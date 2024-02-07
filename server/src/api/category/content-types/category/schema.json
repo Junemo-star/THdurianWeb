@@ -37,6 +37,9 @@
         "videos",
         "audios"
       ]
+    },
+    "defaultDescriptions": {
+      "type": "text"
     }
   }
 }
