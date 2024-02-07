@@ -2,10 +2,17 @@ import React, { useState } from 'react';
 import { Form, Container } from 'react-bootstrap';
 
 const LoginApp = () => {
+    const [username, setUsername] = useState()
+    const [password, setPassword] = useState()
+
+    const handleSubmit = async (e) => {
+        
+    }
+
     return (
         <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
             
-            <div style={{
+            <Form onSubmit={handleSubmit} style={{
                 backgroundColor: "#568203",
                 margin: "20px 20px 20px 20px",
                 borderRadius: "25px",
@@ -24,20 +31,32 @@ const LoginApp = () => {
 
                 <div style={{display: "flex", alignItems: "center", flexDirection: "column", margin: "10px"}}>
                     <div>
-                        <input placeholder='username' style={{borderRadius: "25px", width: "282px", height: "44", padding: "8px "}}></input>
+                        <Form.Control 
+                            id="username" 
+                            placeholder="username" 
+                            style={{borderRadius: "25px", width: "282px", height: "44", padding: "8px "}}
+                            type='text'
+                            onChange={(e) => setUsername(e.target.value)}
+                        />
                     </div>
                     <div style={{marginTop: "10px"}}>
-                        <input placeholder='password' style={{borderRadius: "25px", width: "282px", height: "44", padding: "8px "}}></input>
+                        <Form.Control 
+                            id="password" 
+                            placeholder="password" 
+                            onChange={(e) => setPassword(e.target.value)} 
+                            style={{borderRadius: "25px", width: "282px", height: "44", padding: "8px "}}
+                            type='password'
+                        />
                     </div>
                 </div>
 
                 <div>
-                    <button style={{marginRight: "10px"}}>submit</button>
-                    <button>register</button>
+                    <button style={{borderRadius: "25px", width: "91px", height: "34", padding: "8px ", marginRight: "20px"}}>submit</button>
+                    <button style={{borderRadius: "25px", width: "91px", height: "34", padding: "8px "}}>register</button>
                 </div>
 
-            </div>
-        </div>
+            </Form>
+        </Container>
     )
 }
 
