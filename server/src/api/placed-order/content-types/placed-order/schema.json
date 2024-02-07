@@ -1,0 +1,49 @@
+{
+  "kind": "collectionType",
+  "collectionName": "placed_orders",
+  "info": {
+    "singularName": "placed-order",
+    "pluralName": "placed-orders",
+    "displayName": "PlacedOrder",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "date": {
+      "type": "datetime"
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "order_histories"
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "price": {
+      "type": "integer"
+    },
+    "location": {
+      "type": "text"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "Packaging",
+        "Verifying",
+        "Delivering",
+        "Complete"
+      ]
+    },
+    "product": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "placed_orders"
+    }
+  }
+}

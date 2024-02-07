@@ -1,0 +1,53 @@
+{
+  "kind": "collectionType",
+  "collectionName": "farm_post_news",
+  "info": {
+    "singularName": "farm-post-new",
+    "pluralName": "farm-post-news",
+    "displayName": "FarmPostNew",
+    "description": ""
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "date": {
+      "type": "datetime"
+    },
+    "note": {
+      "type": "string"
+    },
+    "owner": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "farm_post_histories"
+    },
+    "category": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::category.category",
+      "inversedBy": "farm_post_news"
+    },
+    "amount": {
+      "type": "integer"
+    },
+    "location": {
+      "type": "text"
+    },
+    "status": {
+      "type": "enumeration",
+      "enum": [
+        "Pending",
+        "Verified"
+      ]
+    },
+    "descriptions": {
+      "type": "text"
+    },
+    "price": {
+      "type": "integer"
+    }
+  }
+}
