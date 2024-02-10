@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Form, Container } from 'react-bootstrap';
+import { Form, Container, Image } from 'react-bootstrap';
+import '../css/CssLogin.css'
 
 const LoginApp = () => {
     const [username, setUsername] = useState()
@@ -10,20 +11,13 @@ const LoginApp = () => {
     }
 
     return (
-        <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh" }}>
+        <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column" }}>
             
-            <Form onSubmit={handleSubmit} style={{
-                backgroundColor: "#568203",
-                margin: "20px 20px 20px 20px",
-                borderRadius: "25px",
-                border: "None",
-                width: "334px",
-                height: '376px',
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "center",
-                alignItems: "center",
-            }}>
+            <div style={{position: "relative", top: "10%"}}>
+                <Image src="user.png" className="userimg" style={{layout: "fill"}}/>
+            </div>
+            
+            <Form onSubmit={handleSubmit} className='Formlogin'>
 
                 <div style={{color: "white", fontSize: "60px"}}>
                     Login
@@ -51,8 +45,8 @@ const LoginApp = () => {
                 </div>
 
                 <div>
-                    <button style={{borderRadius: "25px", width: "91px", height: "34", padding: "8px ", marginRight: "20px"}}>submit</button>
-                    <button style={{borderRadius: "25px", width: "91px", height: "34", padding: "8px "}}>register</button>
+                    <button className='buttonlogin-re-lo' style={{marginRight: "20px"}}>submit</button>
+                    <button className='buttonlogin-re-lo'>register</button>
                 </div>
 
             </Form>

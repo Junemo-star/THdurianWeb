@@ -1,0 +1,32 @@
+.Container_all {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    flex-direction: column;
+}
+
+.Card_show {
+    border-radius: 25px;
+    width: 150px;
+    align-items: flex-end;
+}
+
+.Box_name_garden {
+    background-color: #418300;
+    width: fit-content;
+    height: 20px;
+    color: white;
+    margin: 10px;
+    border-radius: 25px;
+    font-size: 8px;
+}
+
+.Box_info_durian {
+    background-color: #418300;
+    width: 130px;
+    height: 70px;
+    color: white;
+    border-radius: 25px;
+    font-size: 14px;
+}

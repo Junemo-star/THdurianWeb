@@ -1,22 +1,29 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
+import App from './App';
+import HomeApp from './page/Home';
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <App />
+  },
+  {
+    path: "/Home",
+    element: <HomeApp />
   }
 ])
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
+  <div style={{ backgroundColor: "#D4EFCF" }}>    {/* เพื่อทำให้ทุกหน้าใน router มีสีตามนี้ */}
     <RouterProvider router={router} />
-  </React.StrictMode>
+  </div>
 );
 
 // If you want to start measuring performance in your app, pass a function

@@ -1,0 +1,26 @@
+.buttonlogin-re-lo {
+    border-radius: 25px;
+    width: 91px;
+    height: 34;
+    padding: 8px;
+}
+
+.Formlogin {
+    background-color: #568203;
+    margin: 20px 20px 20px 20px;
+    border-radius: 25px;
+    border: None;
+    width: 334px;
+    height: 376px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.userimg {
+    width: 150px;
+    height: 150px;
+    background-color: white;
+    border-radius: 50%;
+}
