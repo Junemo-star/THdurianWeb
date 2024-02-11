@@ -2,14 +2,34 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+}
+
+.Card_sale {
+    border-radius: 25px;
+    width: 150px;
+    height: 210px;
+    background-color: #FFEB34;
+    align-items: flex-end;
+    display: flex;
     flex-direction: column;
 }
 
-.Card_show {
+.Card_nomal {
     border-radius: 25px;
     width: 150px;
+    height: 210px;
+    background-color: #568203;
     align-items: flex-end;
+    display: flex;
+    flex-direction: column;
+}
+
+.CardBody {
+    flex-grow: 1;
+    padding: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .Box_name_garden {
@@ -22,11 +42,32 @@
     font-size: 8px;
 }
 
+.Box_name_garden_nomal {
+    background-color: #B0BF07;
+    width: fit-content;
+    height: 20px;
+    color: white;
+    margin: 10px;
+    border-radius: 25px;
+    font-size: 8px;
+}
+
 .Box_info_durian {
     background-color: #418300;
-    width: 130px;
-    height: 70px;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.Box_info_durian_nomal {
+    background-color: #B0BF07;
+    width: 100%;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.font_inbox {
+    font-size: 12px;
+    text-align: left;
     color: white;
-    border-radius: 25px;
-    font-size: 14px;
 }
