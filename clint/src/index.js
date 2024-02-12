@@ -5,8 +5,10 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
+
 import App from './App';
 import HomeApp from './page/Home';
+import UserProfile from './page/User';
 
 const router = createBrowserRouter([
   {
@@ -16,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/Login",
     element: <App />
+  },
+  {
+    path: "/User",
+    element: <UserProfile />
   }
 ])
 
