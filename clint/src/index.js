@@ -11,11 +11,11 @@ import HomeApp from './page/Home';
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App />
+    element: <HomeApp />
   },
   {
-    path: "/Home",
-    element: <HomeApp />
+    path: "/Login",
+    element: <App />
   }
 ])
 

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
 import '../css/CssLogin.css'
+import NavbarHead from '../componet/Navbar';
+import Footers from '../componet/Footerbar';
 
 const LoginApp = () => {
     const [username, setUsername] = useState()
@@ -12,7 +14,6 @@ const LoginApp = () => {
 
     return (
         <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column" }}>
-            
             <div style={{position: "relative", top: "10%"}}>
                 <Image src="user.png" className="userimg" style={{layout: "fill"}}/>
             </div>
@@ -50,6 +51,7 @@ const LoginApp = () => {
                 </div>
 
             </Form>
+
         </Container>
     )
 }
