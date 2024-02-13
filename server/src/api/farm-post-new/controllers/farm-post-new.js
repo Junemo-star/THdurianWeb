@@ -18,7 +18,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         const data = ctx.request["body"].data;
         console.log(data);
         
-        const findCatagoryById = await strapi.entityService.findOne("api::category.category",1)
+        const findCatagoryById = await strapi.entityService.findOne("api::category.category",data.category)
         console.log(findCatagoryById);
         const postEntry = await strapi.entityService.create('api::farm-post-new.farm-post-new', {
             data: {
@@ -27,6 +27,8 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 price: data.price, 
                 owner: ctx.state.user,
                 category: findCatagoryById,
+                note: data.note,
+                descriptions: data.descriptions,
                 publishedAt: new Date()
             },
         });
