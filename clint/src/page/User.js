@@ -16,8 +16,8 @@ const UserProfile = () => {
             <div className={styles.box}>
 
                 <div className={styles.box_inside_profile}>
-                    <div>
-                        ชื่อ
+                    <div className={styles.box_inside_text}>
+                        
                     </div>
                 </div>
 

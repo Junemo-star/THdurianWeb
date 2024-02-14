@@ -9,6 +9,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App';
 import HomeApp from './page/Home';
 import UserProfile from './page/User';
+import PostGarden from './page/Postgardener';
 
 const router = createBrowserRouter([
   {
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/User",
     element: <UserProfile />
+  },
+  {
+    path: "/Post",
+    element: <PostGarden />
   }
 ])
 
