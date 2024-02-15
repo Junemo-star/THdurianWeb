@@ -435,6 +435,11 @@ export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
       Attribute.DefaultTo<'Pending'>;
     descriptions: Attribute.Text;
     price: Attribute.Integer & Attribute.Required;
+    orders: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'oneToMany',
+      'api::placed-order.placed-order'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -481,6 +486,11 @@ export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
       'api::placed-order.placed-order',
       'manyToOne',
       'api::category.category'
+    >;
+    farmPost: Attribute.Relation<
+      'api::placed-order.placed-order',
+      'manyToOne',
+      'api::farm-post-new.farm-post-new'
     >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
