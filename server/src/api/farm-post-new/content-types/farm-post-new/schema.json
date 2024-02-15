@@ -31,23 +31,27 @@
       "inversedBy": "farm_post_news"
     },
     "amount": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     },
     "location": {
-      "type": "text"
+      "type": "text",
+      "required": true
     },
     "status": {
       "type": "enumeration",
       "enum": [
         "Pending",
         "Verified"
-      ]
+      ],
+      "default": "Pending"
     },
     "descriptions": {
       "type": "text"
     },
     "price": {
-      "type": "integer"
+      "type": "integer",
+      "required": true
     }
   }
 }

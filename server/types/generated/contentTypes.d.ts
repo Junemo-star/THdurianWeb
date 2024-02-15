@@ -429,11 +429,20 @@ export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
       'manyToOne',
       'api::category.category'
     >;
+<<<<<<< HEAD
     amount: Attribute.Integer;
     location: Attribute.Text;
     status: Attribute.Enumeration<['Pending', 'Verified']>;
     descriptions: Attribute.Text;
     price: Attribute.Integer;
+=======
+    amount: Attribute.Integer & Attribute.Required;
+    location: Attribute.Text & Attribute.Required;
+    status: Attribute.Enumeration<['Pending', 'Verified']> &
+      Attribute.DefaultTo<'Pending'>;
+    descriptions: Attribute.Text;
+    price: Attribute.Integer & Attribute.Required;
+>>>>>>> d358f80b1e82476f1f41e558c7b8275e104e5c38
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

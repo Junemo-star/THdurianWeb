@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
-import '../css/CssLogin.css'
+import '../css/Csslogin.css'
 import NavbarHead from '../componet/Navbar';
 import Footers from '../componet/Footerbar';
 
