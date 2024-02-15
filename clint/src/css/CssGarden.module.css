@@ -1,0 +1,124 @@
+.set_pos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.userimg {
+    width: 110px;
+    height: 110px;
+    background-color: white;
+    border-radius: 50%;
+    position: relative;
+    bottom: 3%;
+}
+
+.pos_img {
+    position: relative;
+    top: 70px;
+}
+
+.button_logout {
+    width: 100px;
+    height: 41px;
+    border-radius: 10px;
+    color: white;
+    background-color: #B0BF07;
+    border-style: hidden;
+    position: relative;
+    top: -60px;
+    left: 130px;
+    font-size: 20px;
+}
+
+.box {
+    width: 345px;
+    height: 680px;
+    background-color: #568203;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    padding: 10px;
+}
+
+.set_head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.head_box {
+    width: 126px;
+    height: 36px;
+    background-color: #B0BF07;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.text_head_box {
+    color: white;
+}
+
+.box_inside_profile {
+    width: 312px;
+    height: 174px;
+    background-color: #B0BF07;
+    border-radius: 25px;
+    margin-top: 10px;
+}
+
+.box_inside_profile2 {
+    width: 312px;
+    height: 152px;
+    background-color: #B0BF07;
+    border-radius: 25px;
+    margin-top: 20px;
+}
+
+.text_inside_profile2 {
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    color: white;
+}
+
+.inside_box_profile2 {
+    width: 294px;
+    height: 54px;
+    background-color: white;
+    color: black;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+.score_line {
+    overflow-y: auto;
+    max-height: 80px;
+}
+
+.box_inside_profile3 {
+    width: 312px;
+    height: 170px;
+    background-color: #B0BF07;
+    border-radius: 25px;
+    margin-top: 20px;
+}
+
+.inside_box_profile3 {
+    width: 294px;
+    height: 30px;
+    background-color: white;
+    color: black;
+    margin: 10px;
+    border-radius: 10px;
+    padding: 5px;
+}

@@ -3,13 +3,31 @@ import { Form, Container, Image } from 'react-bootstrap';
 import styles from '../css/CssUser.module.css'
 import Footers from '../componet/Footerbar';
 import NavbarHead from '../componet/Navbar';
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+import { useAuth } from '../componet/AuthContext';
 
 
 const UserProfile = () => {
+    const navigate = useNavigate()
+    const { setRole } = useAuth();
+
+    const handleLogout = () => {
+        // Remove JWT Token from Local Storage
+        // window.localStorage.removeItem("jwtToken");
+        window.localStorage.removeItem("userRole");
+        setRole(null)
+        // Clear Authorization Header in Axios Defaults
+        axios.defaults.headers.common.Authorization = "";
+        // Navigate to the "/" path (adjust this if using a different routing library)
+        navigate("/");
+    }
+
     return (
         <div className={styles.set_pos}>
 
             <div className={styles.pos_img}>
+                <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>
                 <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />
             </div>
 
@@ -60,7 +78,7 @@ const UserProfile = () => {
                 </div>
             </div>
 
-            {/* <Footers /> */}
+            <Footers />
         </div>
     )
 }

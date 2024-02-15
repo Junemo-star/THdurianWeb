@@ -3,12 +3,17 @@ import { Form, Container, Carousel, Card, Image, Col, Row } from 'react-bootstra
 import styles from '../css/CssHome.module.css'
 import NavbarHead from '../componet/Navbar';
 import Footers from '../componet/Footerbar';
+import { useAuth } from '../componet/AuthContext';
 
 
 const HomeApp = () => {
+    const { userRole } = useAuth();
+
     return (
         <div style={{height: "100%"}}>
             <NavbarHead />
+
+            {console.log(userRole)}
 
             <div className={styles.promotion_banner}>
                 <Image src="promotion.png" className={styles.promotion_img} />
@@ -19,6 +24,8 @@ const HomeApp = () => {
                     <h2>รายการสินค้าประจำวัน</h2>
                 </div>
             </div>
+
+            {console.log(userRole)}
 
             <Carousel style={{ top: "13px" }}>
                 {/* หน้าแรกของการหมุน */}
