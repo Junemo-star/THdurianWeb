@@ -44,6 +44,12 @@
       "relation": "manyToOne",
       "target": "api::category.category",
       "inversedBy": "placed_orders"
+    },
+    "farmPost": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::farm-post-new.farm-post-new",
+      "inversedBy": "orders"
     }
   }
 }

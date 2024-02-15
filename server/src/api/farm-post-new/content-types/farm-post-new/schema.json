@@ -52,6 +52,12 @@
     "price": {
       "type": "integer",
       "required": true
+    },
+    "orders": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::placed-order.placed-order",
+      "mappedBy": "farmPost"
     }
   }
 }
