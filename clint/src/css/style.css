@@ -1,0 +1,7 @@
+body {
+    background-color: #D4EFCF;
+}
+
+.carousel-control-prev {
+    display: none; /* ซ่อนปุ่มเลื่อนด้านซ้าย */
+}

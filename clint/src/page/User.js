@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
 import styles from '../css/CssUser.module.css'
 import Footers from '../componet/Footerbar';

@@ -435,18 +435,11 @@ export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
       Attribute.DefaultTo<'Pending'>;
     descriptions: Attribute.Text;
     price: Attribute.Integer & Attribute.Required;
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
     orders: Attribute.Relation<
       'api::farm-post-new.farm-post-new',
       'oneToMany',
       'api::placed-order.placed-order'
     >;
-=======
->>>>>>> d358f80b1e82476f1f41e558c7b8275e104e5c38
->>>>>>> 6fc504dc4ae89d2246659ec74e3a746a5d28b2a5
->>>>>>> 68dcd491bede3d097a8e3bcc67a7bf34fac03d51
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

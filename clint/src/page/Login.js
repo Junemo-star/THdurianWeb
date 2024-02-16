@@ -1,11 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
-import '../css/CssLogin.css'
-import NavbarHead from '../componet/Navbar';
+import styles from '../css/CssLogin.module.css'
+import '../css/style.css'
 import Footers from '../componet/Footerbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../componet/AuthContext';
+import useWindowWidth from '../componet/Check_size';
+import toast, { Toaster } from 'react-hot-toast';
 
 
 const LoginApp = () => {
@@ -15,6 +17,7 @@ const LoginApp = () => {
     const navigate = useNavigate()
     const [submitEnabled, setSubmitEnabled] = useState(true);
     const { setRole } = useAuth();
+    const windowWidth = useWindowWidth();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -49,6 +52,7 @@ const LoginApp = () => {
                 
                 if (result.data.role.name === 'Customer') {
                     navigate('/');
+                    toast.success('Successfully toasted!')
                 }
                 if (result.data.role.name === 'Farmer') {
                     navigate('/');
@@ -56,6 +60,7 @@ const LoginApp = () => {
                 if (result.data.role.name === 'Admin') {
                     navigate('/');
                 }
+
             }
 
             //console.log(result)
@@ -67,12 +72,14 @@ const LoginApp = () => {
     }
 
     return (
-        <Container style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column" }}>
-            <div style={{position: "relative", top: "10%"}}>
-                <Image src="user.png" className="userimg" style={{layout: "fill"}}/>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
+            <Toaster position="top-center" reverseOrder={false} />
+            
+            <div className={styles.pos_user}>
+                <Image src="user.png" className={styles.userimg} style={{layout: "fill"}}/>
             </div>
             
-            <Form onSubmit={handleSubmit} className='Formlogin'>
+            <Form onSubmit={handleSubmit} className={styles.Formlogin}>
 
                 <div style={{color: "white", fontSize: "60px"}}>
                     Login
@@ -100,13 +107,15 @@ const LoginApp = () => {
                 </div>
 
                 <div>
-                    <button className='buttonlogin-re-lo' style={{marginRight: "20px"}}>submit</button>
-                    <button className='buttonlogin-re-lo'>register</button>
+                    <button className={styles.buttonlogin_re_lo} style={{marginRight: "20px"}}>submit</button>
+                    <button className={styles.buttonlogin_re_lo}>register</button>
                 </div>
 
             </Form>
 
-        </Container>
+            {windowWidth < 450 && <Footers />}
+
+        </div>
     )
 }
 

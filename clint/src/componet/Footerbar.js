@@ -17,11 +17,9 @@ const Footers = () => {
         console.log(userRole)
         if (userRole === 'Customer') {
             navigate('/User');
-        }
-        if (userRole === 'Farmer') {
+        } else if (userRole === 'Farmer') {
             navigate('/Gardener')
-        }
-        if (userRole === null) {
+        } else {
             navigate('/Login')
         }
     }

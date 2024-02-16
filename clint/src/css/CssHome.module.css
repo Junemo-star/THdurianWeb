@@ -1,3 +1,7 @@
+.position_all {
+    height: 100%;
+}
+
 .headweb {
     display: flex;
     justify-content: center;
@@ -15,8 +19,12 @@
 .headweb_pos {
     display: flex;
     justify-content: center;
-    margin-top: 30px;
-    margin-bottom: 20px;
+}
+
+.Carousel_img {
+    display: block;
+    width: 100%;
+    height: 280px;
 }
 
 .promotion_banner {
@@ -31,20 +39,6 @@
     width: 60vw;
 }
 
-@media (min-width: 450px) {
-    .promotion_img {
-        width: 30vw; 
-    }
-
-    .promotion_banner {
-        position: absolute;
-        transform: rotate(-9deg);
-        z-index: 1;
-        right: 75%;
-        top: 20%;
-    }
-}
-
 .Container_all {
     display: flex;
     justify-content: center;
@@ -52,20 +46,10 @@
 }
 
 .Card_sale {
-    border-radius: 25px;
-    width: 150px;
-    height: 210px;
+    border-radius: 5px;
+    width: 180px;
+    height: 170px;
     background-color: #FFEB34;
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column;
-}
-
-.Card_nomal {
-    border-radius: 25px;
-    width: 150px;
-    height: 210px;
-    background-color: #568203;
     align-items: flex-end;
     display: flex;
     flex-direction: column;
@@ -80,43 +64,27 @@
 }
 
 .Box_name_garden {
-    background-color: #418300;
+    background-color: #C1FF84;
     width: fit-content;
     height: 20px;
-    color: white;
+    color: black;
+    font-weight: bold;
     margin: 10px;
     border-radius: 25px;
     font-size: 8px;
-}
-
-.Box_name_garden_nomal {
-    background-color: #B0BF07;
-    width: fit-content;
-    height: 20px;
-    color: white;
-    margin: 10px;
-    border-radius: 25px;
-    font-size: 8px;
+    position: absolute;
 }
 
 .Box_info_durian {
-    background-color: #418300;
     width: 100%;
     border-radius: 10px;
-    padding: 10px;
-}
-
-.Box_info_durian_nomal {
-    background-color: #B0BF07;
-    width: 100%;
-    border-radius: 10px;
-    padding: 10px;
 }
 
 .font_inbox {
     font-size: 12px;
     text-align: left;
-    color: white;
+    color: black;
+    font-weight: bold;
 }
 
 .products_con {
@@ -131,14 +99,7 @@
 
 .products_item {
     background-color: #568203;
-    border-radius: 25px;
-}
-
-.products_pos_garden {
-    display: flex;
-    justify-content: end;
-    margin: 0px;
-    padding: 0px;
+    border-radius: 5px;
 }
 
 .products_garden {
@@ -148,27 +109,73 @@
     background-color: #B0BF07;
     border-radius: 10px;
     margin: 10px;
+    position: absolute;
+    color: black;
+    font-weight: bold;
 }
 
 .products_img {
-    display: grid;
-    place-items: center; /* จัดให้อยู่ตรงกลางทั้งแนวนอนและแนวตั้ง */
-    margin-bottom: 10px;
+    display: flex;
+    justify-content: end;
 }
 
 .products_img img {
-    width: 90%;
-    border-radius: 25px;
+    width: 100%;
     margin-left: auto;
     margin-right: auto;
 }
 
-
-.products_detail {
-    padding: 0.5rem;
-    background-color: #B0BF07;
-    border-radius: 10px;
-    margin: 10px;
-    font-size: 12px;
+.products_detail_pos {
+    padding: 10px;
     color: white;
+    font-weight: bold;
+}
+
+@media (min-width: 450px) {
+    .Carousel_img {
+        display: block;
+        width: 100%;
+        height: 340px;
+    }
+
+    .Card_sale {
+        border-radius: 5px;
+        width: 180px;
+        height: 223px;
+        background-color: #FFEB34;
+        align-items: flex-end;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .promotion_img {
+        width: 30vw; 
+    }
+
+    .promotion_banner {
+        position: absolute;
+        transform: rotate(-9deg);
+        z-index: 1;
+        right: 75%;
+        top: 20%;
+    }
+
+    .products_con {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+        grid-gap: 1rem;
+        margin: 20px;
+        margin-bottom: 120px;
+        background-color: #D4EFCF;
+        padding-bottom: 20px;
+        width: 800px;
+    }
+
+    .position_all {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+    }
 }
