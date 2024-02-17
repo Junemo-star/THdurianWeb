@@ -63,8 +63,7 @@ const LoginApp = () => {
                 }
 
             }
-
-            //console.log(result)
+            console.log(result)
         } catch (e) {
             console.log(e)
             console.log('wrong username & password')
