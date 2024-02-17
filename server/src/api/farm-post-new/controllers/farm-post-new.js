@@ -59,21 +59,53 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
     async publicGet(ctx) {
         console.log("PublicGet")
 
-        const entries = await strapi.entityService.findMany("api::farm-post-new.farm-post-new",{
-            populate: ["owner","category","orders"],
+        let entries = await strapi.entityService.findMany("api::farm-post-new.farm-post-new", {
+            populate: "*"
 
         });
-        console.log(entries);
-        console.log("Farm" + " : " + "category" + " : " + "amount" + " : " + "price");
-        for (let post of entries){
-            console.log(post.owner.username + " : " + post.category["durianType"] + " : " + post.amount + " : " + post.price + " : " + post.createdAt);
+        //console.log(entries);
+        //console.log("Farm" + " : " + "category" + " : " + "amount" + " : " + "price");
+        for (let post of entries) {
+            const totalStock = post.orders.reduce((acc, curr) => acc + curr.amount, 0);
+            console.log(totalStock);
+            post["Sale"] = totalStock
+        }
+        //console.log(entries);
+        const newData = entries.map(post => {
+            return {
+                id: post.id,
+                Farmer: post.owner.username,
+                Category: post.category["durianType"],
+                Amount: post.amount,
+                Price: post.price,
+                TotalSale: post["Sale"],
+                Picture: post.picture
+            }
+        })
+        //console.log(newData);
+        // Function to combine rows
 
+        const combinedData = [];
+
+        // Group rows by Name, Type, and Cost
+        const groupedData = newData.reduce((acc, row) => {
+            const key = `${row.Farmer}${row.Category}${row.Price}`;
+            acc[key] = acc[key] || { Farmer: row.Farmer, Category: row.Category,Amount: 0 ,Price: row.Price, TotalSale: 0, Picture: row.Picture};
+            acc[key].Amount += row.Amount;
+            acc[key].TotalSale += row.TotalSale;
+            return acc;
+        }, {});
+
+        // Create new array with combined objects
+        for (const key in groupedData) {
+            combinedData.push(groupedData[key]);
         }
 
+        console.log(combinedData);
 
 
 
-
+        return combinedData;
         return ctx.body = { response: "Public Get" }
         //Function called when user want to search by category
         //Should return the list of items that related to pick one
