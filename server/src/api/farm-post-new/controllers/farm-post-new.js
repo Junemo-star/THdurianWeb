@@ -57,6 +57,24 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
     },
 
     async publicGet(ctx) {
+        console.log("PublicGet")
+
+        const entries = await strapi.entityService.findMany("api::farm-post-new.farm-post-new",{
+            populate: ["owner","category","orders"],
+
+        });
+        console.log(entries);
+        console.log("Farm" + " : " + "category" + " : " + "amount" + " : " + "price");
+        for (let post of entries){
+            console.log(post.owner.username + " : " + post.category["durianType"] + " : " + post.amount + " : " + post.price + " : " + post.createdAt);
+
+        }
+
+
+
+
+
+        return ctx.body = { response: "Public Get" }
         //Function called when user want to search by category
         //Should return the list of items that related to pick one
     },

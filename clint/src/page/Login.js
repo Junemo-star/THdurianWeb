@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
+import '../css/Csslogin.css'
+import NavbarHead from '../componet/Navbar';
 import styles from '../css/CssLogin.module.css'
 import '../css/style.css'
 import Footers from '../componet/Footerbar';

@@ -4,7 +4,7 @@ module.exports = {
     routes: [ //custom routes
         {
             method: 'GET', 
-            path: '/',
+            path: '/public',
             handler: 'farm-post-new.publicGet'
         },
 

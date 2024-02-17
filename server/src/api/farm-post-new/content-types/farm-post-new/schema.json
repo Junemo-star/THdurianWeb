@@ -58,6 +58,16 @@
       "relation": "oneToMany",
       "target": "api::placed-order.placed-order",
       "mappedBy": "farmPost"
+    },
+    "picture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
     }
   }
 }
