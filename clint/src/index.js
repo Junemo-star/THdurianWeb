@@ -11,6 +11,7 @@ import HomeApp from './page/Home';
 import UserProfile from './page/User';
 import PostGarden from './page/Postgardener';
 import Gardener from './page/Usergarden';
+import Register from './page/Register';
 
 
 const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
   {
     path: "/Gardener",
     element: <Gardener />
+  },
+  {
+    path: "/Register",
+    element: <Register />
   }
 ])
 

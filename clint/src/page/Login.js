@@ -71,6 +71,10 @@ const LoginApp = () => {
         }
     }
 
+    const Regis = () => {
+        navigate("/Register")
+    }
+
     return (
         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
             <Toaster position="top-center" reverseOrder={false} />
@@ -108,7 +112,7 @@ const LoginApp = () => {
 
                 <div>
                     <button className={styles.buttonlogin_re_lo} style={{marginRight: "20px"}}>submit</button>
-                    <button className={styles.buttonlogin_re_lo}>register</button>
+                    <button className={styles.buttonlogin_re_lo} onClick={() => Regis()}>register</button>
                 </div>
 
             </Form>
