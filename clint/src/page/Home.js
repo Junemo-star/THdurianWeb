@@ -172,7 +172,7 @@ const HomeApp = () => {
 
                     <div className={styles.products_img}>
                         <div className={styles.products_garden}>
-                            สวนนายดำ
+                            ก้านยาว
                         </div>
                         <img src='2.jpg' />
                     </div>
