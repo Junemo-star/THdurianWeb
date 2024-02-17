@@ -115,3 +115,21 @@
     background-color: #2E792D;
     margin-top: 20px;
 }
+
+.back_pos {
+    padding: 10px;
+    display: flex;
+    justify-content: end;
+}
+
+.back_pos button{
+    background-color: #B0BF07;
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-style: hidden;
+    font-size: 20px;
+    color: white;
+    font-weight: bold;
+}
