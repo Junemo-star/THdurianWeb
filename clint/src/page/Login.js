@@ -1,15 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
-import '../css/Csslogin.css'
 import NavbarHead from '../componet/Navbar';
 import styles from '../css/CssLogin.module.css'
-import '../css/style.css'
 import Footers from '../componet/Footerbar';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import toast, { Toaster } from 'react-hot-toast';
+import '../css/style.css'
 
 
 const LoginApp = () => {
