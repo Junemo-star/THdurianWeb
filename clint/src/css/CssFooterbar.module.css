@@ -24,3 +24,9 @@
     justify-content: center;
     align-items: center;
 }
+
+.no_underline {
+    text-decoration: none;
+    color: none;
+    /* เปลี่ยนสีตามที่คุณต้องการ */
+}

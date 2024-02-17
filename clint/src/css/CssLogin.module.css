@@ -1,10 +1,14 @@
-.buttonlogin-re-lo {
+.buttonlogin_re_lo {
     border-radius: 25px;
     width: 91px;
     height: 34;
     padding: 8px;
 }
 
+.pos_user {
+    position: absolute;
+    top: 20%
+}
 
 .Formlogin {
     background-color: #568203;
@@ -25,3 +29,12 @@
     background-color: white;
     border-radius: 50%;
 }
+
+@media (min-width: 450px) {
+    .pos_user {
+        position: absolute;
+        top: 10%
+    }
+}
+
+
