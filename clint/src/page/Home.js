@@ -27,6 +27,7 @@ const HomeApp = () => {
                 let url = "2.jpg"
                 if (item.Picture){
                     url = "http://localhost:1337" + item.Picture.url
+                    console.log(item.Picture.url)
                 }
 
                 return (
