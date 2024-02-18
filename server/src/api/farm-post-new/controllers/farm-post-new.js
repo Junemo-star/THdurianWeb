@@ -94,6 +94,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
             acc[key] = acc[key] || { 
                 Farmer: row.Farmer, 
                 Category: row.Category, 
+                CategoryID: row.CategoryID,
                 Amount: 0, 
                 Price: row.Price, 
                 TotalSale: 0, 
