@@ -90,7 +90,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         // Group rows by Name, Type, and Cost
         const groupedData = newData.reduce((acc, row) => {
             const key = `${row.Farmer}${row.Category}${row.Price}`;
-            acc[key] = acc[key] || { Farmer: row.Farmer, Category: row.Category,Amount: 0 ,Price: row.Price, TotalSale: 0, Picture: row.Picture};
+            acc[key] = acc[key] || { Farmer: row.Farmer, Category: row.Category, Amount: 0, Price: row.Price, TotalSale: 0, Picture: row.Picture };
             acc[key].Amount += row.Amount;
             acc[key].TotalSale += row.TotalSale;
             return acc;
@@ -101,9 +101,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
             combinedData.push(groupedData[key]);
         }
 
-        console.log(combinedData);
-
-
+        //console.log(combinedData);
 
         return combinedData;
         return ctx.body = { response: "Public Get" }
