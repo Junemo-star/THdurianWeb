@@ -3,11 +3,14 @@ import Footers from '../componet/Footerbar';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../componet/AuthContext';
+import useWindowWidth from '../componet/Check_size';
 
 
 const Gardener = () => {
     const navigate = useNavigate()
     const { setRole } = useAuth();
+
+    const windowWidth = useWindowWidth();
 
     const handleLogout = () => {
         // Remove JWT Token from Local Storage
@@ -18,6 +21,10 @@ const Gardener = () => {
         axios.defaults.headers.common.Authorization = "";
         // Navigate to the "/" path (adjust this if using a different routing library)
         navigate("/");
+    }
+
+    const postsell = () => {
+        navigate('/Post')
     }
 
     return (
@@ -32,11 +39,11 @@ const Gardener = () => {
                             สถานะ : ชาวสวน
                         </div>
                     </div>
-                    <div className={styles.head_box}>
+                    <button className={styles.head_box} onClick={() => postsell()}>
                         <div className={styles.text_head_box}>
                             เพิ่มโพสการขาย
                         </div>
-                    </div>
+                    </button>
                 </div>
 
                 <div className={styles.box_inside_profile}>
@@ -97,7 +104,7 @@ const Gardener = () => {
                 </div>
             </div>
 
-            <Footers />
+            {windowWidth < 450 && <Footers />}
         </div>
     )
 }

@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styles from '../css/CssPost.module.css'
 import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
 import { message, Upload } from 'antd';
+import Footers from '../componet/Footerbar';
+import { useNavigate } from "react-router-dom";
 
 const getBase64 = (img, callback) => {
     const reader = new FileReader();
@@ -24,6 +26,9 @@ const beforeUpload = (file) => {
 const PostGarden = () => {
     const [loading, setLoading] = useState(false);
     const [imageUrl, setImageUrl] = useState();
+    
+    const navigate = useNavigate()
+
     const handleChange = (info) => {
         if (info.file.status === 'uploading') {
             setLoading(true);
@@ -37,6 +42,7 @@ const PostGarden = () => {
             });
         }
     };
+
     const uploadButton = (
         <button
             style={{
@@ -55,6 +61,10 @@ const PostGarden = () => {
             </div>
         </button>
     );
+
+    const back = () => {
+        navigate("/Gardener")
+    }
 
     return (
         <div className={styles.set_pos}>
@@ -117,12 +127,16 @@ const PostGarden = () => {
                         <button className={styles.button_con}>
                             เพิ่มโพสการขาย
                         </button>
-
                     </div>
                 </div>
-
-
+            
+                <div className={styles.back_pos}>
+                    <button onClick={() => back()}>
+                        ย้อนกลับ
+                    </button>
+                </div>
             </div>
+
         </div>
     )
 }
