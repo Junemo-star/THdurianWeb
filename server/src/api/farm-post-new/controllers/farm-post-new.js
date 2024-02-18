@@ -76,13 +76,14 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 id: post.id,
                 Farmer: post.owner.username,
                 Category: post.category["durianType"],
+                CategoryID: post.category.id,
                 Amount: post.amount,
                 Price: post.price,
                 TotalSale: post["Sale"],
                 Picture: post.picture
             }
         })
-        //console.log(newData);
+        console.log(newData);
         // Function to combine rows
 
         const combinedData = [];
@@ -90,7 +91,14 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         // Group rows by Name, Type, and Cost
         const groupedData = newData.reduce((acc, row) => {
             const key = `${row.Farmer}${row.Category}${row.Price}`;
-            acc[key] = acc[key] || { Farmer: row.Farmer, Category: row.Category, Amount: 0, Price: row.Price, TotalSale: 0, Picture: row.Picture };
+            acc[key] = acc[key] || { 
+                Farmer: row.Farmer, 
+                Category: row.Category, 
+                Amount: 0, 
+                Price: row.Price, 
+                TotalSale: 0, 
+                Picture: row.Picture
+             };
             acc[key].Amount += row.Amount;
             acc[key].TotalSale += row.TotalSale;
             return acc;
