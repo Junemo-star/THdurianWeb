@@ -9,11 +9,13 @@
     "antd": "^5.14.1",
     "axios": "^1.6.7",
     "bootstrap": "^5.3.2",
+    "jwt-decode": "^4.0.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.10.1",
     "react-dom": "^18.2.0",
     "react-hot-toast": "^2.4.1",
     "react-router-dom": "^6.22.0",
+    "react-script": "^2.0.5",
     "react-scripts": "^5.0.1",
     "web-vitals": "^2.1.4"
   },

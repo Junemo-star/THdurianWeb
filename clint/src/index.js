@@ -13,6 +13,7 @@ import PostGarden from './page/Postgardener';
 import Gardener from './page/Usergarden';
 import Register from './page/Register';
 import Delivery from './page/Delivery';
+import StatusPage from './page/Status';
 
 
 const router = createBrowserRouter([
@@ -43,6 +44,10 @@ const router = createBrowserRouter([
   {
     path: "/Delivery",
     element: <Delivery />
+  },
+  {
+    path: "/Status",
+    element: <StatusPage/>
   }
 ])
 
