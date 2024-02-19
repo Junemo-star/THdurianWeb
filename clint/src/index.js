@@ -12,6 +12,7 @@ import UserProfile from './page/User';
 import PostGarden from './page/Postgardener';
 import Gardener from './page/Usergarden';
 import Register from './page/Register';
+import Delivery from './page/Delivery';
 
 
 const router = createBrowserRouter([
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
   {
     path: "/Register",
     element: <Register />
+  },
+  {
+    path: "/Delivery",
+    element: <Delivery />
   }
 ])
 

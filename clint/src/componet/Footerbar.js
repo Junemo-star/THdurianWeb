@@ -27,6 +27,17 @@ const Footers = () => {
     const homee = () => {
         navigate('/')
     }
+    const delivery = () => {
+        console.log(role)
+        console.log("-----------------")
+        console.log(userRole)
+        if (userRole === 'Customer') {
+            navigate('/Delivery');
+        }else {
+            navigate('/Login')
+        }
+    }
+    
 
 
     return (
@@ -64,7 +75,7 @@ const Footers = () => {
                 </div>
             </div>
 
-            <div className={styles.setting_pos}>
+            <div className={styles.setting_pos} onClick={() => delivery()}>
                 <img src='car.png' className={styles.imgfooter} style={{ padding: "5px" }} />
                 <div >
                     Delivery

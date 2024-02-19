@@ -1,0 +1,13 @@
+.set_pos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    height: 100vh;
+}
+.box {
+    width: 345px;
+    height: 664px;
+    background-color: #568203;
+    border-radius: 25px;
+}
