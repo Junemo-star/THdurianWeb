@@ -22,12 +22,12 @@ const HomeApp = () => {
 
             const response = await axios.get(PUBLIC_URL);
             const data = response.data
-            console.log(data)
+            // console.log(data)
             const products = data.map((item) => {
                 let url = "2.jpg"
                 if (item.Picture){
                     url = "http://localhost:1337" + item.Picture.url
-                    console.log(item.Picture.url)
+                    // console.log(item.Picture.url)
                 }
 
                 return (
@@ -52,7 +52,7 @@ const HomeApp = () => {
                     </div>
                 );
             });
-            console.log(products)
+            // console.log(products)
             setProduct(products)
         } catch (err) {
             //console.log(err)
