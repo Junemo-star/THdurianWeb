@@ -1,6 +1,7 @@
-import React, { useState, useEffect  } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Container, Carousel, Card, Image, Col, Row } from 'react-bootstrap';
 import styles from '../css/CssHome.module.css'
+import { Link, useNavigate } from "react-router-dom";
 import NavbarHead from '../componet/Navbar';
 import Footers from '../componet/Footerbar';
 import { useAuth } from '../componet/AuthContext';
@@ -17,39 +18,43 @@ const HomeApp = () => {
 
     const [product, setProduct] = useState([])
 
+    const idpost = (id) => {
+        console.log(id)
+    }
+
     const fetchItems = async () => {
         try {
-
             const response = await axios.get(PUBLIC_URL);
             const data = response.data
             // console.log(data)
             const products = data.map((item) => {
                 let url = "2.jpg"
-                if (item.Picture){
+                if (item.Picture) {
                     url = "http://localhost:1337" + item.Picture.url
                     // console.log(item.Picture.url)
                 }
-
                 return (
-                    <div className={styles.products_item}>
-                        <div className={styles.products_img}>
-                            <div className={styles.products_garden}>
-                                {item.Category}
+                    <Link onClick={() => idpost(item.CategoryID)}>
+                        <div className={styles.products_item}>
+                            <div className={styles.products_img}>
+                                <div className={styles.products_garden}>
+                                    {item.Category}
+                                </div>
+                                <img src={url} />
                             </div>
-                            <img src={url} />
+                            <div className={styles.products_detail_pos}>
+                                <div style={{ fontSize: "12px" }}>
+                                    {item.Farmer}
+                                </div>
+                                <div style={{ fontSize: "15px" }}>
+                                    ราคา {item.Price} บาท/กก.
+                                </div>
+                                <div style={{ fontSize: "10px" }}>
+                                    ขายไปแล้ว {item.TotalSale} กก
+                                </div>
+                            </div>
                         </div>
-                        <div className={styles.products_detail_pos}>
-                            <div style={{ fontSize: "12px" }}>
-                                {item.Farmer}
-                            </div>
-                            <div style={{ fontSize: "15px" }}>
-                                ราคา {item.Price} บาท/กก.
-                            </div>
-                            <div style={{ fontSize: "10px" }}>
-                                ขายไปแล้ว {item.TotalSale} กก
-                            </div>
-                        </div>
-                    </div>
+                    </Link>
                 );
             });
             // console.log(products)

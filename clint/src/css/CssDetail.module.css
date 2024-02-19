@@ -1,0 +1,22 @@
+.set_pos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+
+.box {
+    width: 345px;
+    height: 680px;
+    background-color: #568203;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 80px;
+    padding: 10px;
+}

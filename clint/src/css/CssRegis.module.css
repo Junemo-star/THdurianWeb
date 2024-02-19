@@ -24,7 +24,7 @@
     border-radius: 25px;
     border: None;
     width: 377px;
-    height: 439px;
+    height: 550px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -32,16 +32,33 @@
 }
 
 .text {
+    width: 100%;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
     color: white;
     font-weight: bold;
 }
 
+/* เพิ่ม Flexbox ใน children ของ .text */
+.text > * {
+    flex: 1; /* ทำให้ children ขยายออกเต็มพื้นที่ */
+    margin-right: 10px; /* ระยะห่างด้านขวา */
+}
+
 .control {
-    border-radius: 25px;
+    border-radius: 10px;
     width: 230px;
     height: 44px;
     padding: 8px;
+}
+
+.botton_box {
+    border-radius: 10px;
+    background-color: #B0BF07;
+    color: white;
+    border-style: hidden;
+    font-weight: bold;
+    font-size: 20px;
+    padding: 10px;
 }
