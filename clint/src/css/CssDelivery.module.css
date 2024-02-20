@@ -11,3 +11,29 @@
     background-color: #568203;
     border-radius: 25px;
 }
+.inside_box {
+    width: 312px;
+    height: 386px;
+    background-color: #B0BF07;
+    border-radius: 25px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+.pos {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.text {
+    padding: 10px;
+    color: white;
+    font-size: 30px;
+}
+.text2 {
+    padding: 10px;
+    color: white;
+    font-size: 25px;
+}
