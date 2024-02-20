@@ -7,6 +7,11 @@ module.exports = {
             path: '/public',
             handler: 'farm-post-new.publicGet'
         },
+        {
+            method: 'POST', 
+            path: '/detail',
+            handler: 'farm-post-new.publicDetail'
+        },
 
     ]
 }

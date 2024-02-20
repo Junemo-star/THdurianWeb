@@ -41,7 +41,6 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
 
         const entries = await strapi.db.query('api::farm-post-new.farm-post-new').findMany({
             where: {
-
                 owner: {
                     id: {
                         $eq: ctx.state.user.id,
@@ -91,15 +90,17 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         // Group rows by Name, Type, and Cost
         const groupedData = newData.reduce((acc, row) => {
             const key = `${row.Farmer}${row.Category}${row.Price}`;
-            acc[key] = acc[key] || { 
-                Farmer: row.Farmer, 
-                Category: row.Category, 
+            acc[key] = acc[key] || {
+                Id: [],
+                Farmer: row.Farmer,
+                Category: row.Category,
                 CategoryID: row.CategoryID,
-                Amount: 0, 
-                Price: row.Price, 
-                TotalSale: 0, 
+                Amount: 0,
+                Price: row.Price,
+                TotalSale: 0,
                 Picture: row.Picture
-             };
+            };
+            acc[key].Id.push(row.id);
             acc[key].Amount += row.Amount;
             acc[key].TotalSale += row.TotalSale;
             return acc;
@@ -118,5 +119,32 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         //Should return the list of items that related to pick one
     },
 
+    async publicDetail(ctx) {
+        console.log("PublicDetail")
+        const data = ctx.request["body"].data;
+        console.log(data.Id);
+
+        const combinedData = [];
+        for (const ID of data.Id) {
+            const findPost = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", ID, { populate: "*" })
+            console.log(findPost)
+            const returnData = {
+                id: findPost.id,
+                Farmer: findPost.owner.username,
+                FarmerName: findPost.owner.firstname + " " + findPost.owner.surname,
+                Category: findPost.category["durianType"],
+                CategoryID: findPost.category.id,
+                Amount: findPost.amount,
+                Price: findPost.price,
+                TotalSale: findPost.orders.reduce((acc, curr) => acc + curr.amount, 0), //Total sale
+                Picture: findPost.picture
+            }
+            combinedData.push(returnData);
+        }
+
+        console.log(combinedData);
+        return combinedData
+        return ctx.body = { response: "Public detail" }
+    },
 }));
 
