@@ -130,6 +130,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
             console.log(findPost)
             const returnData = {
                 id: findPost.id,
+                PostDate: findPost.createdAt,
                 Farmer: findPost.owner.username,
                 FarmerName: findPost.owner.firstname + " " + findPost.owner.surname,
                 Category: findPost.category["durianType"],
@@ -137,7 +138,8 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Amount: findPost.amount,
                 Price: findPost.price,
                 TotalSale: findPost.orders.reduce((acc, curr) => acc + curr.amount, 0), //Total sale
-                Picture: findPost.picture
+                Picture: findPost.picture,
+                
             }
             combinedData.push(returnData);
         }
