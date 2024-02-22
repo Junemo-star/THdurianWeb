@@ -3,7 +3,6 @@ import axios from 'axios';
 import styled from 'styled-components';
 import { Card } from 'antd';
 
-
 const MainContainer = styled.div`
   padding: 0 16px;
 `;
@@ -25,8 +24,7 @@ const StepStyle = styled.div`
   height: 40px;
   border-radius: 50%;
   background-color: #ffffff;
-  border: 3px solid ${({ step }) =>
-    step === 'completed' ? '#164b15' : '#eaf3e7'};
+  border: 3px solid ${({ step }) => (step === 'completed' ? '#164b15' : '#eaf3e7')};
   transition: 0.4s ease;
   display: flex;
   justify-content: center;
@@ -58,8 +56,7 @@ const StepLabel = styled.span`
 
 const ButtonsContainer = styled.div`
   display: flex;
-  justify-content: ${({ isFirstStep }) =>
-    isFirstStep ? 'flex-end' : 'space-between'};
+  justify-content: ${({ isFirstStep }) => (isFirstStep ? 'flex-end' : 'space-between')};
   margin: 0 -15px;
   margin-top: 100px;
 `;
@@ -113,6 +110,11 @@ const steps = [
 const StatusPage = () => {
   const [activeStep, setActiveStep] = useState(1);
   const [durianTypes, setDurianTypes] = useState([]);
+  const [address, setAddress] = useState({
+    street: '',
+    city: '',
+    postalCode: ''
+  });
   const token = localStorage.getItem('jwtToken');
   const [username, setUsername] = useState('');
 
@@ -156,8 +158,7 @@ const StatusPage = () => {
       if (response.status === 200) {
         const data = response.data;
         const userOrders = data.data.filter(
-          (item) =>
-            item.attributes.owner.data.attributes.username === username
+          (item) => item.attributes.owner.data.attributes.username === username
         );
         const durianTypeList = userOrders.map(
           (item) => item.attributes.product.data.attributes.durianType
@@ -179,15 +180,26 @@ const StatusPage = () => {
     setActiveStep(activeStep - 1);
   };
 
+  const handleAddressChange = (e) => {
+    setAddress({
+      ...address,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  const handleAddressSubmit = (e) => {
+    e.preventDefault();
+    // need to be update soon ex. axios post ...
+    console.log('Address submitted:', address);
+  };
+
   return (
     <Card style={{ width: '45%', margin: 'auto', marginTop: '75px', background: '#97dba7'}}>
       <MainContainer>
         <StepContainer>
           {steps.map(({ step, label }) => (
             <StepWrapper key={step}>
-              <StepStyle
-                step={activeStep >= step ? 'completed' : 'incomplete'}
-              >
+              <StepStyle step={activeStep >= step ? 'completed' : 'incomplete'}>
                 {activeStep > step ? (
                   <CheckMark>L</CheckMark>
                 ) : (
@@ -203,16 +215,30 @@ const StatusPage = () => {
 
         <ButtonsContainer isFirstStep={activeStep === 1}>
           {activeStep !== 1 && (
-            <ButtonStyle onClick={prevStep}>
-              Previous
-            </ButtonStyle>
+            <ButtonStyle onClick={prevStep}>Previous</ButtonStyle>
           )}
           {activeStep !== steps.length && (
-            <ButtonStyle onClick={nextStep}>
-              Next
-            </ButtonStyle>
+            <ButtonStyle onClick={nextStep}>Next</ButtonStyle>
           )}
         </ButtonsContainer>
+
+        {activeStep === 2 && (
+          <div style={{ marginTop: '50px' }}>
+            <h2>Payment Information</h2>
+            <form>
+              <label htmlFor="cardNumber">Card Number:</label>
+              <input type="text" id="cardNumber" name="cardNumber" required />
+              <br />
+              <label htmlFor="expireDate">Expiration Date:</label>
+              <input type="text" id="expireDate" name="expireDate" required />
+              <br />
+              <label htmlFor="ccv">CCV:</label>
+              <input type="text" id="ccv" name="ccv" required />
+              <br />
+              <ButtonStyle type="submit">Summit</ButtonStyle>
+            </form>
+          </div>
+        )}
 
         {activeStep === 1 && (
           <div style={{ marginTop: '50px' }}>
@@ -222,6 +248,24 @@ const StatusPage = () => {
                 <li key={index}>{type}</li>
               ))}
             </ul>
+          </div>
+        )}
+
+        {activeStep === 3 && (
+          <div style={{ marginTop: '50px' }}>
+            <h2>Address Information</h2>
+            <form onSubmit={handleAddressSubmit}>
+              <label htmlFor="street">Street:</label>
+              <input type="text" id="street" name="street" value={address.street} onChange={handleAddressChange} required />
+              <br />
+              <label htmlFor="city">City:</label>
+              <input type="text" id="city" name="city" value={address.city} onChange={handleAddressChange} required />
+              <br />
+              <label htmlFor="postalCode">Postal Code:</label>
+              <input type="text" id="postalCode" name="postalCode" value={address.postalCode} onChange={handleAddressChange} required />
+              <br />
+              <ButtonStyle type="submit">Submit</ButtonStyle>
+            </form>
           </div>
         )}
       </MainContainer>
