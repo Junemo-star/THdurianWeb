@@ -51,7 +51,7 @@ const router = createBrowserRouter([
     element: <StatusPage/>
   },
   {
-    path: "/Test",
+    path: "/Detail/:durian/:id",
     element: <Detail />
   }
 ])

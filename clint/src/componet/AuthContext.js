@@ -10,6 +10,11 @@ export const AuthProvider = ({ children }) => {
     return storedRole || null;
   });
 
+  const token = {
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+    }
+  }
 
   const setRole = (role) => {
     setUserRole(role);
@@ -27,7 +32,7 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ userRole, setRole,}}>
+    <AuthContext.Provider value={{ userRole, setRole, token}}>
       {children}
     </AuthContext.Provider>
   );

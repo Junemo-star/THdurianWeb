@@ -10,13 +10,52 @@
 
 .box {
     width: 345px;
-    height: 680px;
+    height: 650px;
+    margin-top: 80px;
     background-color: #568203;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 80px;
     padding: 10px;
+}
+
+.size_img {
+    width: 249px;
+    height: 170px;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.box_inside {
+    width: 300px;
+    height: 397px;
+    background-color: #B0BF07;
+    border-radius: 10px;
+}
+
+.text_head_inside {   
+    color: white;
+    font-weight: bold;
+    font-size: 30px;
+}
+
+.text_body_inside {
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.describ {
+    background-color: white;
+    border-radius: 10px;
+    width: 280px;
+    height: 87px;
+    margin: auto;
+}
+
+.text_describ {
+    padding: 8px;
+    height: 100%;
 }

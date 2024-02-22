@@ -45,7 +45,7 @@ const Footers = () => {
 
             <Link className={styles.no_underline} onClick={() => user()}>
                 <div className={styles.setting_pos}>
-                    <img src='user.png' className={styles.imgfooter} />
+                    <img src='/user.png' className={styles.imgfooter} />
                     <div style={{color: "white"}}>
                         User
                     </div>
@@ -53,7 +53,7 @@ const Footers = () => {
             </Link>
 
             <div className={styles.setting_pos}>
-                <img src='search.png' className={styles.imgfooter} style={{ padding: "5px" }} />
+                <img src='/search.png' className={styles.imgfooter} style={{ padding: "5px" }} />
                 <div >
                     Search
                 </div>
@@ -61,7 +61,7 @@ const Footers = () => {
 
             <Link className={styles.no_underline} onClick={() => homee()}>
                 <div className={styles.setting_pos}>
-                    <img src='Home.png' className={styles.imgfooter} style={{ padding: "5px" }} />
+                    <img src='/Home.png' className={styles.imgfooter} style={{ padding: "5px" }} />
                     <div style={{color: "white"}}>
                         Home
                     </div>
@@ -69,14 +69,14 @@ const Footers = () => {
             </Link>
 
             <div className={styles.setting_pos}>
-                <img src='cart.png' className={styles.imgfooter} style={{ padding: "5px" }} />
+                <img src='/cart.png' className={styles.imgfooter} style={{ padding: "5px" }} />
                 <div >
                     Cart
                 </div>
             </div>
 
             <div className={styles.setting_pos} onClick={() => delivery()}>
-                <img src='car.png' className={styles.imgfooter} style={{ padding: "5px" }} />
+                <img src='/car.png' className={styles.imgfooter} style={{ padding: "5px" }} />
                 <div >
                     Delivery
                 </div>

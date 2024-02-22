@@ -9,11 +9,12 @@ import axios from 'axios';
 
 const PostGarden = () => {
     const [species, setSpecies] = useState([]);
-    
-    const [idSpecies, setIdSpecies] = useState('')
-    const [file, setFile] = useState();
-    const [detail, setDetail] = useState('');
-    const [note, setNote] = useState('')
+    const [success, setSuccess] = useState(false)
+
+    const [idSpecies, setIdSpecies] = useState()
+    const [image, setImage] = useState();
+    const [detail, setDetail] = useState();
+    const [note, setNote] = useState()
 
     const navigate = useNavigate()
 
@@ -35,11 +36,40 @@ const PostGarden = () => {
 
     const handleChange = (e) => {
         console.log(e.target.files);
-        setFile(URL.createObjectURL(e.target.files[0]));
+        setImage(e.target.files[0])
     }
 
     const back = () => {
         navigate("/Gardener")
+    }
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        console.log("idSpecies =", idSpecies)
+        console.log("image =", image)
+        console.log("detail =", detail)
+        console.log("note =", note)
+
+        try {
+            let result = await axios.post("http://localhost:1337/api/farm-post-news", {
+                note: note,
+                amount: 20,
+                price: 20,
+                category: idSpecies,
+                descriptions: detail,
+                location: "16/4 หมู่ 6 ต.ควนธานี อ.กันตัง จ.ตรัง",
+                owner: 7,
+                picture: image
+            }, {
+                headers: {
+                    'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+                    // สามารถเพิ่ม header อื่น ๆ ตามต้องการได้
+                }
+            });
+            setSuccess(true)
+        } catch (e) {
+            console.log(e);
+        }
     }
 
     return (
@@ -64,22 +94,25 @@ const PostGarden = () => {
 
                     <div className={styles.inside_box2}>
                         <div className={styles.upload_img}>
-                            <Form.Control 
-                                    as="textarea" 
-                                    rows={2} 
-                                    style={{borderStyle: "hidden"}}
-                                    placeholder='note : '
-                                    onChange={(e) => setNote(e.target.value)}
+                            <Form.Control
+                                as="textarea"
+                                rows={2}
+                                style={{ borderStyle: "hidden" }}
+                                placeholder='note : '
+                                onChange={(e) => setNote(e.target.value)}
                             />
                         </div>
 
-                        <input type="file" onChange={handleChange} className={styles.button_input}/>
+                        <input type="file" accept="image/*" name='file' onChange={handleChange} className={styles.button_input} />
 
                         <div className={styles.text3}>
+
                             ราคา : <input className={styles.input_price} type='number' style={{ marginRight: '10px' }}></input>
+
                             จำนวน : <input className={styles.input_price} type='number'></input><br />
-                            <div style={{display: "flex", marginTop: "10px"}}>
-                                <span style={{marginRight: "10px"}}>พันธุ์เรียน :</span>
+
+                            <div style={{ display: "flex", marginTop: "10px" }}>
+                                <span style={{ marginRight: "10px" }}>พันธุ์เรียน :</span>
                                 <Form.Select onChange={(e) => setIdSpecies(e.target.value)} className={styles.setting_select}>
                                     <option>เลือกสายพันธุ์</option>
                                     {species && species?.map(({ id, attributes }) => (
@@ -91,17 +124,17 @@ const PostGarden = () => {
 
                         <div className={styles.inside_box3}>
                             <div className={styles.text4}>
-                                <Form.Control 
-                                    as="textarea" 
-                                    rows={3} 
-                                    style={{borderStyle: "hidden"}}
+                                <Form.Control
+                                    as="textarea"
+                                    rows={3}
+                                    style={{ borderStyle: "hidden" }}
                                     placeholder='รายละเอียด : '
                                     onChange={(e) => setDetail(e.target.value)}
                                 />
                             </div>
                         </div>
 
-                        <button className={styles.button_con}>
+                        <button className={styles.button_con} onClick={handleSubmit}>
                             เพิ่มโพสการขาย
                         </button>
                     </div>

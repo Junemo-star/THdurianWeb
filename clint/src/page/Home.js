@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Container, Carousel, Card, Image, Col, Row } from 'react-bootstrap';
+import { Carousel, Card, Image } from 'react-bootstrap';
 import styles from '../css/CssHome.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import NavbarHead from '../componet/Navbar';
@@ -8,25 +8,37 @@ import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
+import Modaldurian from '../componet/Modal';
+
 
 const PUBLIC_URL = "http://localhost:1337/api/public";
-
 
 const HomeApp = () => {
     const { userRole } = useAuth();
     const windowWidth = useWindowWidth();
+    const navigate = useNavigate()
 
     const [product, setProduct] = useState([])
+    const [showModal, setShowModal] = useState(false);
+    
+    const handleCloseModal = () => setShowModal(false);
 
-    const idpost = (id) => {
-        console.log(id)
+    const idpost = (durian) => {
+        console.log(durian.length)
+        console.log(durian)
+        if (durian.length > 1) {
+            const latest = durian[durian.length - 1]
+            navigate(`/Detail/${durian}/${latest}`)
+        }else {
+            navigate(`/Detail/${durian}/${durian}`)
+        }
     }
 
     const fetchItems = async () => {
         try {
             const response = await axios.get(PUBLIC_URL);
             const data = response.data
-            // console.log(data)
+            console.log(data)
             const products = data.map((item) => {
                 let url = "2.jpg"
                 if (item.Picture) {
@@ -34,7 +46,7 @@ const HomeApp = () => {
                     // console.log(item.Picture.url)
                 }
                 return (
-                    <Link onClick={() => idpost(item.CategoryID)}>
+                    <Link onClick={() => idpost(item.Id)}>
                         <div className={styles.products_item}>
                             <div className={styles.products_img}>
                                 <div className={styles.products_garden}>
@@ -224,6 +236,8 @@ const HomeApp = () => {
             <div className={styles.products_con}>
                 {product}
             </div>
+
+            {/* <Modaldurian durian={durianArr} show={showModal} handleClose={handleCloseModal}/> */}
 
             {windowWidth < 450 && <Footers />}
         </div>
