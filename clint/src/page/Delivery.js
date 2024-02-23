@@ -1,30 +1,25 @@
 import React, { useEffect, useState } from "react";
 import styles from "../css/CssDelivery.module.css";
 import Footers from "../componet/Footerbar";
+import { useAuth } from '../componet/AuthContext';
 import axios from "axios";
 
 function Delivery() {
   const [orders, setOrders] = useState([]);
+  const { token } = useAuth(); // Get the JWT token from the AuthContext
+
+  const fetchData = async () => {
+    try {
+      const ordersResponse = await axios.get("http://localhost:1337/api/placed-orders", token)
+      setOrders(ordersResponse.data.data)
+    } catch (error) {
+      console.error("Error fetching data: ", error);
+    }
+  };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const token = "your_jwt_token";
-
-        const ordersResponse = await axios.get("http://localhost:1337/api/placed-orders", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        setOrders(ordersResponse.data.data);
-      } catch (error) {
-        console.error("Error fetching data: ", error);
-      }
-    };
-
     fetchData();
-  }, []);
+  }, []); // Include authToken in the dependency array
 
   return (
     <div className={styles.set_pos}>
