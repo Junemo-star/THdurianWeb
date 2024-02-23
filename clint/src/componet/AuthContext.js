@@ -22,6 +22,9 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('userRole', role);
   };
 
+  const duriann = []
+  const Arrdurian = JSON.stringify(duriann);
+  localStorage.setItem('cart', Arrdurian);
 
   // ตรวจสอบ Local Storage เมื่อ App โหลด
   useEffect(() => {
