@@ -7,6 +7,9 @@
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ strapi }) => ({
+    async customPostPic(ctx) {
+
+    },
     async create(ctx) {
         //Function called when farmer want to post new product items
         //console.log(ctx.state.user);
@@ -15,11 +18,12 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         if (ctx.state.user.role.name != "Farmer") {
             return ctx.body = { response: "Invalid Role" }
         }
-        const data = ctx.request["body"].data;
+        const data = ctx.request["body"];
         console.log(data);
 
-        const findCatagoryById = await strapi.entityService.findOne("api::category.category", data.category)
+        const findCatagoryById = await strapi.entityService.findOne("api::category.category", data.categoryID)
         console.log(findCatagoryById);
+        const pictureObj = await strapi.entityService.findOne("plugin::upload.file",data.pictureId)
         const postEntry = await strapi.entityService.create('api::farm-post-new.farm-post-new', {
             data: {
                 amount: data.amount,
@@ -29,7 +33,9 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 category: findCatagoryById,
                 note: data.note,
                 descriptions: data.descriptions,
-                publishedAt: new Date()
+                publishedAt: new Date(),
+                picture: pictureObj,
+                status: "Verified", //Change to pending
             },
         });
         return postEntry
@@ -58,10 +64,28 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
     async publicGet(ctx) {
         console.log("PublicGet")
 
-        let entries = await strapi.entityService.findMany("api::farm-post-new.farm-post-new", {
-            populate: "*"
+        // let entriesA = await strapi.entityService.findMany("api::farm-post-new.farm-post-new", {
+        //     populate: "*",
+        //     filters: {
 
+        //     }
+
+        // });
+        // console.log(entriesA);
+        let entries = await strapi.db.query('api::farm-post-new.farm-post-new').findMany({
+            where: {
+                status: {
+                    $eq: 'Verified'
+                },
+            },
+            populate: {
+                owner: true,
+                category: true,
+                picture: true,
+                orders: true
+            },
         });
+
         //console.log(entries);
         //console.log("Farm" + " : " + "category" + " : " + "amount" + " : " + "price");
         for (let post of entries) {
@@ -82,7 +106,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Picture: post.picture
             }
         })
-        console.log(newData);
+        //console.log(newData);
         // Function to combine rows
 
         const combinedData = [];
@@ -121,13 +145,13 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
 
     async publicDetail(ctx) {
         console.log("PublicDetail")
-        const data = ctx.request["body"].data;
-        console.log(data.Id);
+        const data = ctx.request["body"];
+        //console.log(data.Id);
 
         const combinedData = [];
         for (const ID of data.Id) {
             const findPost = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", ID, { populate: "*" })
-            console.log(findPost)
+            //console.log(findPost)
             const returnData = {
                 id: findPost.id,
                 PostDate: findPost.createdAt,
@@ -139,12 +163,13 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Price: findPost.price,
                 TotalSale: findPost.orders.reduce((acc, curr) => acc + curr.amount, 0), //Total sale
                 Picture: findPost.picture,
+                Description: findPost.descriptions,
                 
             }
             combinedData.push(returnData);
         }
 
-        console.log(combinedData);
+        //console.log(combinedData);
         return combinedData
         return ctx.body = { response: "Public detail" }
     },

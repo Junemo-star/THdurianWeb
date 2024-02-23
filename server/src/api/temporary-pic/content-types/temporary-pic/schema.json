@@ -1,0 +1,22 @@
+{
+  "kind": "collectionType",
+  "collectionName": "temporary_pics",
+  "info": {
+    "singularName": "temporary-pic",
+    "pluralName": "temporary-pics",
+    "displayName": "TemporaryPic"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "picture": {
+      "allowedTypes": [
+        "images"
+      ],
+      "type": "media",
+      "multiple": false
+    }
+  }
+}

@@ -12,7 +12,7 @@ const PostGarden = () => {
     const [success, setSuccess] = useState(false)
 
     const [idSpecies, setIdSpecies] = useState()
-    const [image, setImage] = useState();
+    const [image, setImage] = useState(null);
     const [detail, setDetail] = useState();
     const [note, setNote] = useState()
 
@@ -36,6 +36,7 @@ const PostGarden = () => {
 
     const handleChange = (e) => {
         console.log(e.target.files);
+
         setImage(e.target.files[0])
     }
 
@@ -49,17 +50,37 @@ const PostGarden = () => {
         console.log("image =", image)
         console.log("detail =", detail)
         console.log("note =", note)
+        console.log(image)
+        const formData = new FormData();
+        formData.append('files', image, image.name);
+        console.log(formData)
 
+        const response = await axios.post('http://localhost:1337/api/upload/',
+            formData
+        );
+
+        console.log('File uploaded successfully:', response.data);
+        const pictureId = response.data[0].id
+        console.log(pictureId)
         try {
             let result = await axios.post("http://localhost:1337/api/farm-post-news", {
+
                 note: note,
-                amount: 20,
-                price: 20,
-                category: idSpecies,
+                amount: 30,
+                location: "เลขที่บ้าน 10/999 ซอย. แถวไหน3 ถ.ราชดำเนิน ต.เมือง อ.เมือง จ.เมือง",
+                price: 150,
+                note: null,
                 descriptions: detail,
-                location: "16/4 หมู่ 6 ต.ควนธานี อ.กันตัง จ.ตรัง",
-                owner: 7,
-                picture: image
+                categoryID: idSpecies,
+                pictureId: pictureId
+
+                // amount: 20,
+                // price: 20,
+                // category: idSpecies,
+                // descriptions: detail,
+                // location: "16/4 หมู่ 6 ต.ควนธานี อ.กันตัง จ.ตรัง",
+                // owner: 7,
+
             }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

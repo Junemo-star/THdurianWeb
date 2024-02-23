@@ -16,8 +16,14 @@ const Detail = () => {
 
     const show = async () => {
         try {
-            const response = await axios.get(`http://localhost:1337/api/farm-post-news/${id}?populate[picture]=*&populate[category]=*`, token)
-            setInfomation(response.data.data)
+            //const response = await axios.get(`http://localhost:1337/api/farm-post-news/${id}?populate[picture]=*&populate[category]=*`, token)
+            //setInfomation(response.data.data)
+
+            const result = await axios.post('http://localhost:1337/api/detail', {
+                Id:[ id ]
+            })
+            console.log(result.data[0])
+            setInfomation(result.data[0])
         } catch (err) {
             console.error(err);
         }

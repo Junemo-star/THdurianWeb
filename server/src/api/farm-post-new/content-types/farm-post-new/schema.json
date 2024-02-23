@@ -42,7 +42,8 @@
       "type": "enumeration",
       "enum": [
         "Pending",
-        "Verified"
+        "Verified",
+        "Denied"
       ],
       "default": "Pending"
     },
@@ -60,14 +61,15 @@
       "mappedBy": "farmPost"
     },
     "picture": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
       "allowedTypes": [
         "images",
         "files",
         "videos",
         "audios"
-      ],
-      "type": "media",
-      "multiple": false
+      ]
     }
   }
 }
