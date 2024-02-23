@@ -17,15 +17,17 @@ const HomeApp = () => {
     const { userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const navigate = useNavigate()
-
     const [product, setProduct] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [searchhh, setSearchhh] = useState('ก้านยาว')
     
-    const handleCloseModal = () => setShowModal(false);
+    const handleCloseModal = () => { 
+        setShowModal(false)
+    };
 
     const idpost = (durian) => {
-        console.log(durian.length)
-        console.log(durian)
+        // console.log(durian.length)
+        // console.log(durian)
         if (durian.length > 1) {
             const latest = durian[durian.length - 1]
             navigate(`/Detail/${durian}/${latest}`)
@@ -39,14 +41,20 @@ const HomeApp = () => {
             const response = await axios.get(PUBLIC_URL);
             const data = response.data
             console.log(data)
-            const products = data.map((item) => {
-                let url = "2.jpg"
+            let products;
+
+        if (sessionStorage.getItem("typedurian")) {
+            const choose = sessionStorage.getItem("typedurian");
+            const filterdata = response.data.filter(item => item.Category === choose);
+
+            products = filterdata.map((item) => {
+                let url = "2.jpg";
                 if (item.Picture) {
-                    url = "http://localhost:1337" + item.Picture.url
+                    url = "http://localhost:1337" + item.Picture.url;
                     // console.log(item.Picture.url)
                 }
                 return (
-                    <Link onClick={() => idpost(item.Id)}>
+                    <Link onClick={() => idpost(item.Id)} key={item.Id}>
                         <div className={styles.products_item}>
                             <div className={styles.products_img}>
                                 <div className={styles.products_garden}>
@@ -69,12 +77,85 @@ const HomeApp = () => {
                     </Link>
                 );
             });
-            // console.log(products)
-            setProduct(products)
-        } catch (err) {
-            //console.log(err)
-        } finally { }
+        } else {
+            products = data.map((item) => {
+                let url = "2.jpg";
+                if (item.Picture) {
+                    url = "http://localhost:1337" + item.Picture.url;
+                    // console.log(item.Picture.url)
+                }
+                return (
+                    <Link onClick={() => idpost(item.Id)} key={item.Id}>
+                        <div className={styles.products_item}>
+                            <div className={styles.products_img}>
+                                <div className={styles.products_garden}>
+                                    {item.Category}
+                                </div>
+                                <img src={url} />
+                            </div>
+                            <div className={styles.products_detail_pos}>
+                                <div style={{ fontSize: "12px" }}>
+                                    {item.Farmer}
+                                </div>
+                                <div style={{ fontSize: "15px" }}>
+                                    ราคา {item.Price} บาท/กก.
+                                </div>
+                                <div style={{ fontSize: "10px" }}>
+                                    ขายไปแล้ว {item.TotalSale} กก
+                                </div>
+                            </div>
+                        </div>
+                    </Link>
+                );
+            });
+        }
+
+        setProduct(products);
+    } catch (err) {
+        //console.log(err)
+    } finally { }
+        //     if (sessionStorage.getItem("typedurian")){
+        //         const choose = sessionStorage.getItem("typedurian")
+        //         const filterdata = response.data.filter(item => item.Category === choose)
+        //     }
+
+        //     const products = data.map((item) => {
+        //         let url = "2.jpg"
+        //         if (item.Picture) {
+        //             url = "http://localhost:1337" + item.Picture.url
+        //             // console.log(item.Picture.url)
+        //         }
+        //         return (
+        //             <Link onClick={() => idpost(item.Id)}>
+        //                 <div className={styles.products_item}>
+        //                     <div className={styles.products_img}>
+        //                         <div className={styles.products_garden}>
+        //                             {item.Category}
+        //                         </div>
+        //                         <img src={url} />
+        //                     </div>
+        //                     <div className={styles.products_detail_pos}>
+        //                         <div style={{ fontSize: "12px" }}>
+        //                             {item.Farmer}
+        //                         </div>
+        //                         <div style={{ fontSize: "15px" }}>
+        //                             ราคา {item.Price} บาท/กก.
+        //                         </div>
+        //                         <div style={{ fontSize: "10px" }}>
+        //                             ขายไปแล้ว {item.TotalSale} กก
+        //                         </div>
+        //                     </div>
+        //                 </div>
+        //             </Link>
+        //         );
+        //     });
+        //     // console.log(products)
+        //     setProduct(products)
+        // } catch (err) {
+        //     //console.log(err)
+        // } finally { }
     }
+
     useEffect(() => {
         fetchItems();
     }, [])
@@ -237,7 +318,7 @@ const HomeApp = () => {
                 {product}
             </div>
 
-            {/* <Modaldurian durian={durianArr} show={showModal} handleClose={handleCloseModal}/> */}
+            <Modaldurian show={showModal} handleClose={() => handleCloseModal()}/>
 
             {windowWidth < 450 && <Footers />}
         </div>

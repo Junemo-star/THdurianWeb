@@ -15,8 +15,6 @@ const Detail = () => {
     const [infomation, setInfomation] = useState()
     const [num, setNum] = useState(0);
 
-
-
     const minus = () => {
         if (num > 0) {
             setNum(prevNum => prevNum - 1);

@@ -3,4 +3,19 @@
     text-align: left;
     margin-bottom: 10px;
     width: 100%;
+    width: fit-content;
+    margin-right: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: white;
+    background-color: #B0BF07;
+    border-style: hidden;
+    font-size: 20px;
+}
+
+.search_box {
+    background-color: #B0BF07;
+    color: white;
 }
