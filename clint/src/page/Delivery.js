@@ -2,11 +2,12 @@ import React, { useEffect, useState } from "react";
 import styles from "../css/CssDelivery.module.css";
 import Footers from "../componet/Footerbar";
 import { useAuth } from '../componet/AuthContext';
+import Stack from 'react-bootstrap/Stack';
 import axios from "axios";
 
-function Delivery() {
+const Delivery = () => {
   const [orders, setOrders] = useState([]);
-  const { token } = useAuth(); // Get the JWT token from the AuthContext
+  const { token } = useAuth(); 
 
   const fetchData = async () => {
     try {
@@ -19,7 +20,7 @@ function Delivery() {
 
   useEffect(() => {
     fetchData();
-  }, []); // Include authToken in the dependency array
+  }, []); 
 
   return (
     <div className={styles.set_pos}>
@@ -36,7 +37,19 @@ function Delivery() {
                 ราคา : {order.attributes.price}
                 <br />
                 สถานะ : {order.attributes.status}
+                <br/>
+                <Stack gap={2}>
+                <div>{order.attributes.status === 'Packaging' ? <img src="packing.png" className={styles.userimg} style={{ layout: "fill" }} /> : null} </div>
+                {order.attributes.status === 'Complete' ? (
+                  <>
+                  <img src="packing.png" className={styles.userimg} style={{ layout: "fill" }} />
+                  <img src="car.png" className={styles.userimg} style={{ layout: "fill" }} />
+                  </>
+                ) : null}
+                  
+                </Stack>
               </div>
+              
             </div>
           ))}
         </div>
