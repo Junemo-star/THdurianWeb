@@ -28,28 +28,41 @@ const Delivery = () => {
         <div className={styles.text}>
           สถานะการจัดส่งสินค้า
           {orders.map((order) => (
-            <div key={order.id} className={styles.inside_box}>
-              <div className={styles.text2}>
-                สวนนายดำ
-                <br />
-                จำนวน : {order.attributes.amount}
-                <br />
-                ราคา : {order.attributes.price}
-                <br />
-                สถานะ : {order.attributes.status}
-                <br/>
-                <Stack gap={2}>
-                <div>{order.attributes.status === 'Packaging' ? <img src="packing.png" className={styles.userimg} style={{ layout: "fill" }} /> : null} </div>
-                {order.attributes.status === 'Complete' ? (
-                  <>
-                  <img src="packing.png" className={styles.userimg} style={{ layout: "fill" }} />
-                  <img src="car.png" className={styles.userimg} style={{ layout: "fill" }} />
-                  </>
-                ) : null}
-                  
-                </Stack>
+            <div className={styles.inside_box} key={order.id}> {/* Add the unique key here */}
+              <div className="row">
+                <div className="col-md-6">
+                  <div className={styles.text2}>
+                    <p>สวนนายดำ</p>
+                    <p>จำนวน : {order.attributes.amount}</p>
+                    <p>ราคา : {order.attributes.price}</p>
+                    <p>สถานะ : {order.attributes.status}</p>
+                  </div>
+                </div>
+                <div className="col-md-6">
+                <Stack gap={2} >
+                  {order.attributes.status === 'Packaging' ? (
+                    <Stack direction="horizontal" gap={2}>
+                      <div><img src="packing.png" className={styles.packimg} style={{ layout: "fill" }} /></div>
+                      <div className={styles.text2}>
+                        <p>กำลังจัดเตรียมสินค้า</p>
+                      </div>
+                    </Stack>
+                  ) : null}
+                  {order.attributes.status === 'Complete' ? (
+                    <Stack direction="horizontal" gap={2}>
+                      <div>
+                      <img src="packing.png" className={styles.packimg} style={{ layout: "fill" }} />
+                      <img src="car.png" className={styles.packimg} style={{ layout: "fill" }} />
+                      </div>
+                      <div className={styles.text2}>
+                        <p>กำลังจัดเตรียมสินค้า</p>
+                        <p>จัดส่งสินค้าเรียบร้อยแล้ว</p>
+                      </div>
+                    </Stack>
+  ) : null}
+</Stack>
+                </div>
               </div>
-              
             </div>
           ))}
         </div>

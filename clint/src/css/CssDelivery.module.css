@@ -22,6 +22,15 @@
     align-items: center;
     flex-direction: column;
 }
+.infoinside_box {
+    width: 312px;
+    height: 386px;
+    border-radius: 25px;
+    margin-top: 20px;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
 .pos {
     display: flex;
     flex-direction: column;
@@ -39,8 +48,8 @@
     font-size: 25px;
 }
 .packimg {
-    width: 110px;
-    height: 110px;
+    width: 90px;
+    height: 90px;
     background-color: white;
     border-radius: 50%;
     position: relative;
