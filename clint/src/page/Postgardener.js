@@ -15,6 +15,9 @@ const PostGarden = () => {
     const [image, setImage] = useState(null);
     const [detail, setDetail] = useState();
     const [note, setNote] = useState()
+    const [location, setLocation] = useState()
+    const [amount, setAmount] = useState()
+    const [price, setPrice] = useState()
 
     const navigate = useNavigate()
 
@@ -46,11 +49,11 @@ const PostGarden = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log("idSpecies =", idSpecies)
-        console.log("image =", image)
-        console.log("detail =", detail)
-        console.log("note =", note)
-        console.log(image)
+        // console.log("idSpecies =", idSpecies)
+        // console.log("image =", image)
+        // console.log("detail =", detail)
+        // console.log("note =", note)
+        // console.log(image)
         const formData = new FormData();
         formData.append('files', image, image.name);
         console.log(formData)
@@ -66,21 +69,12 @@ const PostGarden = () => {
             let result = await axios.post("http://localhost:1337/api/farm-post-news", {
 
                 note: note,
-                amount: 30,
-                location: "เลขที่บ้าน 10/999 ซอย. แถวไหน3 ถ.ราชดำเนิน ต.เมือง อ.เมือง จ.เมือง",
-                price: 150,
-                note: null,
+                amount: amount,
+                location: location,
+                price: price,
                 descriptions: detail,
                 categoryID: idSpecies,
                 pictureId: pictureId
-
-                // amount: 20,
-                // price: 20,
-                // category: idSpecies,
-                // descriptions: detail,
-                // location: "16/4 หมู่ 6 ต.ควนธานี อ.กันตัง จ.ตรัง",
-                // owner: 7,
-
             }, {
                 headers: {
                     'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -88,6 +82,8 @@ const PostGarden = () => {
                 }
             });
             setSuccess(true)
+            console.log("success");
+            window.location.reload()
         } catch (e) {
             console.log(e);
         }
@@ -101,18 +97,6 @@ const PostGarden = () => {
                 </div>
 
                 <div className={styles.pos}>
-                    <div className={styles.inside_box}>
-                        <div className={styles.pos_info}>
-                            <div className={styles.userimg}>
-                                <img src='user.png' className={styles.img} />
-                            </div>
-                            <div className={styles.text2}>
-                                ชื่อ : คิม คิมจองจิ <br />
-                                ชื่อสวน : สวนนายดำ
-                            </div>
-                        </div>
-                    </div>
-
                     <div className={styles.inside_box2}>
                         <div className={styles.upload_img}>
                             <Form.Control
@@ -123,14 +107,29 @@ const PostGarden = () => {
                                 onChange={(e) => setNote(e.target.value)}
                             />
                         </div>
+                        <div className={styles.upload_img}>
+                            <Form.Control
+                                as="textarea"
+                                rows={2}
+                                style={{ borderStyle: "hidden" }}
+                                placeholder='location : '
+                                onChange={(e) => setLocation(e.target.value)}
+                            />
+                        </div>
 
                         <input type="file" accept="image/*" name='file' onChange={handleChange} className={styles.button_input} />
 
                         <div className={styles.text3}>
 
-                            ราคา : <input className={styles.input_price} type='number' style={{ marginRight: '10px' }}></input>
+                            ราคา : <input 
+                                        className={styles.input_price} 
+                                        type='number' style={{ marginRight: '10px' }} 
+                                        onChange={(e) => setPrice(e.target.value)} />
 
-                            จำนวน : <input className={styles.input_price} type='number'></input><br />
+                            จำนวน : <input 
+                                        className={styles.input_price} 
+                                        type='number' 
+                                        onChange={(e) => setAmount(e.target.value)} /><br />
 
                             <div style={{ display: "flex", marginTop: "10px" }}>
                                 <span style={{ marginRight: "10px" }}>พันธุ์เรียน :</span>

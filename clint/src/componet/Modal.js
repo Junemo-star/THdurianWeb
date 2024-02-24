@@ -53,10 +53,10 @@ const Modaldurian = ( {show, handleClose} ) => {
                 </Modal.Body>
 
                 <Modal.Footer>
-                    <button onClick={handleClose}>
+                    <button className={styles.button_modal} onClick={handleClose}>
                         Close
                     </button>
-                    <button onClick={() => reset()}>
+                    <button className={styles.button_modal} onClick={() => reset()}>
                         ล้างการค้นหา
                     </button>
                 </Modal.Footer>

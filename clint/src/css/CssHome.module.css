@@ -100,6 +100,7 @@
 .products_item {
     background-color: #568203;
     border-radius: 5px;
+    height: 100%;
 }
 
 .products_garden {
@@ -129,9 +130,15 @@
     padding: 10px;
     color: white;
     font-weight: bold;
+    width: 188px;
+    height: 75.5px;
 }
 
 @media (min-width: 450px) {
+    .Carousel_pos{
+        width: 800px;
+    }
+
     .Carousel_img {
         display: block;
         width: 100%;
@@ -166,9 +173,10 @@
         grid-gap: 1rem;
         margin: 20px;
         margin-bottom: 120px;
-        background-color: #D4EFCF;
-        padding-bottom: 20px;
+        background-color: #C7F3BF;
+        /* padding-bottom: 20px; */
         width: 800px;
+        padding: 20px;
     }
 
     .position_all {

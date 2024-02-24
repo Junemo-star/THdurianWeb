@@ -22,20 +22,32 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem('userRole', role);
   };
 
-  const duriann = []
-  const Arrdurian = JSON.stringify(duriann);
-  localStorage.setItem('cart', Arrdurian);
-
   // ตรวจสอบ Local Storage เมื่อ App โหลด
   useEffect(() => {
     const storedRole = localStorage.getItem('userRole');
     if (storedRole) {
       setUserRole(storedRole);
     }
+    if (localStorage.getItem('cart')) { //ถ้ามีก็ไม่ต้องทำอะไร
+      console.log("eee")
+    } else { //ถ้าใน localStorage.getItem('cart') ไม่มีให้สร้างลิสเปล่าขึ้นมา (ทำแบบนี้เพื่อกันเวลาเลือกของใส่ cart แล้วรีเฟรชหน้าจอแล้วของใน cart หาย)
+      const duriann = []
+      const Arrdurian = JSON.stringify(duriann);
+      localStorage.setItem('cart', Arrdurian)
+    }
   }, []);
 
+  const Addcart = (addcart) => {
+    const iddurian = addcart
+    const existing = localStorage.getItem('cart');
+    const existingDataArray = JSON.parse(existing);
+    existingDataArray.push(iddurian)
+    const updatedDataAsString = JSON.stringify(existingDataArray);
+    localStorage.setItem('cart', updatedDataAsString);
+  }
+
   return (
-    <AuthContext.Provider value={{ userRole, setRole, token}}>
+    <AuthContext.Provider value={{ userRole, setRole, token, Addcart}}>
       {children}
     </AuthContext.Provider>
   );

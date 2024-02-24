@@ -1,19 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import styles from '../css/CssDetail.module.css'
-import Footers from '../componet/Footerbar';
-import useWindowWidth from '../componet/Check_size';
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { Form } from 'react-bootstrap';
 import { useAuth } from '../componet/AuthContext';
+import styles from '../css/CssDetail.module.css'
 import axios from 'axios';
+import useWindowWidth from '../componet/Check_size';
+import Footers from '../componet/Footerbar';
 
 
 const Detail = () => {
     const windowWidth = useWindowWidth();
     const { id, durian } = useParams()
-    const { token } = useAuth()
-
+    const { token, Addcart } = useAuth()
+    const navigate = useNavigate()
     const [infomation, setInfomation] = useState()
+    const [datalist, setDatalist] = useState([])
     const [num, setNum] = useState(0);
+
+    const listdurian = durian.split(",")
 
     const minus = () => {
         if (num > 0) {
@@ -30,8 +34,19 @@ const Detail = () => {
             const result = await axios.post('http://localhost:1337/api/detail', {
                 Id: [id]
             })
-            console.log(result.data[0])
-            setInfomation(result.data[0])
+            const requests = listdurian.map((item) => {
+                return axios.post('http://localhost:1337/api/detail', {
+                    Id: [item]
+                });
+            });
+            const responses = await Promise.all(requests);
+            const dataListFromResponses = responses.map(res => res.data[0]);
+            setDatalist(dataListFromResponses);
+
+            console.log("DatalistDurian", dataListFromResponses);
+            console.log(id);
+            console.log(result.data[0]);
+            setInfomation(result.data[0]);
         } catch (err) {
             console.error(err);
         }
@@ -39,20 +54,26 @@ const Detail = () => {
 
     const add = async () => {
         try {
-            const iddurian = [id, num]
-            const existing = localStorage.getItem('cart');
-            const existingDataArray = JSON.parse(existing);
-            existingDataArray.push(iddurian)
-            const updatedDataAsString = JSON.stringify(existingDataArray);
-            localStorage.setItem('cart', updatedDataAsString);
+            Addcart([id, num])
+            // const iddurian = [id, num]
+            // const existing = localStorage.getItem('cart');
+            // const existingDataArray = JSON.parse(existing);
+            // existingDataArray.push(iddurian)
+            // const updatedDataAsString = JSON.stringify(existingDataArray);
+            // localStorage.setItem('cart', updatedDataAsString);
             // console.log(existi   ngDataAsString)
             // localStorage.setItem('cart', Arrdurian);
             // const existingDataAsString = localStorage.getItem('cart');
             // console.log(existingDataAsString)
-
         } catch (err) {
             console.error(err);
         }
+    }
+
+    const Change = (id) => {
+        console.log(id)
+        navigate(`/Detail/${durian}/${id}`)
+        window.location.reload();
     }
 
     useEffect(() => {
@@ -61,8 +82,6 @@ const Detail = () => {
 
     return (
         <div className={styles.set_pos}>
-            {console.log(infomation)}
-
             {infomation && (
                 <div className={styles.box}>
                     {infomation.Picture ? (
@@ -100,6 +119,23 @@ const Detail = () => {
                             </div>
                         </div>
                     </div>
+                    <div className={styles.box_date}>
+                        วันที่วางจำหน่าย
+                    </div>
+                    <Form.Select className={styles.size_select} onChange={(event) => Change(event.target.value)}>
+                        {datalist && datalist.slice().reverse().map((item) => (
+                            <option key={item.id} value={item.id}>
+                                {new Date(item.PostDate).toLocaleString("th-TH", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    hour12: false,
+                                })}
+                            </option>
+                        ))}
+                    </Form.Select>
                 </div>
             )}
 

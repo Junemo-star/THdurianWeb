@@ -44,13 +44,13 @@ const LoginApp = () => {
 
             //เช็ค role
             result = await axios.get('http://localhost:1337/api/users/me?populate=role', config)
-            
+
             if (result.data.role) {
-                
+
                 localStorage.setItem('userRole', result.data.role.name)
 
                 setRole(localStorage.getItem('userRole'));
-                
+
                 if (result.data.role.name === 'Customer') {
                     navigate('/');
                     toast.success('Successfully toasted!')
@@ -76,49 +76,52 @@ const LoginApp = () => {
     }
 
     return (
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
-            <Toaster position="top-center" reverseOrder={false} />
-            
-            <div className={styles.pos_user}>
-                <Image src="user.png" className={styles.userimg} style={{layout: "fill"}}/>
-            </div>
-            
-            <Form onSubmit={handleSubmit} className={styles.Formlogin}>
+        <div>
+            {windowWidth > 450 && <NavbarHead />}
+            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
+                <Toaster position="top-center" reverseOrder={false} />
 
-                <div style={{color: "white", fontSize: "60px"}}>
-                    Login
+                <div className={styles.pos_user}>
+                    <Image src="user.png" className={styles.userimg} style={{ layout: "fill" }} />
                 </div>
 
-                <div style={{display: "flex", alignItems: "center", flexDirection: "column", margin: "10px"}}>
+                <Form onSubmit={handleSubmit} className={styles.Formlogin}>
+
+                    <div style={{ color: "white", fontSize: "60px" }}>
+                        Login
+                    </div>
+
+                    <div style={{ display: "flex", alignItems: "center", flexDirection: "column", margin: "10px" }}>
+                        <div>
+                            <Form.Control
+                                id="username"
+                                placeholder="username"
+                                style={{ borderRadius: "25px", width: "282px", height: "44", padding: "8px " }}
+                                type='text'
+                                onChange={(e) => setUsername(e.target.value)}
+                            />
+                        </div>
+                        <div style={{ marginTop: "10px" }}>
+                            <Form.Control
+                                id="password"
+                                placeholder="password"
+                                onChange={(e) => setPassword(e.target.value)}
+                                style={{ borderRadius: "25px", width: "282px", height: "44", padding: "8px " }}
+                                type='password'
+                            />
+                        </div>
+                    </div>
+
                     <div>
-                        <Form.Control 
-                            id="username" 
-                            placeholder="username" 
-                            style={{borderRadius: "25px", width: "282px", height: "44", padding: "8px "}}
-                            type='text'
-                            onChange={(e) => setUsername(e.target.value)}
-                        />
+                        <button className={styles.buttonlogin_re_lo} style={{ marginRight: "20px" }}>submit</button>
+                        <button className={styles.buttonlogin_re_lo} onClick={() => Regis()}>register</button>
                     </div>
-                    <div style={{marginTop: "10px"}}>
-                        <Form.Control 
-                            id="password" 
-                            placeholder="password" 
-                            onChange={(e) => setPassword(e.target.value)} 
-                            style={{borderRadius: "25px", width: "282px", height: "44", padding: "8px "}}
-                            type='password'
-                        />
-                    </div>
-                </div>
 
-                <div>
-                    <button className={styles.buttonlogin_re_lo} style={{marginRight: "20px"}}>submit</button>
-                    <button className={styles.buttonlogin_re_lo} onClick={() => Regis()}>register</button>
-                </div>
+                </Form>
 
-            </Form>
+                {windowWidth < 450 && <Footers />}
 
-            {windowWidth < 450 && <Footers />}
-
+            </div>
         </div>
     )
 }

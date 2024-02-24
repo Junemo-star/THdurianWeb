@@ -6,7 +6,6 @@ import NavbarHead from '../componet/Navbar';
 import Footers from '../componet/Footerbar';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
-import toast, { Toaster } from 'react-hot-toast';
 import axios from 'axios';
 import Modaldurian from '../componet/Modal';
 
@@ -20,8 +19,8 @@ const HomeApp = () => {
     const [product, setProduct] = useState([])
     const [showModal, setShowModal] = useState(false);
     const [searchhh, setSearchhh] = useState('ก้านยาว')
-    
-    const handleCloseModal = () => { 
+
+    const handleCloseModal = () => {
         setShowModal(false)
     };
 
@@ -31,7 +30,7 @@ const HomeApp = () => {
         if (durian.length > 1) {
             const latest = durian[durian.length - 1]
             navigate(`/Detail/${durian}/${latest}`)
-        }else {
+        } else {
             navigate(`/Detail/${durian}/${durian}`)
         }
     }
@@ -42,118 +41,82 @@ const HomeApp = () => {
             const data = response.data
             console.log(data)
             let products;
+            if (sessionStorage.getItem("typedurian")) {
+                const choose = sessionStorage.getItem("typedurian");
+                const filterdata = response.data.filter(item => item.Category === choose);
 
-        if (sessionStorage.getItem("typedurian")) {
-            const choose = sessionStorage.getItem("typedurian");
-            const filterdata = response.data.filter(item => item.Category === choose);
-
-            products = filterdata.map((item) => {
-                let url = "2.jpg";
-                if (item.Picture) {
-                    url = "http://localhost:1337" + item.Picture.url;
-                    // console.log(item.Picture.url)
-                }
-                return (
-                    <Link onClick={() => idpost(item.Id)} key={item.Id}>
-                        <div className={styles.products_item}>
-                            <div className={styles.products_img}>
-                                <div className={styles.products_garden}>
-                                    {item.Category}
+                products = filterdata.map((item) => {
+                    let url = "2.jpg";
+                    if (item.Picture) {
+                        url = "http://localhost:1337" + item.Picture.url;
+                        // console.log(item.Picture.url)
+                    }
+                    return (
+                        <Link onClick={() => idpost(item.Id)} key={item.Id}>
+                            <div className={styles.products_item}>
+                                <div className={styles.products_img}>
+                                    <div className={styles.products_garden}>
+                                        {item.Category}
+                                    </div>
+                                    <div style={{ width: "188px", height: "195px" }}>
+                                        <img src={url} style={{ height: "100%" }} />
+                                    </div>
                                 </div>
-                                <img src={url} />
-                            </div>
-                            <div className={styles.products_detail_pos}>
-                                <div style={{ fontSize: "12px" }}>
-                                    {item.Farmer}
-                                </div>
-                                <div style={{ fontSize: "15px" }}>
-                                    ราคา {item.Price} บาท/กก.
-                                </div>
-                                <div style={{ fontSize: "10px" }}>
-                                    ขายไปแล้ว {item.TotalSale} กก
-                                </div>
-                            </div>
-                        </div>
-                    </Link>
-                );
-            });
-        } else {
-            products = data.map((item) => {
-                let url = "2.jpg";
-                if (item.Picture) {
-                    url = "http://localhost:1337" + item.Picture.url;
-                    // console.log(item.Picture.url)
-                }
-                return (
-                    <Link onClick={() => idpost(item.Id)} key={item.Id}>
-                        <div className={styles.products_item}>
-                            <div className={styles.products_img}>
-                                <div className={styles.products_garden}>
-                                    {item.Category}
-                                </div>
-                                <img src={url} />
-                            </div>
-                            <div className={styles.products_detail_pos}>
-                                <div style={{ fontSize: "12px" }}>
-                                    {item.Farmer}
-                                </div>
-                                <div style={{ fontSize: "15px" }}>
-                                    ราคา {item.Price} บาท/กก.
-                                </div>
-                                <div style={{ fontSize: "10px" }}>
-                                    ขายไปแล้ว {item.TotalSale} กก
+                                <div className={styles.products_detail_pos}>
+                                    <div style={{ fontSize: "12px" }}>
+                                        {item.Farmer}
+                                    </div>
+                                    <div style={{ fontSize: "15px" }}>
+                                        ราคา {item.Price} บาท/กก.
+                                    </div>
+                                    <div style={{ fontSize: "10px" }}>
+                                        ขายไปแล้ว {item.TotalSale} กก
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    </Link>
-                );
-            });
-        }
+                        </Link>
+                    );
+                });
+            } else {
+                products = data.map((item) => {
+                    let url = "2.jpg";
+                    if (item.Picture) {
+                        url = "http://localhost:1337" + item.Picture.url;
+                        // console.log(item.Picture.url)
+                    }
+                    return (
+                        <Link onClick={() => idpost(item.Id)} key={item.Id}>
+                            <div className={styles.products_item}>
+                                <div className={styles.products_img}>
+                                    <div className={styles.products_garden}>
+                                        {item.Category}
+                                    </div>
+                                    <div style={{ width: "188px", height: "195px" }}>
+                                        <img src={url} style={{ height: "100%" }} />
+                                    </div>
+                                </div>
+                                <div className={styles.products_detail_pos}>
+                                    <div style={{ fontSize: "12px" }}>
+                                        {item.Farmer}
+                                    </div>
+                                    <div style={{ fontSize: "15px" }}>
+                                        ราคา {item.Price} บาท/กก.
+                                    </div>
+                                    <div style={{ fontSize: "10px" }}>
+                                        ขายไปแล้ว {item.TotalSale} กก
+                                    </div>
+                                </div>
+                            </div>
+                        </Link>
+                    );
+                });
+            }
 
-        setProduct(products);
-    } catch (err) {
-        //console.log(err)
-    } finally { }
-        //     if (sessionStorage.getItem("typedurian")){
-        //         const choose = sessionStorage.getItem("typedurian")
-        //         const filterdata = response.data.filter(item => item.Category === choose)
-        //     }
+            setProduct(products);
+        } catch (err) {
+            //console.log(err)
+        } finally { }
 
-        //     const products = data.map((item) => {
-        //         let url = "2.jpg"
-        //         if (item.Picture) {
-        //             url = "http://localhost:1337" + item.Picture.url
-        //             // console.log(item.Picture.url)
-        //         }
-        //         return (
-        //             <Link onClick={() => idpost(item.Id)}>
-        //                 <div className={styles.products_item}>
-        //                     <div className={styles.products_img}>
-        //                         <div className={styles.products_garden}>
-        //                             {item.Category}
-        //                         </div>
-        //                         <img src={url} />
-        //                     </div>
-        //                     <div className={styles.products_detail_pos}>
-        //                         <div style={{ fontSize: "12px" }}>
-        //                             {item.Farmer}
-        //                         </div>
-        //                         <div style={{ fontSize: "15px" }}>
-        //                             ราคา {item.Price} บาท/กก.
-        //                         </div>
-        //                         <div style={{ fontSize: "10px" }}>
-        //                             ขายไปแล้ว {item.TotalSale} กก
-        //                         </div>
-        //                     </div>
-        //                 </div>
-        //             </Link>
-        //         );
-        //     });
-        //     // console.log(products)
-        //     setProduct(products)
-        // } catch (err) {
-        //     //console.log(err)
-        // } finally { }
     }
 
     useEffect(() => {
@@ -162,6 +125,7 @@ const HomeApp = () => {
 
     return (
         <div className={styles.position_all}>
+            {windowWidth > 450 && <NavbarHead />}
             <div className={styles.headweb_pos}>
                 <div className={styles.headweb} style={{ marginTop: "65px" }}>
                     <h2>รายการสินค้าประจำวัน</h2>
@@ -171,7 +135,9 @@ const HomeApp = () => {
             <Carousel style={{ top: "13px" }}>
                 {/* หน้าแรกของการหมุน */}
                 <Carousel.Item>
-                    <img className={styles.Carousel_img} src="promo.png" />
+                    <div className={styles.Carousel_pos}>
+                        <img className={styles.Carousel_img} src="promo.png" />
+                    </div>
 
                     <Carousel.Caption style={{ padding: "0px", display: "flex", justifyContent: "center" }}>
 
@@ -242,7 +208,9 @@ const HomeApp = () => {
 
                 {/* หน้าสองของการหมุน */}
                 <Carousel.Item>
-                    <img className={styles.Carousel_img} src="promo.png" />
+                    <div className={styles.Carousel_pos}>
+                        <img className={styles.Carousel_img} src="promo.png" />
+                    </div>
 
                     <Carousel.Caption style={{ padding: "0px", display: "flex", justifyContent: "center" }}>
 
@@ -318,7 +286,7 @@ const HomeApp = () => {
                 {product}
             </div>
 
-            <Modaldurian show={showModal} handleClose={() => handleCloseModal()}/>
+            <Modaldurian show={showModal} handleClose={() => handleCloseModal()} />
 
             {windowWidth < 450 && <Footers />}
         </div>
