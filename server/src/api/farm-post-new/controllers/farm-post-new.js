@@ -7,9 +7,7 @@
 const { createCoreController } = require('@strapi/strapi').factories;
 
 module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ strapi }) => ({
-    async customPostPic(ctx) {
 
-    },
     async create(ctx) {
         //Function called when farmer want to post new product items
         //console.log(ctx.state.user);
@@ -35,6 +33,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 descriptions: data.descriptions,
                 publishedAt: new Date(),
                 picture: pictureObj,
+                promotion: false,
                 status: "Verified", //Change to pending
             },
         });
@@ -103,7 +102,8 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Amount: post.amount,
                 Price: post.price,
                 TotalSale: post["Sale"],
-                Picture: post.picture
+                Picture: post.picture,
+                Promotion: post.promotion
             }
         })
         //console.log(newData);
@@ -113,7 +113,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
 
         // Group rows by Name, Type, and Cost
         const groupedData = newData.reduce((acc, row) => {
-            const key = `${row.Farmer}${row.Category}${row.Price}`;
+            const key = `${row.Farmer}${row.Category}${row.Price}${row.Promotion}`;
             acc[key] = acc[key] || {
                 Id: [],
                 Farmer: row.Farmer,
@@ -122,7 +122,8 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Amount: 0,
                 Price: row.Price,
                 TotalSale: 0,
-                Picture: row.Picture
+                Picture: row.Picture,
+                Promotiom: row.Promotion
             };
             acc[key].Id.push(row.id);
             acc[key].Amount += row.Amount;

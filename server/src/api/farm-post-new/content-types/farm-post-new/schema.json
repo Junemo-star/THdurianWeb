@@ -70,6 +70,10 @@
         "videos",
         "audios"
       ]
+    },
+    "promotion": {
+      "type": "boolean",
+      "default": false
     }
   }
 }
