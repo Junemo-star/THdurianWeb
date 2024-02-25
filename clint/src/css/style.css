@@ -5,3 +5,10 @@ body {
 .carousel-control-prev {
     display: none; /* ซ่อนปุ่มเลื่อนด้านซ้าย */
 }
+
+.carousel-control-next {
+    margin: 0;
+    padding: 0;
+    width: 100px;
+    position: absolute;
+}

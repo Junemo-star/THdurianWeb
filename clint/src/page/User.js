@@ -41,11 +41,12 @@ const UserProfile = () => {
         <div>
             {windowWidth > 450 && <NavbarHead />}
             <div className={styles.set_pos}>
-                <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>
-                <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />
+                {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}
+                {windowWidth < 450 && <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />}
+                {/* <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} /> */}
                 {userdata && (
                     <div className={styles.box}>
-
+                        {windowWidth > 450 && <img src="user.png" className={styles.userimg}/>}
                         <div className={styles.box_inside_profile}>
                             <div className={styles.box_inside_text}>
                                 ชื่อ : {userdata.firstname} {userdata.surname}<br />
