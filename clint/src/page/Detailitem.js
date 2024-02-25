@@ -55,16 +55,6 @@ const Detail = () => {
     const add = async () => {
         try {
             Addcart([id, num])
-            // const iddurian = [id, num]
-            // const existing = localStorage.getItem('cart');
-            // const existingDataArray = JSON.parse(existing);
-            // existingDataArray.push(iddurian)
-            // const updatedDataAsString = JSON.stringify(existingDataArray);
-            // localStorage.setItem('cart', updatedDataAsString);
-            // console.log(existi   ngDataAsString)
-            // localStorage.setItem('cart', Arrdurian);
-            // const existingDataAsString = localStorage.getItem('cart');
-            // console.log(existingDataAsString)
         } catch (err) {
             console.error(err);
         }

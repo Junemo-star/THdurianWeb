@@ -59,7 +59,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div style={{ backgroundColor: "#D4EFCF" }}>    {/* เพื่อทำให้ทุกหน้าใน router มีสีตามนี้ */}
+    <div style={{ backgroundColor: "white" }}>    {/* เพื่อทำให้ทุกหน้าใน router มีสีตามนี้ */}
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>
