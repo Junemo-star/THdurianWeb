@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
-import { Card } from 'antd';
-
+import { Row, Col, Card, Button, Form, Input, Flex} from 'antd';
+const { TextArea } = Input;
 const MainContainer = styled.div`
   padding: 0 16px;
 `;
@@ -115,62 +115,37 @@ const StatusPage = () => {
     city: '',
     postalCode: ''
   });
+  const [sumPrice, setSumPrice] = useState(0); 
   const token = localStorage.getItem('jwtToken');
-  const [username, setUsername] = useState('');
 
   useEffect(() => {
-    if (token) {
-      axios
-        .get('http://localhost:1337/api/users/me', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+    if (token && activeStep === 1) {
+      axios.get('http://localhost:1337/api/public')
+        .then(response => {
+          const data = response.data;
+          const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          const ids = cart.map(item => item[0]);
+          const totalPrice = cart.reduce((total, item) => {
+            const [id, amount] = item;
+            const foundItem = data.find(durian => durian.Id.includes(parseInt(id)));
+            if (foundItem && foundItem.Price) {
+              return total + (foundItem.Price * amount);
+            }
+            return total;
+          }, 0);
+          setSumPrice(totalPrice);
+          const filteredData = data.filter(item => {
+            return item.Id.some(id => ids.includes(id.toString()));
+          });
+          setDurianTypes(filteredData);
         })
-        .then((response) => {
-          const { username } = response.data;
-          setUsername(username);
-        })
-        .catch((error) => {
-          console.error('Error fetching user information:', error);
+        .catch(error => {
+          console.error('Error fetching data:', error);
         });
-    } else {
-      console.log('JWT token not found.');
     }
-  }, [token]);
-
-  useEffect(() => {
-    if (token && username) {
-      fetchDurianTypes(token, username);
-    }
-  }, [token, username]);
-
-  const fetchDurianTypes = async (token, username) => {
-    try {
-      const response = await axios.get(
-        'http://localhost:1337/api/placed-orders?populate=*',
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.status === 200) {
-        const data = response.data;
-        const userOrders = data.data.filter(
-          (item) => item.attributes.owner.data.attributes.username === username
-        );
-        const durianTypeList = userOrders.map(
-          (item) => item.attributes.product.data.attributes.durianType
-        );
-        setDurianTypes(durianTypeList);
-      } else {
-        console.error('Error fetching durian types:', response.statusText);
-      }
-    } catch (error) {
-      console.error('Error fetching durian types:', error);
-    }
-  };
+  }, [token, activeStep]);
+  
+  
 
   const nextStep = () => {
     setActiveStep(activeStep + 1);
@@ -225,49 +200,81 @@ const StatusPage = () => {
         {activeStep === 2 && (
           <div style={{ marginTop: '50px' }}>
             <h2>Payment Information</h2>
-            <form>
-              <label htmlFor="cardNumber">Card Number:</label>
-              <input type="text" id="cardNumber" name="cardNumber" required />
-              <br />
-              <label htmlFor="expireDate">Expiration Date:</label>
-              <input type="text" id="expireDate" name="expireDate" required />
-              <br />
-              <label htmlFor="ccv">CCV:</label>
-              <input type="text" id="ccv" name="ccv" required />
-              <br />
-              <ButtonStyle type="submit">Summit</ButtonStyle>
-            </form>
+            <Form layout="vertical">
+              <Form.Item label="Card Number" name="cardNumber" rules={[{ required: true, message: 'Please input your card number!' }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item label="Expiration Date" name="expireDate" rules={[{ required: true, message: 'Please input expiration date!' }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item label="CCV" name="ccv" rules={[{ required: true, message: 'Please input your CCV!' }]}>
+                <Input />
+              </Form.Item>
+              <Form.Item>
+                <ButtonStyle type="primary" htmlType="submit">Submit</ButtonStyle>
+              </Form.Item>
+            </Form>
           </div>
         )}
 
-        {activeStep === 1 && (
-          <div style={{ marginTop: '50px' }}>
-            <h2>Durian Types</h2>
-            <ul>
-              {durianTypes.map((type, index) => (
-                <li key={index}>{type}</li>
-              ))}
-            </ul>
-          </div>
-        )}
+{activeStep === 1 && (
+  <div>
+    {durianTypes.map((durian, index) => {
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const categoryAmount = cart.reduce((total, item) => {
+        const [itemId, amount] = item;
+        return durian.Id.includes(parseInt(itemId)) ? total + amount : total;
+      }, 0);
+      
+      return (
+        <Row key={index} style={{ marginTop: '15px' }}>
+           <Col span={4} style={{ backgroundColor: 'lightblue', padding: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center', borderRadius: '5px' }}>
+            {durian.Picture && ( 
+              <img src={"http://localhost:1337" + durian.Picture.formats.thumbnail.url} alt="Durian" style={{ maxWidth: '85px', height: 'auto' }} />
+            )}
+          </Col>
+          <Col span={20} style={{ backgroundColor: '#ADEDA0', padding: '10px', borderRadius: '10px', border: '1px solid #ccc', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <p style={{ margin: 0 }}>{durian.Category} x {categoryAmount}</p>
+            </Col>
+        </Row>
+      );
+    })}
+    <Row style={{ marginTop: '20px' }}>
+      <Col span={24} style={{ backgroundColor: 'White', padding: '10px', borderRadius: '10px', border: '1px solid #ccc', textAlign: 'center' }}>
+        Price: ฿{sumPrice}
+      </Col>
+    </Row>
+  </div>
+)}
 
-        {activeStep === 3 && (
-          <div style={{ marginTop: '50px' }}>
-            <h2>Address Information</h2>
-            <form onSubmit={handleAddressSubmit}>
-              <label htmlFor="street">Street:</label>
-              <input type="text" id="street" name="street" value={address.street} onChange={handleAddressChange} required />
-              <br />
-              <label htmlFor="city">City:</label>
-              <input type="text" id="city" name="city" value={address.city} onChange={handleAddressChange} required />
-              <br />
-              <label htmlFor="postalCode">Postal Code:</label>
-              <input type="text" id="postalCode" name="postalCode" value={address.postalCode} onChange={handleAddressChange} required />
-              <br />
-              <ButtonStyle type="submit">Submit</ButtonStyle>
-            </form>
-          </div>
-        )}
+{activeStep === 3 && (
+  <div style={{ marginTop: '50px' }}>
+    <h2>Address Information</h2>
+    <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+      <div style={{ marginBottom: '20px' }} />
+      <TextArea
+        placeholder="Type your Address Information"
+        autoSize={{ minRows: 3, maxRows: 5 }}
+        value={address.postalCode}
+        onChange={(e) => handleAddressChange({ target: { name: 'postalCode', value: e.target.value } })}
+      />
+    </div>
+    <Form layout="vertical" onFinish={handleAddressSubmit}>
+      <Form.Item>
+        <ButtonStyle type="primary" htmlType="submit">Submit</ButtonStyle>
+      </Form.Item>
+    </Form>
+  </div>
+)}
+
+{activeStep === 4 && (
+  <Flex vertical gap="small" style={{ width: '100%', marginTop: '50px' }}>
+    <Button type="primary" block style={{ backgroundColor: 'darkgreen', borderColor: 'green' }}>
+      Proceed
+    </Button>
+  </Flex>
+)}
+
       </MainContainer>
     </Card>
   );
