@@ -441,10 +441,7 @@ export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
       'api::placed-order.placed-order'
     >;
     picture: Attribute.Media;
-<<<<<<< HEAD
-=======
     promotion: Attribute.Boolean & Attribute.DefaultTo<false>;
->>>>>>> ff1ac148fc419fe38327f945acebd5fb0d47a959
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

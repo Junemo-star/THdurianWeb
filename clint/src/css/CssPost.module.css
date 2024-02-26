@@ -148,3 +148,50 @@
     font-size: 12px; /* ขนาด font ที่เล็กลง */
     padding: 4px 8px; /* ปรับระยะขอบ */
 }
+
+@media (min-width: 450px) {
+    .set_pos {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 100px;
+        height: 100vh;
+    }
+
+    .box {
+        width: 600px;
+        height: 740px;
+        background-color: #568203;
+        border-radius: 25px;
+    }
+
+    .inside_box2 {
+        width: 550px;
+        height: 600px;
+        background-color: #B0BF07;
+        border-radius: 25px;
+        margin-top: 20px;
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+    }
+
+    .upload_img {
+        width: 500px;
+        height: 100px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        border-radius: 25px;
+        margin: 10px;
+    }
+
+    .inside_box3 {
+        width: 500px;
+        height: 114px;
+        background-color:white;
+        border-radius: 25px;
+        padding: 5px;
+    }
+}
