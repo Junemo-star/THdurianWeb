@@ -362,6 +362,159 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+<<<<<<< HEAD
+=======
+export interface ApiCategoryCategory extends Schema.CollectionType {
+  collectionName: 'categories';
+  info: {
+    singularName: 'category';
+    pluralName: 'categories';
+    displayName: 'Category';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    durianType: Attribute.String;
+    farm_post_news: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::farm-post-new.farm-post-new'
+    >;
+    placed_orders: Attribute.Relation<
+      'api::category.category',
+      'oneToMany',
+      'api::placed-order.placed-order'
+    >;
+    defaultPicture: Attribute.Media;
+    defaultDescriptions: Attribute.Text;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::category.category',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
+  collectionName: 'farm_post_news';
+  info: {
+    singularName: 'farm-post-new';
+    pluralName: 'farm-post-news';
+    displayName: 'FarmPostNew';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    date: Attribute.DateTime;
+    note: Attribute.String;
+    owner: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    category: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'manyToOne',
+      'api::category.category'
+    >;
+    amount: Attribute.Integer & Attribute.Required;
+    location: Attribute.Text & Attribute.Required;
+    status: Attribute.Enumeration<['Pending', 'Verified', 'Denied']> &
+      Attribute.DefaultTo<'Pending'>;
+    descriptions: Attribute.Text;
+    price: Attribute.Integer & Attribute.Required;
+    orders: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'oneToMany',
+      'api::placed-order.placed-order'
+    >;
+    picture: Attribute.Media;
+    promotion: Attribute.Boolean & Attribute.DefaultTo<false>;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
+  collectionName: 'placed_orders';
+  info: {
+    singularName: 'placed-order';
+    pluralName: 'placed-orders';
+    displayName: 'PlacedOrder';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    date: Attribute.DateTime;
+    owner: Attribute.Relation<
+      'api::placed-order.placed-order',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    amount: Attribute.Integer;
+    price: Attribute.Integer;
+    location: Attribute.Text;
+    status: Attribute.Enumeration<
+      ['Packaging', 'Verifying', 'Delivering', 'Complete']
+    >;
+    product: Attribute.Relation<
+      'api::placed-order.placed-order',
+      'manyToOne',
+      'api::category.category'
+    >;
+    farmPost: Attribute.Relation<
+      'api::placed-order.placed-order',
+      'manyToOne',
+      'api::farm-post-new.farm-post-new'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::placed-order.placed-order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::placed-order.placed-order',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+>>>>>>> 6a21e0ba8def7021d3442a126155c400f9591951
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -982,6 +1135,12 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+<<<<<<< HEAD
+=======
+      'api::category.category': ApiCategoryCategory;
+      'api::farm-post-new.farm-post-new': ApiFarmPostNewFarmPostNew;
+      'api::placed-order.placed-order': ApiPlacedOrderPlacedOrder;
+>>>>>>> 6a21e0ba8def7021d3442a126155c400f9591951
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;

@@ -12,11 +12,5 @@ module.exports = {
             path: '/detail',
             handler: 'farm-post-new.publicDetail'
         },
-        {
-            method: 'POST', 
-            path: '/picpost',
-            handler: 'farm-post-new.customPostPic'
-        },
-
     ]
 }

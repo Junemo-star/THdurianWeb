@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
+import NavbarHead from '../componet/Navbar';
 
 
 const Gardener = () => {
@@ -29,8 +30,9 @@ const Gardener = () => {
 
     return (
         <div className={styles.set_pos}>
+            {windowWidth > 450 && <NavbarHead />}
             <div className={styles.box}>
-                <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>
+                {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}
                 <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />
 
                 <div className={styles.set_head}>

@@ -72,7 +72,9 @@
 
 .text_head_history {
     padding: 10px;
+    font-size: 20px;
     color: white;
+    font-weight: bold;
 }
 
 .body_history {
@@ -87,7 +89,7 @@
 
 .text_body_history {
     padding: 4px;
-    font-size: 11px;
+    font-size: 14px;
 }
 
 .score_line {
@@ -96,47 +98,19 @@
     padding: 5px;
 }
 
-@media (min-width: 450px) { 
+@media (min-width: 450px) {
     .set_pos {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: column;
-        margin: 0;
-        height: 100%;
+        height: 100 vh;
     }
-
-    .box {
-        width: 900px;
-        height: 400px;
-        background-color: #568203;
-        border-radius: 25px;
+    
+    .pos_img {
         display: flex;
         justify-content: center;
         align-items: center;
-        flex-direction: row;
-    }
-
-    .box_inside_profile {
-        width: 350px;
-        height: 236px;
-        background-color: #B0BF07;
-        border-radius: 25px;
-        margin-bottom: 0px;
-        margin-Top: 0px;
-        margin-right: 30px;
-    }
-
-    .box_inside_history {
-        width: 350px;
-        height: 236px;
-        background-color: #B0BF07;
-        border-radius: 25px;
-    }
-
-    .pos_img {
-        position: relative;
-        top: 60px;
+        flex-direction: column;
     }
     
     .button_logout {
@@ -148,8 +122,67 @@
         border-style: hidden;
         position: relative;
         top: 80px;
-        left: 400px;
+        left: 130px;
         font-size: 20px;
+    }
+    
+    .userimg {
+        width: 150px;
+        height: 150px;
+        background-color: white;
+        border-radius: 50%;
+        position: absolute;
+        top: 80px;
+    }
+    
+    
+    .box {
+        width: 600px;
+        height: 569px;
+        background-color: #568203;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        margin: 100px;
+    }
+    
+    .box_inside_profile {
+        width: 90%;
+        height: 236px;
+        background-color: #B0BF07;
+        border-radius: 25px;
+        margin-bottom: 20px;
+        margin-Top: 70px;
+    }
+    
+    .box_inside_text {
+        margin: 10px;
+        font-size: 25px;
+        color: white;
+    }
+    
+    .box_inside_history {
+        width: 90%;
+        height: 193px;
+        background-color: #B0BF07;
+        border-radius: 25px;
+    }
+    
+    .text_head_history {
+        padding: 10px;
+        color: white;
+    }
+    
+    .body_history {
+        border-radius: 10px;
+        color: black;
+        background-color: white;
+        margin-left: 10px;
+        margin-right: 10px;
+        margin-bottom: 5px;
+        padding: 5px;
     }
 }
 
