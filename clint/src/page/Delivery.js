@@ -11,8 +11,8 @@ const Delivery = () => {
 
   const fetchData = async () => {
     try {
-      const ordersResponse = await axios.get("http://localhost:1337/api/placed-orders", token)
-      setOrders(ordersResponse.data.data)
+      const ordersResponse = await axios.get("http://localhost:1337/api/delivery", token)
+      setOrders(ordersResponse.data)
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -32,15 +32,15 @@ const Delivery = () => {
               <div className="row">
                 <div className="col-md-6">
                   <div className={styles.text2}>
-                    <p>สวนนายดำ</p>
-                    <p>จำนวน : {order.attributes.amount}</p>
-                    <p>ราคา : {order.attributes.price}</p>
-                    <p>สถานะ : {order.attributes.status}</p>
+                    <p>{order.FarmerName}</p>
+                    <p>จำนวน : {order.Amount} กิโลกรัม</p>
+                    <p>ราคา : {order.Price} บาท</p>
+                    <p>สถานะ : {order.Status}</p>
                   </div>
                 </div>
                 <div className="col-md-6">
                 <Stack gap={2} >
-                  {order.attributes.status === 'Packaging' ? (
+                  {order.Status === 'Packaging' ? (
                     <Stack direction="horizontal" gap={2}>
                       <div><img src="packing.png" className={styles.packimg} style={{ layout: "fill" }} /></div>
                       <div className={styles.text2}>
@@ -48,7 +48,7 @@ const Delivery = () => {
                       </div>
                     </Stack>
                   ) : null}
-                  {order.attributes.status === 'Complete' ? (
+                  {order.Status === 'Complete' ? (
                     <Stack direction="horizontal" gap={2}>
                       <div>
                       <img src="packing.png" className={styles.packimg} style={{ layout: "fill" }} />
