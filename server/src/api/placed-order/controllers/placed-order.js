@@ -41,6 +41,27 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
         //console.log(newData);
         return newData
     },
+    async create(ctx){
+        const data = ctx.request["body"];
+        console.log(data);
+        const findCatagoryById = await strapi.entityService.findOne("api::category.category", data.CategoryID)
+        const findPostById = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", data.FarmID)
+        const newOrder = await strapi.entityService.create("api::placed-order.placed-order", {
+            data: {
+                amount: data.Amount,
+                location: data.Location,
+                date: data.Date,
+                price: data.Price,
+                owner: ctx.state.user,
+                product: findCatagoryById,
+                farmPost: findPostById,
+                status: "Packaging",
+                publishedAt: new Date(),
+            },
+        });
+
+        return newOrder
+    }
 
 
 }));
