@@ -6,6 +6,7 @@ import Footers from '../componet/Footerbar';
 import { useNavigate } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
+import { Helmet } from "react-helmet";
 
 const PostGarden = () => {
     const [species, setSpecies] = useState([]);
@@ -91,6 +92,11 @@ const PostGarden = () => {
 
     return (
         <div className={styles.set_pos}>
+            <Helmet>
+                <title>Post</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
+
             <div className={styles.box}>
                 <div className={styles.text}>
                     โพสขายสินค้า

@@ -49,6 +49,10 @@ const Footers = () => {
         }
     }
 
+    const cart = () => {
+        navigate('/Status')
+    }
+
     const Search = () => {
         setShowModal(true)
     }
@@ -81,7 +85,7 @@ const Footers = () => {
                 </div>
             </Link>
 
-            <div className={styles.setting_pos}>
+            <div className={styles.setting_pos} onClick={() => cart()}>
                 <img src='/cart.png' className={styles.imgfooter} style={{ padding: "5px" }} />
                 <div >
                     Cart

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
+import { Helmet } from "react-helmet";
 
 
 const UserProfile = () => {
@@ -39,6 +40,11 @@ const UserProfile = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>User</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
+
             {windowWidth > 450 && <NavbarHead />}
             <div className={styles.set_pos}>
                 {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}

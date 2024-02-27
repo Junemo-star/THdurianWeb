@@ -9,6 +9,7 @@ import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import toast, { Toaster } from 'react-hot-toast';
 import '../css/style.css'
+import { Helmet } from "react-helmet";
 
 
 const LoginApp = () => {
@@ -77,6 +78,11 @@ const LoginApp = () => {
 
     return (
         <div>
+            <Helmet>
+                <title>Login</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
+
             {windowWidth > 450 && <NavbarHead />}
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
                 <Toaster position="top-center" reverseOrder={false} />

@@ -65,6 +65,10 @@
 .text_describ {
     padding: 8px;
     height: 100%;
+    background-color: white;
+    border-radius: 10px;
+    width: 280px;
+    height: 87px;
 }
 
 .size_img2 {
@@ -104,4 +108,44 @@
     font-weight: bold;
     margin-top: 10px;
     width: 100%;
+}
+
+@media (min-width: 450px) {
+    .box {
+        width: 600px;
+        height: 680px;
+        margin-top: 80px;
+        background-color: #568203;
+        border-radius: 25px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        /* padding: 10px; */
+        margin: 100px;
+    }
+
+    .box_inside {
+        width: 500px;
+        height: 380px;
+        background-color: #B0BF07;
+        border-radius: 10px;
+    }
+
+    /* .describ {
+        background-color: white;
+        border-radius: 10px;
+        width: 280px;
+        height: 87px;
+        margin: auto;
+    } */
+    
+    .text_describ {
+        padding: 8px;
+        height: 100%;
+        background-color: white;
+        border-radius: 10px;
+        width: 280px;
+        height: 87px;
+    }
 }

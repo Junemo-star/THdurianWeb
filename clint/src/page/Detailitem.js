@@ -6,6 +6,8 @@ import styles from '../css/CssDetail.module.css'
 import axios from 'axios';
 import useWindowWidth from '../componet/Check_size';
 import Footers from '../componet/Footerbar';
+import { Helmet } from "react-helmet";  
+import NavbarHead from '../componet/Navbar';
 
 
 const Detail = () => {
@@ -72,6 +74,13 @@ const Detail = () => {
 
     return (
         <div className={styles.set_pos}>
+            <Helmet>
+                <title>Detail</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
+
+            {windowWidth > 450 && <NavbarHead />}
+
             {infomation && (
                 <div className={styles.box}>
                     {infomation.Picture ? (

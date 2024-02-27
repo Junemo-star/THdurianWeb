@@ -124,7 +124,9 @@ const StatusPage = () => {
         .then(response => {
           const data = response.data;
           const cart = JSON.parse(localStorage.getItem('cart')) || [];
+          console.log(cart)
           const ids = cart.map(item => item[0]);
+          console.log(ids)
           const totalPrice = cart.reduce((total, item) => {
             const [id, amount] = item;
             const foundItem = data.find(durian => durian.Id.includes(parseInt(id)));

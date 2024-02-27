@@ -8,6 +8,7 @@ import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import axios from 'axios';
 import Modaldurian from '../componet/Modal';
+import { Helmet } from "react-helmet";
 
 
 const PUBLIC_URL = "http://localhost:1337/api/public";
@@ -125,6 +126,11 @@ const HomeApp = () => {
 
     return (
         <div className={styles.position_all}>
+            <Helmet>
+                <title>Home</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
+
             {windowWidth > 450 && <NavbarHead />}
             <div className={styles.headweb_pos}>
                 <div className={styles.headweb} style={{ marginTop: "65px" }}>

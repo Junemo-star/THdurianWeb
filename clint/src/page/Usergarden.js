@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import NavbarHead from '../componet/Navbar';
+import { Helmet } from "react-helmet";
 
 
 const Gardener = () => {
@@ -30,6 +31,11 @@ const Gardener = () => {
 
     return (
         <div className={styles.set_pos}>
+            <Helmet>
+                <title>User</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
+
             {windowWidth > 450 && <NavbarHead />}
             <div className={styles.box}>
                 {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}

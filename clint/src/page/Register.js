@@ -5,6 +5,7 @@ import Footers from '../componet/Footerbar';
 import styles from '../css/CssRegis.module.css'
 import { Form, Container, Image } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
+import { Helmet } from "react-helmet";
 
 
 const Register = () => {
@@ -66,6 +67,10 @@ const Register = () => {
 
     return (
         <div className={styles.set_pos}>
+            <Helmet>
+                <title>Register</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
 
             <Form onSubmit={handleSubmit} className={styles.Formlogin}>
 
