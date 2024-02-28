@@ -20,11 +20,10 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
                         $eq: ctx.state.user.id,
                     }
                 },
-
             },
             populate:["farmPost.owner","product"]
         });
-        //console.log(entries);
+        console.log(entries);
         //console.log(entries[0].farmPost.owner);
 
         const newData = entries.map(post => {
@@ -32,9 +31,13 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
                 id: post.id,
                 Farmer: post.farmPost.owner.username,
                 FarmerName: post.farmPost.owner.firstname + " " + post.farmPost.owner.surname,
+                FarmPostID: post.farmPost.id,
+                OrderDate: post.createdAt,
                 Amount: post.amount,
                 Price: post.price,
-                Status: post.status
+                Status: post.status,
+                UserLocation: post.location,
+                FarmLocation: post.farmPost.location,
             }
         })
 
@@ -43,9 +46,11 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
     },
     async create(ctx){
         const data = ctx.request["body"];
-        console.log(data);
+        //console.log(data);
         const findCatagoryById = await strapi.entityService.findOne("api::category.category", data.CategoryID)
-        const findPostById = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", data.FarmID)
+        const findPostById = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", data.FarmPostNewID)
+        const pictureObj = await strapi.entityService.findOne("plugin::upload.file",data.PaymentPictureID)
+
         const newOrder = await strapi.entityService.create("api::placed-order.placed-order", {
             data: {
                 amount: data.Amount,
@@ -56,6 +61,7 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
                 product: findCatagoryById,
                 farmPost: findPostById,
                 status: "Packaging",
+                payment: pictureObj,
                 publishedAt: new Date(),
             },
         });
