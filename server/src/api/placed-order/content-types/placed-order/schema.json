@@ -33,10 +33,9 @@
     "status": {
       "type": "enumeration",
       "enum": [
-        "Packaging",
         "Verifying",
-        "Delivering",
-        "Complete"
+        "Packaging",
+        "Delivered"
       ]
     },
     "product": {
@@ -50,6 +49,17 @@
       "relation": "manyToOne",
       "target": "api::farm-post-new.farm-post-new",
       "inversedBy": "orders"
+    },
+    "payment": {
+      "type": "media",
+      "multiple": false,
+      "required": false,
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ]
     }
   }
 }

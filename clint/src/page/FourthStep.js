@@ -43,7 +43,8 @@ const FourthStep = () => {
           Amount: amount,
           Price: null,
           Location: null,
-          FarmPostNewID: null
+          FarmPostNewID: null, //Id of farm post new
+          PaymentPictureID: 12 //Id of uploaded payment picture
         };
         return product;
       });

@@ -945,9 +945,7 @@ export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
     amount: Attribute.Integer;
     price: Attribute.Integer;
     location: Attribute.Text;
-    status: Attribute.Enumeration<
-      ['Packaging', 'Verifying', 'Delivering', 'Complete']
-    >;
+    status: Attribute.Enumeration<['Verifying', 'Packaging', 'Delivered']>;
     product: Attribute.Relation<
       'api::placed-order.placed-order',
       'manyToOne',
@@ -958,6 +956,7 @@ export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
       'manyToOne',
       'api::farm-post-new.farm-post-new'
     >;
+    payment: Attribute.Media;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;

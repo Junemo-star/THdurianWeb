@@ -49,7 +49,8 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
         //console.log(data);
         const findCatagoryById = await strapi.entityService.findOne("api::category.category", data.CategoryID)
         const findPostById = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", data.FarmPostNewID)
-        
+        const pictureObj = await strapi.entityService.findOne("plugin::upload.file",data.PaymentPictureID)
+
         const newOrder = await strapi.entityService.create("api::placed-order.placed-order", {
             data: {
                 amount: data.Amount,
@@ -60,6 +61,7 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
                 product: findCatagoryById,
                 farmPost: findPostById,
                 status: "Packaging",
+                payment: pictureObj,
                 publishedAt: new Date(),
             },
         });

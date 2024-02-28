@@ -6,4 +6,6 @@
 
 const { createCoreController } = require('@strapi/strapi').factories;
 
-module.exports = createCoreController('api::news-promotion.news-promotion');
+module.exports = createCoreController('api::news-promotion.news-promotion',({ strapi }) => ({
+
+}));
