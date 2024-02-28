@@ -24,7 +24,7 @@ const steps = [
   },
 ];
 
-const StatusPage: React.FC = () => {
+const StatusPage = () => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
@@ -38,7 +38,7 @@ const StatusPage: React.FC = () => {
 
   const items = steps.map((item) => ({ key: item.title, title: item.title }));
 
-  const contentStyle: React.CSSProperties = {
+  const contentStyle = {
     lineHeight: '260px',
     textAlign: 'center',
     color: token.colorTextTertiary,

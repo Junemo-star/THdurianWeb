@@ -1,0 +1,39 @@
+{
+  "kind": "collectionType",
+  "collectionName": "news_promotions",
+  "info": {
+    "singularName": "news-promotion",
+    "pluralName": "news-promotions",
+    "displayName": "newsPromotion"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "picture": {
+      "allowedTypes": [
+        "images",
+        "files",
+        "videos",
+        "audios"
+      ],
+      "type": "media",
+      "multiple": false
+    },
+    "startDate": {
+      "type": "datetime"
+    },
+    "endDate": {
+      "type": "datetime"
+    },
+    "activation": {
+      "type": "enumeration",
+      "enum": [
+        "Auto",
+        "Active",
+        "Inactive"
+      ]
+    }
+  }
+}

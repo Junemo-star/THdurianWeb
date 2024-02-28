@@ -43,7 +43,7 @@ const FourthStep = () => {
           Amount: amount,
           Price: null,
           Location: null,
-          FarmID: null
+          FarmPostNewID: null
         };
         return product;
       });
@@ -70,7 +70,7 @@ const FourthStep = () => {
       });
 
       const postResponses = await Promise.all(orders.map(order =>
-        axios.post('http://localhost:1337/api/placed/orders', order, config)
+        axios.post('http://localhost:1337/api/placed-orders', order, config)
       ));
 
       console.log('Orders placed successfully:', postResponses.map(res => res.data));
