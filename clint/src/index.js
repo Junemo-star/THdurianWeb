@@ -5,6 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './componet/AuthContext';
+// import './css/style.css'
 
 import App from './App';
 import HomeApp from './page/Home';
@@ -59,7 +60,7 @@ const router = createBrowserRouter([
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-    <div style={{ backgroundColor: "white" }}>    {/* เพื่อทำให้ทุกหน้าใน router มีสีตามนี้ */}
+    <div>
       <AuthProvider>
         <RouterProvider router={router} />
       </AuthProvider>

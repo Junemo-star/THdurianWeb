@@ -26,6 +26,10 @@ function NavbarHead() {
         }
     }
 
+    const cart = () => {
+        navigate('/Status')
+    }
+
     const handleLogout = () => {
         // Remove JWT Token from Local Storage
         // window.localStorage.removeItem("jwtToken");
@@ -58,7 +62,7 @@ function NavbarHead() {
                         navbarScroll
                     >
                         <Nav.Link onClick={() => homee()}>Home</Nav.Link>
-                        <Nav.Link >Cart</Nav.Link>
+                        <Nav.Link onClick={() => cart()}>Cart</Nav.Link>
                         <Nav.Link >Delivery</Nav.Link>
                     </Nav>
                     <Form className="d-flex" >

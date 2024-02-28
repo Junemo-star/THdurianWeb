@@ -174,5 +174,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         return combinedData
         return ctx.body = { response: "Public detail" }
     },
+
+    
 }));
 

@@ -132,11 +132,11 @@ const HomeApp = () => {
             </Helmet>
 
             {windowWidth > 450 && <NavbarHead />}
-            <div className={styles.headweb_pos}>
+            {/* <div className={styles.headweb_pos}>
                 <div className={styles.headweb} style={{ marginTop: "65px" }}>
                     <h2>รายการสินค้าประจำวัน</h2>
                 </div>
-            </div>
+            </div> */}
 
             <Carousel style={{ top: "13px" }} className={styles.Carousel_pos}>
                 {/* หน้าแรกของการหมุน */}

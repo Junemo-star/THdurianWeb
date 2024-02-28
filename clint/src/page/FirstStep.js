@@ -62,12 +62,17 @@ const FirstStep = () => {
           <div>
             {getFilteredData().map((item, index) => (
               <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', position: 'relative' }}>
+                {console.log(item)}
                 <div style={{ position: 'absolute', top: '10px', right: '10px', transform: 'scale(1.1)' }}>
                   <Button type="primary" danger onClick={() => removeFromCart(item.id)} icon={<DeleteOutlined />} />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <div style={{ flex: '1', marginRight: '10px' }}>
-                    <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
+                    {item.picture === null ? (
+                      <Image src='/noimg.png' alt={item.category} />
+                    ) : (
+                      <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
+                    )}
                   </div>
                   <div style={{ flex: '2' }}>
                     <span>{`${item.category} x ${item.amount}`}</span>
