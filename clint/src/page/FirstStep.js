@@ -5,8 +5,8 @@ import { DeleteOutlined } from '@ant-design/icons';
 const FirstStep = () => {
   const [cartData, setCartData] = useState([]);
   const [apiData, setApiData] = useState([]);
-  const [current, setCurrent] = useState(0);
-
+  const [filteredData, setFilteredData] = useState([]);
+  
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem('cart')) || [];
     setCartData(localStorageData);
@@ -17,26 +17,50 @@ const FirstStep = () => {
       .catch(error => console.error('Error fetching data:', error));
   }, []);
 
-  const getFilteredData = () => {
-    const aggregatedData = {};
-    cartData.forEach(([id, amount]) => {
-      if (aggregatedData[id]) {
-        aggregatedData[id] += amount;
-      } else {
-        aggregatedData[id] = amount;
-      }
-    });
+  useEffect(() => {
+    const fetchData = async () => {
+      const aggregatedData = {};
+      cartData.forEach(([id, amount]) => {
+        if (aggregatedData[id]) {
+          aggregatedData[id] += amount;
+        } else {
+          aggregatedData[id] = amount;
+        }
+      });
 
-    const filteredData = [];
-    Object.entries(aggregatedData).forEach(([id, amount]) => {
-      const matchingItem = apiData.find(item => item.Id.includes(Number(id)));
-      if (matchingItem) {
-        filteredData.push({ id, category: matchingItem.Category, amount, picture: matchingItem.Picture });
-      }
-    });
+      const dataPromises = Object.entries(aggregatedData).map(([id, amount]) => {
+        const matchingItem = apiData.find(item => item.Id.includes(Number(id)));
+        if (matchingItem) {
+          return fetch(`http://localhost:1337/api/farm-post-news/${id}`)
+            .then(response => response.json())
+            .then(dateData => {
+              const date = new Date(dateData?.data?.attributes?.date);
+              const formattedDate = date.toLocaleDateString('th-TH', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+              return {
+                id,
+                category: matchingItem.Category,
+                amount,
+                picture: matchingItem.Picture,
+                date: formattedDate
+              };
+            })
+            .catch(error => console.error(`Error fetching date for item with ID ${id}:`, error));
+        } else {
+          return Promise.resolve(null);
+        }
+      });
 
-    return filteredData;
-  };
+      Promise.all(dataPromises)
+        .then(results => {
+          const validResults = results.filter(result => result !== null);
+          setFilteredData(validResults);
+        });
+    };
+
+    if (apiData.length > 0 && cartData.length > 0) {
+      fetchData();
+    }
+  }, [apiData, cartData]);
 
   const removeFromCart = idToRemove => {
     const updatedCartData = cartData.filter(([id, amount]) => id !== idToRemove);
@@ -46,7 +70,7 @@ const FirstStep = () => {
 
   const getSumPrice = () => {
     let sum = 0;
-    getFilteredData().forEach(item => {
+    filteredData.forEach(item => {
       const matchingItem = apiData.find(apiItem => apiItem.Id.includes(Number(item.id)));
       if (matchingItem) {
         sum += matchingItem.Price * item.amount;
@@ -58,25 +82,22 @@ const FirstStep = () => {
   return (
     <Card title="รายการที่สั่งซื้อ">
       <div>
-        {current === 0 && (
-          <div>
-            {getFilteredData().map((item, index) => (
-              <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', position: 'relative' }}>
-                <div style={{ position: 'absolute', top: '10px', right: '10px', transform: 'scale(1.1)' }}>
-                  <Button type="primary" danger onClick={() => removeFromCart(item.id)} icon={<DeleteOutlined />} />
-                </div>
-                <div style={{ display: 'flex', alignItems: 'center' }}>
-                  <div style={{ flex: '1', marginRight: '10px' }}>
-                    <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
-                  </div>
-                  <div style={{ flex: '2' }}>
-                    <span>{`${item.category} x ${item.amount}`}</span>
-                  </div>
-                </div>
+        {filteredData.map((item, index) => (
+          <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '10px', position: 'relative' }}>
+            <div style={{ position: 'absolute', top: '10px', right: '10px', transform: 'scale(1.1)' }}>
+              <Button type="primary" danger onClick={() => removeFromCart(item.id)} icon={<DeleteOutlined />} />
+            </div>
+            <div style={{ display: 'flex', alignItems: 'center' }}>
+              <div style={{ flex: '1', marginRight: '10px' }}>
+                <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
               </div>
-            ))}
+              <div style={{ flex: '2' }}>
+                <div>{`${item.category} x ${item.amount}`}</div>
+                <div style={{ opacity: 0.61 }}>{item.date}</div> 
+              </div>
+            </div>
           </div>
-        )}
+        ))}
       </div>
       <div style={{ marginTop: '20px', textAlign: 'right' }}>
         <strong>ราคารวม:</strong> {getSumPrice()} บาท

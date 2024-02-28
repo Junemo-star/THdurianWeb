@@ -28,44 +28,8 @@ const StatusPage: React.FC = () => {
   const { token } = theme.useToken();
   const [current, setCurrent] = useState(0);
 
-<<<<<<< HEAD
-  useEffect(() => {
-    if (token && activeStep === 1) {
-      axios.get('http://localhost:1337/api/public')
-        .then(response => {
-          const data = response.data;
-          const cart = JSON.parse(localStorage.getItem('cart')) || [];
-          console.log(cart)
-          const ids = cart.map(item => item[0]);
-          console.log(ids)
-          const totalPrice = cart.reduce((total, item) => {
-            const [id, amount] = item;
-            const foundItem = data.find(durian => durian.Id.includes(parseInt(id)));
-            if (foundItem && foundItem.Price) {
-              return total + (foundItem.Price * amount);
-            }
-            return total;
-          }, 0);
-          setSumPrice(totalPrice);
-          const filteredData = data.filter(item => {
-            return item.Id.some(id => ids.includes(id.toString()));
-          });
-          setDurianTypes(filteredData);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-        });
-    }
-  }, [token, activeStep]);
-  
-  
-
-  const nextStep = () => {
-    setActiveStep(activeStep + 1);
-=======
   const next = () => {
     setCurrent(current + 1);
->>>>>>> 150313f2a32a13e9235f75fc2e59a7de9eac3133
   };
 
   const prev = () => {
