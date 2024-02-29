@@ -9,6 +9,7 @@ import { AuthProvider } from './componet/AuthContext';
 
 import App from './App';
 import HomeApp from './page/Home';
+import AdminPage from './page/Admin'
 import UserProfile from './page/User';
 import PostGarden from './page/Postgardener';
 import Gardener from './page/Usergarden';
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeApp />
+  },
+  {
+    path: "/Admin",
+    element: <AdminPage />
   },
   {
     path: "/Login",
