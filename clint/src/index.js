@@ -5,7 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { AuthProvider } from './componet/AuthContext';
-// import './css/style.css'
+import useWindowWidth from './componet/Check_size'
+// import { Route } from 'react-router-dom';
 
 import App from './App';
 import HomeApp from './page/Home';
@@ -16,6 +17,9 @@ import Register from './page/Register';
 import Delivery from './page/Delivery';
 import StatusPage from './page/Status';
 import Detail from './page/Detailitem';
+import UsergardenPc from './page/UsergardenPc';
+import PostgardenPC from './page/PostgardenrPC';
+import RegisterPc from './page/RegisterPc';
 
 
 const router = createBrowserRouter([
@@ -37,7 +41,8 @@ const router = createBrowserRouter([
   },
   {
     path: "/Gardener",
-    element: <Gardener />
+    // element: useWindowWidth < 450 ? <Gardener /> : <UsergardenPc />
+    element: <Gardener /> 
   },
   {
     path: "/Register",
@@ -54,6 +59,18 @@ const router = createBrowserRouter([
   {
     path: "/Detail/:durian/:id",
     element: <Detail />
+  },
+  {
+    path: "/Gardeners",
+    element: <UsergardenPc />
+  },
+  {
+    path: "/Posts",
+    element: <PostgardenPC />
+  },
+  {
+    path: "/Registers",
+    element: <RegisterPc />
   }
 ])
 

@@ -6,7 +6,7 @@ import styles from '../css/CssDetail.module.css'
 import axios from 'axios';
 import useWindowWidth from '../componet/Check_size';
 import Footers from '../componet/Footerbar';
-import { Helmet } from "react-helmet";  
+import { Helmet } from "react-helmet";
 import NavbarHead from '../componet/Navbar';
 
 
@@ -83,12 +83,38 @@ const Detail = () => {
 
             {infomation && (
                 <div className={styles.box}>
-                    {infomation.Picture ? (
-                        <img className={styles.size_img} src={"http://localhost:1337" + infomation.Picture.url} />
-                    ) : (
-                        <img className={styles.size_img} src='/noimg.png' />
-                    )}
-                    <div className={styles.box_inside}>
+
+                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                        {infomation.Picture ? (
+                            <img className={styles.size_img} src={"http://localhost:1337" + infomation.Picture.url} />
+                        ) : (
+                            <img className={styles.size_img} src='/noimg.png' />
+                        )}
+
+                        {windowWidth > 450 &&
+                            <div>
+                                <div className={styles.box_date}>
+                                    วันที่วางจำหน่าย
+                                </div>
+                                <Form.Select className={styles.size_select} onChange={(event) => Change(event.target.value)}>
+                                    {datalist && datalist.slice().reverse().map((item) => (
+                                        <option key={item.id} value={item.id}>
+                                            {new Date(item.PostDate).toLocaleString("th-TH", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                                hour: "numeric",
+                                                minute: "numeric",
+                                                hour12: false,
+                                            })}
+                                        </option>
+                                    ))}
+                                </Form.Select>
+                            </div>
+                        }
+                    </div>
+
+                    <div className={windowWidth > 450 ? styles.box_inside_pc : styles.box_inside}>
                         <div style={{ padding: "15px" }}>
                             <div className={styles.text_head_inside}>
                                 {infomation.Category}<br />
@@ -107,34 +133,50 @@ const Detail = () => {
                                 สั่งซื้อ
                             </div>
                             <div className={styles.set_pos_r}>
-                                <img className={styles.size_img2} src='/minus.png' onClick={() => minus()} />
+                                <div onClick={() => minus()} style={{ marginRight: "10px", color: "#FFEF60" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                    </svg>
+                                </div>
                                 <div className={styles.box_num}>
                                     {num}
                                 </div>
-                                <img className={styles.size_img2} src='/plus.png' onClick={() => plus()} />
+                                <div onClick={() => plus()} style={{ marginLeft: "10px", color: "#FFEF60" }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                    </svg>
+                                </div>
                             </div>
-                            <div className={styles.set_pos_r}>
+                            <div className={styles.set_pos_r} >
                                 <button className={styles.button_s} onClick={() => add()}>เพิ่มลงในตะกร้า</button>
                             </div>
                         </div>
+
                     </div>
-                    <div className={styles.box_date}>
-                        วันที่วางจำหน่าย
-                    </div>
-                    <Form.Select className={styles.size_select} onChange={(event) => Change(event.target.value)}>
-                        {datalist && datalist.slice().reverse().map((item) => (
-                            <option key={item.id} value={item.id}>
-                                {new Date(item.PostDate).toLocaleString("th-TH", {
-                                    year: "numeric",
-                                    month: "long",
-                                    day: "numeric",
-                                    hour: "numeric",
-                                    minute: "numeric",
-                                    hour12: false,
-                                })}
-                            </option>
-                        ))}
-                    </Form.Select>
+
+                    {windowWidth < 450 &&
+                        <div>
+                            <div className={styles.box_date}>
+                                วันที่วางจำหน่าย
+                            </div>
+                            <Form.Select className={styles.size_select} onChange={(event) => Change(event.target.value)}>
+                                {datalist && datalist.slice().reverse().map((item) => (
+                                    <option key={item.id} value={item.id}>
+                                        {new Date(item.PostDate).toLocaleString("th-TH", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                            hour12: false,
+                                        })}
+                                    </option>
+                                ))}
+                            </Form.Select>
+                        </div>
+                    }
                 </div>
             )}
 

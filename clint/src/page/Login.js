@@ -18,7 +18,7 @@ const LoginApp = () => {
 
     const navigate = useNavigate()
     const [submitEnabled, setSubmitEnabled] = useState(true);
-    const { setRole } = useAuth();
+    const { setRole, token } = useAuth();
     const windowWidth = useWindowWidth();
 
     const handleSubmit = async (e) => {
@@ -32,19 +32,13 @@ const LoginApp = () => {
             })
 
             //เก็บ jwt ในฟังก์ชั่นเพื่อเรียกใช้งานในหน้า component อื่น
-            const saveTokenToLocalStorage = (token) => {
-                localStorage.setItem('jwtToken', token);        //เก็บ jwt token
+            const saveTokenToLocalStorage = (tokenn) => {
+                localStorage.setItem('jwtToken', tokenn);        //เก็บ jwt token
             }
             saveTokenToLocalStorage(result.data.jwt)
 
-            const config = {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
-                },
-            };
-
             //เช็ค role
-            result = await axios.get('http://localhost:1337/api/users/me?populate=role', config)
+            result = await axios.get('http://localhost:1337/api/users/me?populate=role', token)
 
             if (result.data.role) {
 
@@ -73,7 +67,11 @@ const LoginApp = () => {
     }
 
     const Regis = () => {
-        navigate("/Register")
+        if (windowWidth > 450){
+            navigate("/Registers")
+        } else {
+            navigate("/Register")
+        }
     }
 
     return (
@@ -102,7 +100,7 @@ const LoginApp = () => {
                             <Form.Control
                                 id="username"
                                 placeholder="username"
-                                style={{ borderRadius: "25px", width: "282px", height: "44", padding: "8px " }}
+                                style={{ borderRadius: "25px", width: "282px", height: "44", padding: "8px ", backgroundColor: "#FFEF60" }}
                                 type='text'
                                 onChange={(e) => setUsername(e.target.value)}
                             />
@@ -112,15 +110,15 @@ const LoginApp = () => {
                                 id="password"
                                 placeholder="password"
                                 onChange={(e) => setPassword(e.target.value)}
-                                style={{ borderRadius: "25px", width: "282px", height: "44", padding: "8px " }}
+                                style={{ borderRadius: "25px", width: "282px", height: "44", padding: "8px ", backgroundColor: "#FFEF60" }}
                                 type='password'
                             />
                         </div>
                     </div>
 
-                    <div>
-                        <button className={styles.buttonlogin_re_lo} style={{ marginRight: "20px" }}>submit</button>
-                        <button className={styles.buttonlogin_re_lo} onClick={() => Regis()}>register</button>
+                    <div style={{marginTop: "10px"}}>
+                        <button className={styles.buttonlogin_re_lo} style={{ marginRight: "20px", backgroundColor: "#FFEF60", borderStyle: "hidden", fontWeight: "bold" }}>submit</button>
+                        <button className={styles.buttonlogin_re_lo} style={{ backgroundColor: "#FFEF60", borderStyle: "hidden", fontWeight: "bold"}} onClick={() => Regis()}>register</button>
                     </div>
 
                 </Form>

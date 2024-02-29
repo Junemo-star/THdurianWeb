@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../css/CssPost.module.css'
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
 import Footers from '../componet/Footerbar';
 import { useNavigate } from "react-router-dom";
 import { Form } from 'react-bootstrap';

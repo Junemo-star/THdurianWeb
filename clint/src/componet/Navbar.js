@@ -20,7 +20,7 @@ function NavbarHead() {
         if (userRole === 'Customer') {
             navigate('/User');
         } else if (userRole === 'Farmer') {
-            navigate('/Gardener')
+            navigate('/Gardeners')
         } else {
             navigate('/Login')
         }
@@ -42,9 +42,9 @@ function NavbarHead() {
     }
 
     return (
-        <Navbar expand="xxl" className="bg-body-tertiary" style={{ width: "100%", fontWeight: "bold" }}>
-            <Container fluid>
-                <Navbar.Brand href="#">
+        <Navbar expand="xxl" style={{ width: "100%", fontWeight: "bold", backgroundColor: "#697E50" }}>
+            <Container fluid style={{ justifyContent: "space-around" }}>
+                <Navbar.Brand href="#" style={{ color: "white" }} onClick={() => homee()}>
                     <img
                         alt=""
                         src="/logotitle.png"
@@ -54,8 +54,53 @@ function NavbarHead() {
                     />{' '}
                     Thaidurian
                 </Navbar.Brand>
-                <Navbar.Toggle aria-controls="navbarScroll" />
-                <Navbar.Collapse id="navbarScroll">
+
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    <Button variant="light" style={{ display: "flex", justifyContent: "end", alignItems: "center", width: "600px", backgroundColor: 'white' }} onClick={() => Search()}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                        </svg>
+                        {/* <span style={{ marginLeft: "10px" }}>Search</span> */}
+                    </Button>
+
+                    <Button variant="light" onClick={() => cart()} style={{ marginLeft: "10px", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-cart" viewBox="0 0 16 16">
+                            <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                        </svg>
+                        {/* <span style={{ marginLeft: "10px" }}>Search</span> */}
+                    </Button>
+                </div>
+
+                <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+                    {userRole
+                        ?
+                        <Form className="d-flex" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginLeft: "10px" }}>
+                            <Button style={{backgroundColor: "#FFEF60", color: "black", borderStyle: "hidden", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={() => user()}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+                                    <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
+                                    <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
+                                </svg>
+                                <span style={{ marginLeft: "10px" }}>User</span>
+                            </Button>
+                        </Form>
+                        :
+                        <Form className="d-flex" style={{ marginLeft: "10px" }}>
+                            <Button style={{backgroundColor: "#FFEF60", color: "black", borderStyle: "hidden", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={() => user()}>
+                                เข้าสู่ระบบ
+                            </Button>
+                        </Form>
+                    }
+                    {userRole
+                        ?
+                        <Form className="d-flex" style={{ marginLeft: "10px" }}>
+                            <Button style={{backgroundColor: "#FFEF60", color: "black", borderStyle: "hidden", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={() => handleLogout()}>Logout</Button>
+                        </Form>
+                        : null}
+                </div>
+
+                {/* <Navbar.Toggle aria-controls="navbarScroll" /> */}
+
+                {/* <Navbar.Collapse id="navbarScroll">
                     <Nav
                         className="me-auto my-2 my-lg-0"
                         style={{ maxHeight: '100px' }}
@@ -95,7 +140,7 @@ function NavbarHead() {
                             <Button variant="outline-danger" onClick={() => handleLogout()}>Logout</Button>
                         </Form>
                         : null}
-                </Navbar.Collapse>
+                </Navbar.Collapse> */}
             </Container>
 
             <Modaldurian show={showModal} handleClose={() => handleCloseModal()} />

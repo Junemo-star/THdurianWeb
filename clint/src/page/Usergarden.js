@@ -37,6 +37,7 @@ const Gardener = () => {
             </Helmet>
 
             {windowWidth > 450 && <NavbarHead />}
+            
             <div className={styles.box}>
                 {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}
                 <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />

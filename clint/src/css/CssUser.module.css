@@ -39,13 +39,14 @@
 
 .box {
     width: 345px;
-    height: 569px;
+    height: 700px;
     background-color: #568203;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    margin-bottom: 200px;
 }
 
 .box_inside_profile {
@@ -61,6 +62,7 @@
     margin: 10px;
     font-size: 25px;
     color: white;
+    /* display: flex; */
 }
 
 .box_inside_history {
@@ -68,6 +70,11 @@
     height: 193px;
     background-color: #B0BF07;
     border-radius: 25px;
+}
+
+.box_inside_history_pc {
+    border-radius: 25px;
+    display: flex;
 }
 
 .text_head_history {
@@ -94,8 +101,21 @@
 
 .score_line {
     overflow-y: auto;
-    max-height: 146px;
+    max-height: 130px;
     padding: 5px;
+}
+
+.size_pc {
+    width: 600px;
+    margin-left: 30px;
+}
+
+.text_pc {
+    margin-left: 10px;
+    background-color: #FFEF60;
+    color: black;
+    padding: 10px;
+    border-radius: 10px;
 }
 
 @media (min-width: 450px) {
@@ -103,7 +123,9 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        height: 100 vh;
+        flex-direction: row;
+        margin: 0;
+        height: 100%;
     }
     
     .pos_img {
@@ -113,36 +135,22 @@
         flex-direction: column;
     }
     
-    .button_logout {
-        width: 100px;
-        height: 41px;
-        border-radius: 10px;
-        color: white;
-        background-color: #B0BF07;
-        border-style: hidden;
-        position: relative;
-        top: 80px;
-        left: 130px;
-        font-size: 20px;
-    }
-    
     .userimg {
         width: 150px;
         height: 150px;
         background-color: white;
         border-radius: 50%;
-        position: absolute;
-        top: 80px;
+        position: relative;
+        top: 0px;
     }
     
-    
     .box {
-        width: 600px;
-        height: 569px;
-        background-color: #568203;
+        width: 900px;
+        height: 600px;
+        background-color: #697E50;
         border-radius: 25px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         justify-content: center;
         align-items: center;
         margin: 100px;
@@ -151,38 +159,28 @@
     .box_inside_profile {
         width: 90%;
         height: 236px;
-        background-color: #B0BF07;
+        background-color: #FFEF60;
         border-radius: 25px;
         margin-bottom: 20px;
         margin-Top: 70px;
     }
     
-    .box_inside_text {
-        margin: 10px;
-        font-size: 25px;
-        color: white;
-    }
-    
-    .box_inside_history {
-        width: 90%;
-        height: 193px;
-        background-color: #B0BF07;
-        border-radius: 25px;
-    }
-    
-    .text_head_history {
-        padding: 10px;
-        color: white;
-    }
-    
     .body_history {
         border-radius: 10px;
-        color: black;
-        background-color: white;
-        margin-left: 10px;
-        margin-right: 10px;
-        margin-bottom: 5px;
+        color: white;
+        background-color: #8F3E00;
+        margin: 10px;
         padding: 5px;
+    }
+
+    .score_line {
+        overflow-y: auto;
+        max-height: 146px;
+        padding: 5px;
+        background-color: #FFEF60;
+        width: 312px;
+        height: 193px;
+        border-radius: 25px;
     }
 }
 
