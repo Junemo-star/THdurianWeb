@@ -891,8 +891,6 @@ export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
   };
 }
 
-<<<<<<< HEAD
-=======
 export interface ApiNewsPromotionNewsPromotion extends Schema.CollectionType {
   collectionName: 'news_promotions';
   info: {
@@ -926,7 +924,6 @@ export interface ApiNewsPromotionNewsPromotion extends Schema.CollectionType {
   };
 }
 
->>>>>>> 3574936b276997dcee93937fd6a769e4ced1152c
 export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
   collectionName: 'placed_orders';
   info: {
@@ -948,13 +945,7 @@ export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
     amount: Attribute.Integer;
     price: Attribute.Integer;
     location: Attribute.Text;
-<<<<<<< HEAD
-    status: Attribute.Enumeration<
-      ['Packaging', 'Verifying', 'Delivering', 'Complete']
-    >;
-=======
     status: Attribute.Enumeration<['Verifying', 'Packaging', 'Delivered']>;
->>>>>>> 3574936b276997dcee93937fd6a769e4ced1152c
     product: Attribute.Relation<
       'api::placed-order.placed-order',
       'manyToOne',
@@ -965,10 +956,7 @@ export interface ApiPlacedOrderPlacedOrder extends Schema.CollectionType {
       'manyToOne',
       'api::farm-post-new.farm-post-new'
     >;
-<<<<<<< HEAD
-=======
     payment: Attribute.Media;
->>>>>>> 3574936b276997dcee93937fd6a769e4ced1152c
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -1007,10 +995,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::category.category': ApiCategoryCategory;
       'api::farm-post-new.farm-post-new': ApiFarmPostNewFarmPostNew;
-<<<<<<< HEAD
-=======
       'api::news-promotion.news-promotion': ApiNewsPromotionNewsPromotion;
->>>>>>> 3574936b276997dcee93937fd6a769e4ced1152c
       'api::placed-order.placed-order': ApiPlacedOrderPlacedOrder;
     }
   }
