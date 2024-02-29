@@ -34,7 +34,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 publishedAt: new Date(),
                 picture: pictureObj,
                 promotion: false,
-                status: "Verified", //Change to pending
+                status: "Pending", //Change to pending
             },
         });
         return postEntry
@@ -100,6 +100,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Category: post.category["durianType"],
                 CategoryID: post.category.id,
                 Amount: post.amount,
+                NetAmount: post.amount - post["Sale"],
                 Price: post.price,
                 TotalSale: post["Sale"],
                 Picture: post.picture,
@@ -120,6 +121,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Category: row.Category,
                 CategoryID: row.CategoryID,
                 Amount: 0,
+                NetAmount: 0,
                 Price: row.Price,
                 TotalSale: 0,
                 Picture: row.Picture,
@@ -127,6 +129,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
             };
             acc[key].Id.push(row.id);
             acc[key].Amount += row.Amount;
+            acc[key].NetAmount += row.NetAmount;
             acc[key].TotalSale += row.TotalSale;
             return acc;
         }, {});
@@ -153,6 +156,13 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         for (const ID of data.Id) {
             const findPost = await strapi.entityService.findOne("api::farm-post-new.farm-post-new", ID, { populate: "*" })
             //console.log(findPost)
+            const totalSale = findPost.orders.reduce((acc, curr) => acc + curr.amount, 0);
+
+            // if ((findPost.amount - totalSale)<0) {
+            //     combinedData.push([]);
+            //     continue   
+            // }
+
             const returnData = {
                 id: findPost.id,
                 PostDate: findPost.createdAt,
@@ -162,7 +172,8 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 CategoryID: findPost.category.id,
                 Amount: findPost.amount,
                 Price: findPost.price,
-                TotalSale: findPost.orders.reduce((acc, curr) => acc + curr.amount, 0), //Total sale
+                TotalSale: totalSale, //Total sale
+                NetAmount: findPost.amount - totalSale,
                 Picture: findPost.picture,
                 Description: findPost.descriptions,
                 
@@ -174,7 +185,47 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
         return combinedData
         return ctx.body = { response: "Public detail" }
     },
+    async adminGet(ctx){
 
+        if (ctx.state.user.role.name != "Admin") {
+            return ctx.body = { response: "Invalid Role" }
+        }
+        console.log(ctx.state.user.role.name );
+        let entries = await strapi.db.query('api::farm-post-new.farm-post-new').findMany({
+            populate: {
+                owner: true,
+                category: true,
+                picture: true,
+                orders: true
+            },
+        });
+
+        //console.log(entries);
+        //console.log("Farm" + " : " + "category" + " : " + "amount" + " : " + "price");
+        for (let post of entries) {
+            const totalStock = post.orders.reduce((acc, curr) => acc + curr.amount, 0);
+            //console.log(totalStock);
+            post["Sale"] = totalStock
+        }
+        //console.log(entries);
+        const newData = entries.map(post => {
+            return {
+                id: post.id,
+                Farmer: post.owner.username,
+                Category: post.category["durianType"],
+                CategoryID: post.category.id,
+                Amount: post.amount,
+                NetAmount: post.amount - post["Sale"],
+                Price: post.price,
+                TotalSale: post["Sale"],
+                Promotion: post.promotion,
+                Status: post.status,
+                Picture: post.picture,
+                
+            }
+        })
+        return newData
+    }
     
 }));
 

@@ -54,7 +54,7 @@ const LoginApp = () => {
                     navigate('/');
                 }
                 if (result.data.role.name === 'Admin') {
-                    navigate('/');
+                    navigate('/Admin');
                 }
 
             }

@@ -12,5 +12,10 @@ module.exports = {
             path: '/detail',
             handler: 'farm-post-new.publicDetail'
         },
+        {
+            method: 'GET', 
+            path: '/adminget',
+            handler: 'farm-post-new.adminGet'
+        },
     ]
 }
