@@ -59,6 +59,7 @@ const UserProfile = () => {
                             </div>
                         }
                         <div className={windowWidth > 450 ? styles.size_pc : null}>
+                            {console.log(userdata)}
                             <div className={windowWidth > 450 ? null : styles.box_inside_profile}>
                                 <div className={styles.box_inside_text}>
                                     <div style={{display: 'flex'}}>

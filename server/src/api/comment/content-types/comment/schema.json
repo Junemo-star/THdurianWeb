@@ -1,0 +1,36 @@
+{
+  "kind": "collectionType",
+  "collectionName": "comments",
+  "info": {
+    "singularName": "comment",
+    "pluralName": "comments",
+    "displayName": "Comment"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "Star": {
+      "type": "string",
+      "required": false,
+      "default": "0"
+    },
+    "farm_post_new": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::farm-post-new.farm-post-new",
+      "inversedBy": "comments"
+    },
+    "comment": {
+      "type": "text",
+      "required": true
+    },
+    "users_permissions_user": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "plugin::users-permissions.user",
+      "inversedBy": "comments"
+    }
+  }
+}

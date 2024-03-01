@@ -17,7 +17,7 @@
 
 .box {
     width: 345px;
-    height: 680px;
+    height: auto;
     margin-top: 80px;
     background-color: #568203;
     border-radius: 25px;
@@ -26,6 +26,7 @@
     justify-content: center;
     align-items: center;
     padding: 10px;
+    margin-bottom: 150px;
 }
 
 .size_img {
@@ -42,7 +43,7 @@
     border-radius: 10px;
 }
 
-.text_head_inside {   
+.text_head_inside {
     color: white;
     font-weight: bold;
     font-size: 30px;
@@ -98,11 +99,10 @@
     border-style: hidden;
 }
 
-.size_select{
+.size_select {
     margin-top: 10px;
     width: 300px;
     background-color: #FFEF60
-    
 }
 
 .box_date {
@@ -121,19 +121,77 @@
     flex-direction: column;
 }
 
+.pos_pc {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+}
+
+.box_comment {
+    width: 95%;
+    height: auto;
+    /* background-color: #FFEF60; */
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+    border-radius: 10px;
+    margin-top: 0px;
+}
+
+.size_rating {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    height: auto;
+    background-color: #FFEF60;
+    border-radius: 10px;
+}
+
 @media (min-width: 450px) {
+    .pos_pc {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        flex-direction: row;
+        width: 100%;
+    }
+
     .box {
         width: 1000px;
-        height: 500px;
+        height: auto;
         margin-top: 80px;
-        background-color: #697E50;  
+        background-color: #697E50;
         border-radius: 25px;
         display: flex;
-        flex-direction: row;
+        flex-direction: column;
         justify-content: space-around;
         /* align-items: center; */
         /* padding: 10px; */
         margin: 100px;
+    }
+
+    .size_rating {
+        margin-left: 20px;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        align-items: center;
+        width: 95%;
+        height: auto;
+        background-color: #FFEF60;
+        border-radius: 10px;
+    }
+
+    .box_comment {
+        width: 900px;
+        height: auto;
+        /* background-color: #FFEF60; */
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-radius: 10px;
+        margin-top: 0px;
     }
 
     .box_inside {
@@ -152,7 +210,7 @@
         margin-top: 20px;
         border-style: hidden;
     }
-    
+
     .text_describ {
         padding: 8px;
         height: 100%;

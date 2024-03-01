@@ -85,6 +85,12 @@
       "relation": "oneToMany",
       "target": "api::farm-post-new.farm-post-new",
       "mappedBy": "owner"
+    },
+    "comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
+      "mappedBy": "users_permissions_user"
     }
   }
 }

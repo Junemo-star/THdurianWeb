@@ -8,6 +8,7 @@ import useWindowWidth from '../componet/Check_size';
 import Footers from '../componet/Footerbar';
 import { Helmet } from "react-helmet";
 import NavbarHead from '../componet/Navbar';
+import RatingStarss from '../componet/RatingStar';
 
 
 const Detail = () => {
@@ -18,8 +19,12 @@ const Detail = () => {
     const [infomation, setInfomation] = useState()
     const [datalist, setDatalist] = useState([])
     const [num, setNum] = useState(0);
-
     const listdurian = durian.split(",")
+    const [userr, setUserr] = useState()
+
+    //ข้อมูล comment
+    const [commentt, setCommentt] = useState()
+    const [star, setStar] = useState("")
 
     const minus = () => {
         if (num > 0) {
@@ -68,7 +73,37 @@ const Detail = () => {
         window.location.reload();
     }
 
+    const ratingChangedd = (newRating) => {
+        // console.log(newRating);
+        let s = String(newRating)
+        setStar(s)
+        // console.log(typeof star);
+    };
+
+    const Postcomment = async () => {
+        try {
+            let num_id = Number(id)
+            const data = {
+                data: {
+                    comment: commentt,
+                    Star: star,
+                    farm_post_new: num_id,
+                    users_permissions_user: userr,
+                }
+            }
+            console.log(data)
+            let result = await axios.post("http://localhost:1337/api/comments", data, token)
+            console.log("success")
+            setCommentt("") 
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     useEffect(() => {
+        axios.get("http://localhost:1337/api/users/me", token)
+            .then((item) => setUserr(item.data.id)).catch((err) => console.log(err))
+
         show();
     }, [])
 
@@ -79,19 +114,85 @@ const Detail = () => {
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
 
+            {/* {console.log(userr)} */}
             {windowWidth > 450 && <NavbarHead />}
 
             {infomation && (
                 <div className={styles.box}>
+                    <div className={windowWidth > 450 ? styles.pos_pc : null}>
+                        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                            {infomation.Picture ? (
+                                <img className={styles.size_img} src={"http://localhost:1337" + infomation.Picture.url} />
+                            ) : (
+                                <img className={styles.size_img} src='/noimg.png' />
+                            )}
 
-                    <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
-                        {infomation.Picture ? (
-                            <img className={styles.size_img} src={"http://localhost:1337" + infomation.Picture.url} />
-                        ) : (
-                            <img className={styles.size_img} src='/noimg.png' />
-                        )}
+                            {windowWidth > 450 &&
+                                <div>
+                                    <div className={styles.box_date}>
+                                        วันที่วางจำหน่าย
+                                    </div>
+                                    <Form.Select className={styles.size_select} onChange={(event) => Change(event.target.value)}>
+                                        {datalist && datalist.slice().reverse().map((item) => (
+                                            <option key={item.id} value={item.id}>
+                                                {new Date(item.PostDate).toLocaleString("th-TH", {
+                                                    year: "numeric",
+                                                    month: "long",
+                                                    day: "numeric",
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                    hour12: false,
+                                                })}
+                                            </option>
+                                        ))}
+                                    </Form.Select>
+                                </div>
+                            }
+                        </div>
 
-                        {windowWidth > 450 &&
+                        <div className={windowWidth > 450 ? styles.box_inside_pc : styles.box_inside}>
+                            <div style={{ padding: "15px" }}>
+                                <div className={styles.text_head_inside}>
+                                    {infomation.Category}<br />
+                                    ราคา : {infomation.Price} บาท
+                                </div>
+                                <div className={styles.text_body_inside}>
+                                    สินค้าคงเหลือ : {infomation.Amount}
+                                </div>
+                            </div>
+
+                            <div className={styles.describ}>
+                                <div className={styles.text_describ}>
+                                    รายละเอียด : {infomation.Descriptions}
+                                </div>
+                                <div className={styles.text_body_inside} style={{ width: "fit-content", marginTop: "10px" }}>
+                                    สั่งซื้อ
+                                </div>
+                                <div className={styles.set_pos_r}>
+                                    <div onClick={() => minus()} style={{ marginRight: "10px", color: "#FFEF60" }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
+                                        </svg>
+                                    </div>
+                                    <div className={styles.box_num}>
+                                        {num}
+                                    </div>
+                                    <div onClick={() => plus()} style={{ marginLeft: "10px", color: "#FFEF60" }}>
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                            <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
+                                            <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <div className={styles.set_pos_r} >
+                                    <button className={styles.button_s} onClick={() => add()}>เพิ่มลงในตะกร้า</button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        {windowWidth < 450 &&
                             <div>
                                 <div className={styles.box_date}>
                                     วันที่วางจำหน่าย
@@ -114,69 +215,30 @@ const Detail = () => {
                         }
                     </div>
 
-                    <div className={windowWidth > 450 ? styles.box_inside_pc : styles.box_inside}>
-                        <div style={{ padding: "15px" }}>
-                            <div className={styles.text_head_inside}>
-                                {infomation.Category}<br />
-                                ราคา : {infomation.Price} บาท
-                            </div>
-                            <div className={styles.text_body_inside}>
-                                สินค้าคงเหลือ : {infomation.Amount}
+                    <div className={styles.box_comment}>
+                        <div style={{ fontSize: "25px", padding: "10px", color: "white" }}>
+                            เพิ่มความคิดเห็น
+                        </div>
+                        <div style={{ display: "flex", justifyContent: "center" }}>
+                            <div className={styles.size_rating}>
+                                <RatingStarss ratingChanged={ratingChangedd} starrr={star} />
+                                <Form.Label style={{ textDecoration: "left", display: "block", width: "95%", }}>ความคิดเห็น</Form.Label>
+                                <Form.Control
+                                    value={commentt}
+                                    as="textarea"
+                                    rows={3}
+                                    style={{ width: "95%", height: "100px", marginBottom: "20px", backgroundColor: "#8F3E00", borderRadius: "10px", color: "white", borderStyle: "hidden", padding: "10px" }}
+                                    onChange={(e) => setCommentt(e.target.value)}
+                                />
+                                <button
+                                    style={{ marginBottom: "10px", padding: "8px", borderRadius: "10px", borderStyle: "hidden", backgroundColor: "#8F3E00", color: "white" }}
+                                    onClick={() => Postcomment()}
+                                >
+                                    โพสต์
+                                </button>
                             </div>
                         </div>
-
-                        <div className={styles.describ}>
-                            <div className={styles.text_describ}>
-                                รายละเอียด : {infomation.Descriptions}
-                            </div>
-                            <div className={styles.text_body_inside} style={{ width: "fit-content", marginTop: "10px" }}>
-                                สั่งซื้อ
-                            </div>
-                            <div className={styles.set_pos_r}>
-                                <div onClick={() => minus()} style={{ marginRight: "10px", color: "#FFEF60" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                        <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
-                                    </svg>
-                                </div>
-                                <div className={styles.box_num}>
-                                    {num}
-                                </div>
-                                <div onClick={() => plus()} style={{ marginLeft: "10px", color: "#FFEF60" }}>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
-                                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
-                                        <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-                                    </svg>
-                                </div>
-                            </div>
-                            <div className={styles.set_pos_r} >
-                                <button className={styles.button_s} onClick={() => add()}>เพิ่มลงในตะกร้า</button>
-                            </div>
-                        </div>
-
                     </div>
-
-                    {windowWidth < 450 &&
-                        <div>
-                            <div className={styles.box_date}>
-                                วันที่วางจำหน่าย
-                            </div>
-                            <Form.Select className={styles.size_select} onChange={(event) => Change(event.target.value)}>
-                                {datalist && datalist.slice().reverse().map((item) => (
-                                    <option key={item.id} value={item.id}>
-                                        {new Date(item.PostDate).toLocaleString("th-TH", {
-                                            year: "numeric",
-                                            month: "long",
-                                            day: "numeric",
-                                            hour: "numeric",
-                                            minute: "numeric",
-                                            hour12: false,
-                                        })}
-                                    </option>
-                                ))}
-                            </Form.Select>
-                        </div>
-                    }
                 </div>
             )}
 

@@ -55,7 +55,6 @@ const PostgardenPC = () => {
         console.log(pictureId)
         try {
             let result = await axios.post("http://localhost:1337/api/farm-post-news", {
-
                 note: note,
                 amount: amount,
                 location: location,

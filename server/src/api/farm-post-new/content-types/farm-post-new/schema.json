@@ -74,6 +74,12 @@
     "promotion": {
       "type": "boolean",
       "default": false
+    },
+    "comments": {
+      "type": "relation",
+      "relation": "oneToMany",
+      "target": "api::comment.comment",
+      "mappedBy": "farm_post_new"
     }
   }
 }

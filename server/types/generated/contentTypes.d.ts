@@ -776,6 +776,11 @@ export interface PluginUsersPermissionsUser extends Schema.CollectionType {
       'oneToMany',
       'api::farm-post-new.farm-post-new'
     >;
+    comments: Attribute.Relation<
+      'plugin::users-permissions.user',
+      'oneToMany',
+      'api::comment.comment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     createdBy: Attribute.Relation<
@@ -836,6 +841,47 @@ export interface ApiCategoryCategory extends Schema.CollectionType {
   };
 }
 
+export interface ApiCommentComment extends Schema.CollectionType {
+  collectionName: 'comments';
+  info: {
+    singularName: 'comment';
+    pluralName: 'comments';
+    displayName: 'Comment';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    Star: Attribute.String & Attribute.DefaultTo<'0'>;
+    farm_post_new: Attribute.Relation<
+      'api::comment.comment',
+      'manyToOne',
+      'api::farm-post-new.farm-post-new'
+    >;
+    comment: Attribute.Text & Attribute.Required;
+    users_permissions_user: Attribute.Relation<
+      'api::comment.comment',
+      'manyToOne',
+      'plugin::users-permissions.user'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::comment.comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::comment.comment',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
   collectionName: 'farm_post_news';
   info: {
@@ -873,6 +919,11 @@ export interface ApiFarmPostNewFarmPostNew extends Schema.CollectionType {
     >;
     picture: Attribute.Media;
     promotion: Attribute.Boolean & Attribute.DefaultTo<false>;
+    comments: Attribute.Relation<
+      'api::farm-post-new.farm-post-new',
+      'oneToMany',
+      'api::comment.comment'
+    >;
     createdAt: Attribute.DateTime;
     updatedAt: Attribute.DateTime;
     publishedAt: Attribute.DateTime;
@@ -994,6 +1045,7 @@ declare module '@strapi/types' {
       'plugin::users-permissions.role': PluginUsersPermissionsRole;
       'plugin::users-permissions.user': PluginUsersPermissionsUser;
       'api::category.category': ApiCategoryCategory;
+      'api::comment.comment': ApiCommentComment;
       'api::farm-post-new.farm-post-new': ApiFarmPostNewFarmPostNew;
       'api::news-promotion.news-promotion': ApiNewsPromotionNewsPromotion;
       'api::placed-order.placed-order': ApiPlacedOrderPlacedOrder;
