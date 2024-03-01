@@ -42,7 +42,7 @@ const Delivery = () => {
                 <Stack gap={2} >
                   {order.Status === 'Packaging' ? (
                     <Stack direction="horizontal" gap={2}>
-                      <div><img src="packing.png" className={styles.packimg} style={{ layout: "fill" }} /></div>
+                      <div><img src="box-seam.svg" className={styles.packimg}  /></div>
                       <div className={styles.text2}>
                         <p>กำลังจัดเตรียมสินค้า</p>
                       </div>
@@ -51,8 +51,8 @@ const Delivery = () => {
                   {order.Status === 'Complete' ? (
                     <Stack direction="horizontal" gap={2}>
                       <div>
-                      <img src="packing.png" className={styles.packimg} style={{ layout: "fill" }} />
-                      <img src="car.png" className={styles.packimg} style={{ layout: "fill" }} />
+                      <img src="box-seam.svg" className={styles.packimg} />
+                      <img src="truck.svg" className={styles.packimg}  />
                       </div>
                       <div className={styles.text2}>
                         <p>กำลังจัดเตรียมสินค้า</p>
