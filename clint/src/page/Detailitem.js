@@ -15,6 +15,7 @@ import RatingStarsFix from '../componet/RatingStarFix';
 const Detail = () => {
     const windowWidth = useWindowWidth();
     const { id, durian } = useParams()
+    const Num_id = Number(id)
     const { token, Addcart } = useAuth()
     const navigate = useNavigate()
     const [infomation, setInfomation] = useState()
@@ -106,8 +107,13 @@ const Detail = () => {
         axios.get("http://localhost:1337/api/users/me", token)
             .then((item) => setUserr(item.data.id)).catch((err) => console.log(err))
 
-        axios.get("http://localhost:1337/api/comments?populate=*", token)
-            .then((item) => setUserComment(item.data.data)).catch((err) => console.log(err))
+        axios.get(`http://localhost:1337/api/comments?populate[farm_post_new][filters][id][$eq]=${Num_id}&populate[users_permissions_user]=*`, token)
+            .then((item) => {
+                const filteredData = item.data.data.filter(item => 
+                    item.attributes.farm_post_new.data !== null
+                );
+                setUserComment(filteredData)
+            }).catch((err) => console.log(err))
 
         show();
     }, [])
@@ -119,7 +125,7 @@ const Detail = () => {
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
 
-            {console.log(userComment)}
+            {/* {console.log(userComment)} */}
             {windowWidth > 450 && <NavbarHead />}
 
             {infomation && (
@@ -250,22 +256,23 @@ const Detail = () => {
                             ความคิดเห็นทั้งหมด
                         </div>
                         <div style={{ display: "flex", justifyContent: "center" }}>
-                            <div className={styles.scroll_rating} style={{padding: "30px"}}>
-                                {userComment?.map(({ id, attributes }) => (
-                                    <div className={styles.scroll} style={{marginBottom: "20px", color: "white"}} key={id}>
-                                        <div style={{ display: "flex", justifyContent: "left", width: "100%", alignItems: "center", paddingLeft: "10px", paddingTop: "10px", paddingRight: "10px" }}>
-                                            <img src="/user.png" style={{ layout: "fill", width: "40px", height: "40px", marginRight: "10px" }} />
-                                            <div>{attributes.users_permissions_user.data.attributes.firstname} {attributes.users_permissions_user.data.attributes.surname}</div>
+                            <div className={styles.scroll_rating} style={{ padding: "30px" }}>
+                                {userComment !== null ? (
+                                    userComment?.map(({ id, attributes }) => (
+                                        <div className={styles.scroll} style={{ marginBottom: "20px", color: "white" }} key={id}>
+                                            <div style={{ display: "flex", justifyContent: "left", width: "100%", alignItems: "center", paddingLeft: "10px", paddingTop: "10px", paddingRight: "10px" }}>
+                                                <img src="/user.png" style={{ layout: "fill", width: "40px", height: "40px", marginRight: "10px" }} />
+                                                <div>{attributes.users_permissions_user.data.attributes.firstname} {attributes.users_permissions_user.data.attributes.surname}</div>
+                                            </div>
+                                            <div style={{ display: "flex", justifyContent: "left", width: "100%", alignItems: "center", paddingLeft: "10px" }}>
+                                                <RatingStarsFix how={attributes.Star === "" ? 0 : attributes.Star} /> {new Date(attributes.createdAt).toLocaleDateString('th-TH')}
+                                            </div>
+                                            <div style={{ display: "flex", justifyContent: "left", width: "100%", alignItems: "center", paddingLeft: "10px", paddingRight: "10px", paddingBottom: "10px" }}>
+                                                {attributes.comment}
+                                            </div>
                                         </div>
-                                        <div style={{ display: "flex", justifyContent: "left", width: "100%", alignItems: "center", paddingLeft: "10px" }}>
-                                            {/* star : {attributes.Star === "" ? 0 : attributes.Star} {new Date(attributes.createdAt).toLocaleDateString('th-TH')} */}
-                                            <RatingStarsFix how={attributes.Star === "" ? 0 : attributes.Star} /> {new Date(attributes.createdAt).toLocaleDateString('th-TH')}
-                                        </div>
-                                        <div style={{ display: "flex", justifyContent: "left", width: "100%", alignItems: "center", paddingLeft: "10px", paddingRight: "10px", paddingBottom: "10px" }}>
-                                            {attributes.comment}
-                                        </div>
-                                    </div>
-                                ))}
+                                    ))
+                                ) : null}
                             </div>
                         </div>
                     </div>
