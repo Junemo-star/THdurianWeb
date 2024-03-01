@@ -149,6 +149,28 @@
     border-radius: 10px;
 }
 
+.scroll_rating {
+
+    width: 95%;
+    /* height: auto; */
+    background-color: #FFEF60;
+    border-radius: 10px;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.scroll {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 95%;
+    height: auto;
+    background-color: #8F3E00;
+    border-radius: 10px;
+}
+
+
 @media (min-width: 450px) {
     .pos_pc {
         display: flex;
