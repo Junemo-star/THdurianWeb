@@ -35,6 +35,7 @@ const LoginApp = () => {
             const saveTokenToLocalStorage = (tokenn) => {
                 localStorage.setItem('jwtToken', tokenn);        //เก็บ jwt token
             }
+            console.log(result.data.jwt)
             saveTokenToLocalStorage(result.data.jwt)
 
             //เช็ค role

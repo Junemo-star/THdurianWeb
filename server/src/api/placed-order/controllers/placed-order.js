@@ -45,6 +45,7 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
         return newData
     },
     async create(ctx){
+        
         const data = ctx.request["body"];
         //console.log(data);
         const findCatagoryById = await strapi.entityService.findOne("api::category.category", data.CategoryID)

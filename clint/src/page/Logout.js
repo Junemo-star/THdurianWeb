@@ -6,6 +6,7 @@ const Logout = () => {
     const navigate = useNavigate();
     useEffect(() => {
         localStorage.setItem('user', "")
+        localStorage.setItem('jwtToken', "")
         navigate('/Login')  
     }, [navigate])  
     

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tag, Radio } from 'antd';
+import { Card, Tag, Radio, Space, Button } from 'antd';
 import styles from '../css/CssAdmin.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import NavbarHead from '../componet/Navbar';
@@ -16,14 +16,14 @@ const UPDATE_URL = "http://localhost:1337/api/farm-post-news";
 
 const statusOptions = [
     {
-      label: 'Verified',
-      value: 'Verified',
+        label: 'Verified',
+        value: 'Verified',
     },
     {
-      label: 'Denied',
-      value: 'Denied',
+        label: 'Denied',
+        value: 'Denied',
     },
-  ];
+];
 
 const HomeApp = () => {
     const { userRole } = useAuth();
@@ -54,133 +54,103 @@ const HomeApp = () => {
     const onRadioChange = async (value, add) => {
         console.log('radio1 checked', value.target.value);
         console.log(add)
-        const response = await axios.put(UPDATE_URL + `/${add}`, 
-        {
-            "data":{
-                "status": value.target.value
+        const response = await axios.put(UPDATE_URL + `/${add}`,
+            {
+                "data": {
+                    "status": value.target.value
+                }
+
             }
-            
-        }
-        ,config);
+            , config);
         fetchItems()
-      };
+    };
 
     const fetchItems = async () => {
         try {
-            
-            
+
+
             const response = await axios.get(ADMIN_URL, config);
             const data = response.data
             console.log(data)
             let products;
-            if (sessionStorage.getItem("typedurian")) {
-                const choose = sessionStorage.getItem("typedurian");
-                const filterdata = response.data.filter(item => item.Category === choose);
 
-                products = filterdata.map((item) => {
-                    let url = "2.jpg";
-                    if (item.Picture) {
-                        url = "http://localhost:1337" + item.Picture.url;
-                        // console.log(item.Picture.url)
-                    }
-                    return (
-                        <Link onClick={() => idpost(item.Id)} key={item.Id}>
-                            <div className={styles.products_item}>
-                                <div className={styles.products_img}>
-                                    <div className={styles.products_garden}>
-                                        {item.Category}
-                                    </div>
-                                    <div style={{ width: "188px", height: "259px" }}>
-                                        <img src={url} style={{ height: "100%" }} />
-                                    </div>
-                                </div>
-                                <div className={styles.products_detail_pos}>
-                                    <div style={{ fontSize: "12px" }}>
-                                        {item.Farmer}
-                                    </div>
-                                    <div style={{ fontSize: "15px" }}>
-                                        ราคา {item.Price} บาท/กก.
-                                    </div>
-                                    <div style={{ fontSize: "15px" }}>
-                                        Stock {item.Amount} kg.
-                                    </div>
-                                    <div style={{ fontSize: "15px" }}>
-                                        NetStock {item.NetAmount} kg.
-                                    </div>
-                                    <div style={{ fontSize: "10px" }}>
-                                        ขายไปแล้ว {item.TotalSale} กก
-                                    </div>
-                                </div>
-                            </div>
-                        </Link>
-                    );
-                });
-            } else {
-                products = data.map((item) => {
-                    let url = "2.jpg";
-                    if (item.Picture) {
-                        url = "http://localhost:1337" + item.Picture.url;
-                        // console.log(item.Picture.url)
-                    }
-                    let tagColor = "red"
-                    if (item.Status == "Verified") {
-                        tagColor = "green-inverse"
-                    } else if (item.Status == "Pending") {
-                        tagColor = "orange-inverse"
-                    } else if (item.Status == "Denied") {
-                        tagColor = "red-inverse"
-                    }
+            products = data.map((item) => {
+                let url = "2.jpg";
+                if (item.Picture) {
+                    url = "http://localhost:1337" + item.Picture.url;
+                    // console.log(item.Picture.url)
+                }
+                let tagColor = "red"
+                if (item.Status == "Verified") {
+                    tagColor = "green-inverse"
+                } else if (item.Status == "Pending") {
+                    tagColor = "orange-inverse"
+                } else if (item.Status == "Denied") {
+                    tagColor = "red-inverse"
+                }
 
 
-                    return (
-                        <Card
-                            size="small"
-                            hoverable
-                            style={{
-                                width: 188,
-                            }}
-                            cover={<div style={{ width: "188px", height: "140px" }}>
-                                <div className={styles.products_garden}>
-                                    {item.Category}
-                                </div>
+                return (
+                    <Card
+                        size="small"
+                        hoverable
+                        style={{
+                            width: 188,
+                        }}
+                        cover={<div style={{ width: "188px", height: "140px" }}>
+                            <div className={styles.products_garden}>
+                                {item.Category}
+                            </div>
 
-                                <img src={url} style={{ height: "100%", width: "100%" }} />
-                            </div>}
-                        >
+                            <img src={url} style={{ height: "100%", width: "100%" }} />
+                        </div>}
+                    >
 
-                            <div style={{ fontSize: "15px" }}>
-                                {item.Farmer}
-                            </div>
-                            <div style={{ fontSize: "15px" }}>
-                                Price {item.Price} Baht/kg.
-                            </div>
-                            <p></p>
-                            <div style={{ fontSize: "10px" }}>
-                                Original Stock {item.Amount} kg.
-                            </div>
-                            <div style={{ fontSize: "15px" }}>
-                                Net Stock {item.NetAmount} kg.
-                            </div>
-                            <div style={{ fontSize: "15px" }}>
-                                Total Sale {item.TotalSale} kg
-                            </div>
-                            <div style={{ fontSize: "15px" }}>
-                                Status <Tag color={tagColor}>{item.Status}</Tag>
-                            </div>
-                            <br></br>
-                            <Radio.Group
-                                options={statusOptions}
-                                onChange={(e) => onRadioChange(e, item.id)}
-                                value={item.Status}
-                                optionType="button"
-                                buttonStyle="solid"
-                            />
+                        <div style={{ fontSize: "15px" }}>
+                            {item.Farmer}
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
+                            Price {item.Price} Baht/kg.
+                        </div>
+                        <p></p>
+                        <div style={{ fontSize: "10px" }}>
+                            Original Stock {item.Amount} kg.
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
+                            Net Stock {item.NetAmount} kg.
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
+                            Total Sale {item.TotalSale} kg
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
+                            Status: <Tag color={tagColor}>{item.Status}</Tag>
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
 
-                        </Card>
+                            Date: {new Date(item.CreatedDate).toLocaleString("en-EN", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false,
+                            })}
+                        </div>
 
-                    );
-                });
-            }
+                        <br></br>
+                        <Radio.Group
+                            options={statusOptions}
+                            onChange={(e) => onRadioChange(e, item.id)}
+                            value={item.Status}
+                            optionType="button"
+                            buttonStyle="solid"
+                        />
+
+                    </Card>
+
+                );
+            });
+
 
             setProduct(products);
         } catch (err) {
@@ -207,9 +177,15 @@ const HomeApp = () => {
                 </div>
             </div> */}
 
-            <div className={styles.products_con}>
-                {product}
+            <div className="space-align-block" >
+                <Space size={[8, 16]} wrap>
+                    {product}
+                </Space>
             </div>
+
+
+
+
 
             <Modaldurian show={showModal} handleClose={() => handleCloseModal()} />
 

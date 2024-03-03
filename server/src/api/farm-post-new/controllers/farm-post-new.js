@@ -221,7 +221,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 Promotion: post.promotion,
                 Status: post.status,
                 Picture: post.picture,
-                
+                CreatedDate: post.createdAt
             }
         })
         return newData
