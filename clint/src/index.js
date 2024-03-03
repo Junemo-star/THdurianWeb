@@ -21,6 +21,7 @@ import Detail from './page/Detailitem';
 import UsergardenPc from './page/UsergardenPc';
 import PostgardenPC from './page/PostgardenrPC';
 import RegisterPc from './page/RegisterPc';
+import DeliveryPc from './page/DeliveryPC';
 
 
 const router = createBrowserRouter([
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
   {
     path: "/Delivery",
     element: <Delivery />
+  },
+  {
+    path: "/Deliverys",
+    element: <DeliveryPc />
   },
   {
     path: "/Status",

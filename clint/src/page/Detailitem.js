@@ -174,7 +174,8 @@ const Detail = () => {
 
                             <div className={styles.describ}>
                                 <div className={styles.text_describ}>
-                                    รายละเอียด : {infomation.Descriptions}
+                                    {console.log(infomation)}
+                                    รายละเอียด : {infomation.Description}
                                 </div>
                                 <div className={styles.text_body_inside} style={{ width: "fit-content", marginTop: "10px" }}>
                                     สั่งซื้อ
