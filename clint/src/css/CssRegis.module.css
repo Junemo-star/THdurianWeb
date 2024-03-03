@@ -19,7 +19,7 @@
 }
 
 .Formlogin {
-    background-color: #568203;
+    background-color: #697E50;
     margin: 20px 20px 20px 20px;
     border-radius: 25px;
     border: None;
@@ -51,12 +51,13 @@
     width: 230px;
     height: 44px;
     padding: 8px;
+    background-color: #FFEF60;
 }
 
 .botton_box {
     border-radius: 10px;
-    background-color: #B0BF07;
-    color: white;
+    background-color: #FFEF60;
+    color: black;
     border-style: hidden;
     font-weight: bold;
     font-size: 20px;

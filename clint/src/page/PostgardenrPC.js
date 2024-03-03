@@ -6,7 +6,7 @@ import useWindowWidth from '../componet/Check_size';
 import NavbarHead from '../componet/Navbar';
 import { Helmet } from "react-helmet";
 import styles from '../css/CssUsergardenPc.module.css'
-import { Form } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 
 
 const PostgardenPC = () => {
@@ -93,18 +93,18 @@ const PostgardenPC = () => {
                                 onChange={handleChange}
                                 style={{ width: "100%", height: "100%", position: "absolute", top: "0", left: "0", opacity: "0", cursor: "pointer" }}
                             />
-                            <div style={{display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column"}}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#8F3E00" class="bi bi-image" viewBox="0 0 16 16" >
-                                <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
-                                <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z" />
-                            </svg><br />
-                            <h6>อัพโหลดรูปภาพ</h6>
+                            <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="#8F3E00" class="bi bi-image" viewBox="0 0 16 16" >
+                                    <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0" />
+                                    <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1z" />
+                                </svg><br />
+                                <h6>อัพโหลดรูปภาพ</h6>
                             </div>
                         </div>
 
                         <div style={{ width: "500px", color: "white" }}>
-                            <div style={{ display: "flex", marginTop: "10px" }}>
-                                <span style={{ marginRight: "10px" }}>พันธุ์เรียน :</span>
+                            <div style={{ display: "flex", alignItems: "center",marginTop: "10px" }}>
+                                <span style={{ marginRight: "10px", width: "82.73px" }}>พันธุ์เรียน :</span>
                                 <Form.Select onChange={(e) => setIdSpecies(e.target.value)} style={{ width: "250px", backgroundColor: "#FFEF60" }}>
                                     <option>เลือกสายพันธุ์</option>
                                     {species && species?.map(({ id, attributes }) => (
@@ -113,22 +113,24 @@ const PostgardenPC = () => {
                                 </Form.Select>
                             </div>
 
-                            <div style={{ marginTop: "20px" }}>
-                                ราคา : <input
+                            <div style={{ display: "flex", alignItems: "center",marginTop: "20px" }}>
+                                <span style={{ marginRight: "10px", width: "82.73px" }}>ราคา : </span>
+                                <input
                                     type='number'
-                                    style={{ marginRight: '10px', borderRadius: "10px", borderStyle: "hidden", backgroundColor: "#FFEF60", color: "black", padding: "10px" }}
+                                    style={{ borderRadius: "10px", borderStyle: "hidden", backgroundColor: "#FFEF60", color: "black", padding: "10px" }}
                                     onChange={(e) => setPrice(e.target.value)}
                                 />
                             </div>
 
-                            <div style={{ marginTop: "20px" }}>
-                                จำนวน : <input
+                            <div style={{ display: "flex", alignItems: "center",marginTop: "20px" }}>
+                            <span style={{ marginRight: "10px", width: "82.73px" }}>จำนวน : </span>
+                                <input
                                     style={{ borderRadius: "10px", borderStyle: "hidden", backgroundColor: "#FFEF60", color: "black", padding: "10px" }}
                                     type='number'
                                     onChange={(e) => setAmount(e.target.value)} />
                             </div>
 
-                            <div style={{ marginTop: "20px", display: "flex" }}>
+                            <div style={{ display: "flex", alignItems: "center",marginTop: "20px" }}>
                                 <span style={{ marginRight: "10px" }}>รายละเอียด : </span>
                                 <Form.Control
                                     as="textarea"
@@ -139,8 +141,8 @@ const PostgardenPC = () => {
                                 />
                             </div>
 
-                            <div style={{ marginTop: "20px", display: "flex" }}>
-                                <span style={{ marginRight: "10px" }}>note : </span>
+                            <div style={{ marginTop: "20px", display: "flex", alignItems: "center" }}>
+                                <span style={{ marginRight: "10px", width: "82.73px" }}>note : </span>
                                 <Form.Control
                                     as="textarea"
                                     rows={2}
@@ -150,18 +152,19 @@ const PostgardenPC = () => {
                                 />
                             </div>
 
-                            <div style={{ marginTop: "20px", display: "flex" }}>
-                            <span style={{ marginRight: "10px" }}>location : </span>
-                            <Form.Control
-                                as="textarea"
-                                rows={2}
-                                style={{ borderStyle: "hidden", width: "250px", backgroundColor: "#FFEF60" }}
-                                placeholder='location : '
-                                onChange={(e) => setLocation(e.target.value)}
-                            />
-                        </div>
+                            <div style={{ marginTop: "20px", display: "flex", alignItems: "center"}}>
+                                <span style={{ marginRight: "10px", width: "82.73px" }}>location : </span>
+                                <Form.Control
+                                    as="textarea"
+                                    rows={2}
+                                    style={{ borderStyle: "hidden", width: "250px", backgroundColor: "#FFEF60" }}
+                                    placeholder='location : '
+                                    onChange={(e) => setLocation(e.target.value)}
+                                />
+                            </div>
                         </div>
                     </div>
+
                     <div style={{ marginTop: "20px" }}>
                         <button style={{ backgroundColor: "#FFEF60", padding: "10px", borderRadius: "10px", borderStyle: "hidden" }} onClick={handleSubmit}>
                             ยืนยันการโพส

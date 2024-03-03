@@ -106,7 +106,8 @@ const PostGarden = () => {
                             <Form.Control
                                 as="textarea"
                                 rows={2}
-                                style={{ borderStyle: "hidden" }}
+                                className={styles.color_placehoder}
+                                // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                 placeholder='note : '
                                 onChange={(e) => setNote(e.target.value)}
                             />
@@ -115,7 +116,8 @@ const PostGarden = () => {
                             <Form.Control
                                 as="textarea"
                                 rows={2}
-                                style={{ borderStyle: "hidden" }}
+                                className={styles.color_placehoder}
+                                // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                 placeholder='location : '
                                 onChange={(e) => setLocation(e.target.value)}
                             />
@@ -123,7 +125,7 @@ const PostGarden = () => {
 
                         <input type="file" accept="image/*" name='file' onChange={handleChange} className={styles.button_input} />
 
-                        <div className={styles.text3}>
+                        <div className={styles.text3} style={{color: "black"}}>
 
                             ราคา : <input 
                                         className={styles.input_price} 
@@ -151,7 +153,8 @@ const PostGarden = () => {
                                 <Form.Control
                                     as="textarea"
                                     rows={3}
-                                    style={{ borderStyle: "hidden" }}
+                                    className={styles.color_placehoder}
+                                    // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                     placeholder='รายละเอียด : '
                                     onChange={(e) => setDetail(e.target.value)}
                                 />

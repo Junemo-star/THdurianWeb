@@ -12,7 +12,7 @@ import { Helmet } from "react-helmet";
 
 
 const PUBLIC_URL = "http://localhost:1337/api/public";
-const PROMOTION = "http://localhost:1337/api/news-promotions?populate=*"
+const PROMOTION = "http://localhost:1337/api/news-promotions"
 
 const HomeApp = () => {
     const { userRole } = useAuth();
@@ -42,7 +42,7 @@ const HomeApp = () => {
         try {
             const response = await axios.get(PUBLIC_URL);
             const promo = await axios.get(PROMOTION);
-            setPromotionItem(promo.data.data)
+            setPromotionItem(promo.data)
             const data = response.data
             console.log(data)
             let products;
@@ -140,14 +140,12 @@ const HomeApp = () => {
 
             {console.log("Promotion", promotionItem)}
 
-            {/* {console.log(userRole)} */}
-
             {promotionItem && (
                 <Carousel fade style={{marginTop: "20px"}}>
-                    {promotionItem.map(({ id, attributes }) => (
+                    {promotionItem.map(({ id, picture }) => (
                         <Carousel.Item key={id} >
                             <div className={styles.Carousel_img} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                <Image src={"http://localhost:1337" + attributes.picture.data.attributes.url} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}/>
+                                <Image src={"http://localhost:1337" + picture.url} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}/>
                             </div>
                         </Carousel.Item>
                     ))}
