@@ -11,8 +11,10 @@ import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
 
 const { Meta } = Card;
-const ADMIN_URL = "http://localhost:1337/api/adminget";
-const UPDATE_URL = "http://localhost:1337/api/farm-post-news";
+const head = "http://localhost:1337"
+const ADMIN_URL = head + "/api/adminget";
+const UPDATE_URL = head + "/api/farm-post-news";
+const PROMO_URL = head + "/api/adminPromo";
 
 const statusOptions = [
     {
@@ -25,11 +27,27 @@ const statusOptions = [
     },
 ];
 
+const promoOptions = [
+    {
+        label: 'Auto',
+        value: 'Auto',
+    },
+    {
+        label: 'Active',
+        value: 'Active',
+    },
+    {
+        label: 'Inactive',
+        value: 'Inactive',
+    },
+];
+
 const HomeApp = () => {
     const { userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const navigate = useNavigate()
     const [product, setProduct] = useState([])
+    const [promo, setPromo] = useState([])
     const [showModal, setShowModal] = useState(false);
     const [searchhh, setSearchhh] = useState('ก้านยาว')
 
@@ -71,13 +89,12 @@ const HomeApp = () => {
 
             const response = await axios.get(ADMIN_URL, config);
             const data = response.data
-            console.log(data)
-            let products;
+            //console.log(data)
 
-            products = data.map((item) => {
+            const products = data.map((item) => {
                 let url = "2.jpg";
                 if (item.Picture) {
-                    url = "http://localhost:1337" + item.Picture.url;
+                    url = head + item.Picture.url;
                     // console.log(item.Picture.url)
                 }
                 let tagColor = "red"
@@ -95,9 +112,9 @@ const HomeApp = () => {
                         size="small"
                         hoverable
                         style={{
-                            width: 188,
+                            width: 250,
                         }}
-                        cover={<div style={{ width: "188px", height: "140px" }}>
+                        cover={<div style={{ width: "250px", height: "180px" }}>
                             <div className={styles.products_garden}>
                                 {item.Category}
                             </div>
@@ -150,9 +167,84 @@ const HomeApp = () => {
 
                 );
             });
-
-
             setProduct(products);
+
+            const Proresponse = await axios.get(PROMO_URL, config);
+
+            const Prodata = Proresponse.data
+            console.log(Prodata)
+            const promotions = Prodata.map((item) => {
+                let url = "2.jpg";
+                if (item.picture) {
+                    url = head + item.picture.url;
+                    // console.log(item.Picture.url)
+                }
+                let tagColor = "red"
+                if (item.activation == "Auto") {
+                    tagColor = "blue-inverse"
+                } else if (item.activation == "Active") {
+                    tagColor = "green-inverse"
+                } else if (item.activation == "Inactive") {
+                    tagColor = "red-inverse"
+                }
+
+
+                return (
+                    <Card
+                        size="small"
+                        hoverable
+                        style={{
+                            width: 400,
+                        }}
+                        cover={<div style={{ width: "400px", height: "300px" }}>
+
+                            <img src={url} style={{ height: "100%", width: "100%" }} />
+                        </div>}
+                    >
+
+
+                        <div style={{ fontSize: "15px" }}>
+                            Status: <Tag color={tagColor}>{item.activation}</Tag>
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
+
+                            Start Date: {new Date(item.startDate).toLocaleString("en-EN", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false,
+                            })}
+                        </div>
+
+                        <div style={{ fontSize: "15px" }}>
+
+                            End Date: {new Date(item.endDate).toLocaleString("en-EN", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false,
+                            })}
+                        </div>
+
+                        <br></br>
+                        <Radio.Group
+                            options={promoOptions}
+                            //onChange={(e) => onRadioChange(e, item.id)}
+                            value={item.activation}
+                            optionType="button"
+                            buttonStyle="solid"
+                        />
+
+                    </Card>
+
+                );
+
+            })
+            setPromo(promotions);
         } catch (err) {
             //console.log(err)
         } finally { }
@@ -176,12 +268,15 @@ const HomeApp = () => {
                     <h2>รายการสินค้าประจำวัน</h2>
                 </div>
             </div> */}
+            <Space size={[8, 16]} wrap>
+                {promo}
+            </Space>
 
-            <div className="space-align-block" >
-                <Space size={[8, 16]} wrap>
-                    {product}
-                </Space>
-            </div>
+
+            <Space size={[8, 16]} wrap>
+                {product}
+            </Space>
+
 
 
 
