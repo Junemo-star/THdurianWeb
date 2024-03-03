@@ -4,6 +4,7 @@ import Modaldurian from './Modal';
 import { useAuth } from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Logout from '../page/Logout';
 
 function NavbarHead() {
     const [showModal, setShowModal] = useState(false);
@@ -15,8 +16,6 @@ function NavbarHead() {
     const homee = () => navigate('/')
 
     const user = () => {
-        console.log("-----------------")
-        console.log(userRole)
         if (userRole === 'Customer') {
             navigate('/User');
         } else if (userRole === 'Farmer') {
@@ -32,14 +31,13 @@ function NavbarHead() {
 
     const handleLogout = () => {
         // Remove JWT Token from Local Storage
-        // window.localStorage.removeItem("jwtToken");
-        window.localStorage.removeItem("userRole");
-        setRole(null)
+        window.localStorage.removeItem("jwtToken");
         // Clear Authorization Header in Axios Defaults
         axios.defaults.headers.common.Authorization = "";
+        setRole(null)
         // Navigate to the "/" path (adjust this if using a different routing library)
         navigate("/");
-    }
+      }
 
     return (
         <Navbar expand="xxl" style={{ width: "100%", fontWeight: "bold", backgroundColor: "#697E50" }}>

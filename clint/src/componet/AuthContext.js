@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
     return storedRole || null;
   });
 
+  // const [userRole, setUserRole] = useState();
+
   const token = {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -19,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   const setRole = (role) => {
     setUserRole(role);
     // เมื่อมีการเปลี่ยนแปลง userRole, บันทึกลง Local Storage
-    localStorage.setItem('userRole', role);
+    // localStorage.setItem('userRole', role);
   };
 
   // ตรวจสอบ Local Storage เมื่อ App โหลด

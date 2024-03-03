@@ -2,82 +2,16 @@
     height: 100%;
 }
 
-.headweb {
-    display: flex;
-    justify-content: center;
-    color: white;
-    background-color: #418300;
-    width: fit-content;
-    border-radius: 25px;
-    padding: 15px;
-}
-
-.headweb h2 {
-    margin: 0px;
-}
-
-.headweb_pos {
-    display: flex;
-    justify-content: center;
-}
-
 .Carousel_img {
-    display: block;
-    width: 100%;
-    height: 400px;
-}
-
-.promotion_banner {
-    position: absolute;
-    right: 45%;
-    top: 17%;
-    transform: rotate(-10deg);
-    z-index: 1;
-}
-
-.promotion_img {
-    width: 60vw;
+    width: 412px;
+    height: auto;
+    padding: 10px;
 }
 
 .Container_all {
     display: flex;
     justify-content: center;
     align-items: center;
-}
-
-.Card_sale {
-    border-radius: 5px;
-    width: 180px;
-    height: 200px;
-    background-color: #FFEB34;
-    align-items: flex-end;
-    display: flex;
-    flex-direction: column;
-}
-
-.CardBody {
-    flex-grow: 1;
-    padding: 0px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.Box_name_garden {
-    background-color: #C1FF84;
-    width: fit-content;
-    height: 20px;
-    color: black;
-    font-weight: bold;
-    margin: 10px;
-    border-radius: 25px;
-    font-size: 8px;
-    position: absolute;
-}
-
-.Box_info_durian {
-    width: 100%;
-    border-radius: 10px;
 }
 
 .font_inbox {
@@ -149,24 +83,10 @@
 }
 
 @media (min-width: 450px) {
-    .Carousel_pos{
-        width: 1200px;
-    }
-
     .Carousel_img {
-        display: block;
-        width: 100%;
-        height: 400px;
-    }
-
-    .Card_sale {
-        border-radius: 5px;
-        width: 180px;
-        height: 203px;
-        background-color: #FFEB34;
-        align-items: flex-end;
-        display: flex;
-        flex-direction: column;
+        width: 1200px;
+        height: auto;
+        padding: 0px;
     }
 
     .products_item {
@@ -180,18 +100,6 @@
         border-radius: 5px;
         height: 100%;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-    }
-    
-    .promotion_img {
-        width: 30vw; 
-    }
-
-    .promotion_banner {
-        position: absolute;
-        transform: rotate(-9deg);
-        z-index: 1;
-        right: 75%;
-        top: 20%;
     }
 
     .products_con {

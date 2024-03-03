@@ -12,6 +12,7 @@ import { Helmet } from "react-helmet";
 
 
 const PUBLIC_URL = "http://localhost:1337/api/public";
+const PROMOTION = "http://localhost:1337/api/news-promotions?populate=*"
 
 const HomeApp = () => {
     const { userRole } = useAuth();
@@ -19,6 +20,7 @@ const HomeApp = () => {
     const navigate = useNavigate()
     const [product, setProduct] = useState([])
     const [showModal, setShowModal] = useState(false);
+    const [promotionItem, setPromotionItem] = useState(false);
     const [searchhh, setSearchhh] = useState('ก้านยาว')
 
     const handleCloseModal = () => {
@@ -39,6 +41,8 @@ const HomeApp = () => {
     const fetchItems = async () => {
         try {
             const response = await axios.get(PUBLIC_URL);
+            const promo = await axios.get(PROMOTION);
+            setPromotionItem(promo.data.data)
             const data = response.data
             console.log(data)
             let products;
@@ -124,6 +128,7 @@ const HomeApp = () => {
         fetchItems();
     }, [])
 
+
     return (
         <div className={styles.position_all}>
             <Helmet>
@@ -132,157 +137,22 @@ const HomeApp = () => {
             </Helmet>
 
             {windowWidth > 450 && <NavbarHead />}
-            {/* <div className={styles.headweb_pos}>
-                <div className={styles.headweb} style={{ marginTop: "65px" }}>
-                    <h2>รายการสินค้าประจำวัน</h2>
-                </div>
-            </div> */}
 
-            <Carousel style={{ top: "13px" }} className={styles.Carousel_pos}>
-                {/* หน้าแรกของการหมุน */}
-                <Carousel.Item>
-                    <div className={styles.Carousel_pos}>
-                        <Image className={styles.Carousel_img} src="promo.png" />
-                    </div>
+            {console.log("Promotion", promotionItem)}
 
-                    <Carousel.Caption style={{ padding: "0px", display: "flex", justifyContent: "center" }}>
+            {/* {console.log(userRole)} */}
 
-                        <Card className={styles.Card_sale} style={{ bottom: "80px", marginRight: "10px" }}>
-                            <div style={{ position: "absolute", right: "65%", top: "-15%", transform: "rotate(-20deg)" }}>
-                                <Image src="flashsale.png" style={{ layout: "fill", width: "80px" }} />
+            {promotionItem && (
+                <Carousel fade style={{marginTop: "20px"}}>
+                    {promotionItem.map(({ id, attributes }) => (
+                        <Carousel.Item key={id} >
+                            <div className={styles.Carousel_img} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
+                                <Image src={"http://localhost:1337" + attributes.picture.data.attributes.url} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}/>
                             </div>
-
-                            <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
-                                <div className={styles.Box_name_garden}>
-                                    <div style={{ padding: "4px" }}>
-                                        หมอนทอง
-                                    </div>
-                                </div>
-                                <Card.Img variant="top" src="2.jpg" />
-                            </div>
-
-                            <Card.Body style={{ padding: "6px", width: "100%", paddingTop: "5px" }}>
-                                <div className={styles.Box_info_durian}>
-                                    <Card.Text className={styles.font_inbox}>
-                                        <div style={{ fontSize: "12px" }}>
-                                            สวนนายดำ
-                                        </div>
-                                        <div style={{ fontSize: "14px" }}>
-                                            ราคา 200 บาท/กก.
-                                        </div>
-                                        <div style={{ fontSize: "10px" }}>
-                                            ขายไปแล้ว 800 กก
-                                        </div>
-                                    </Card.Text>
-                                </div>
-                            </Card.Body>
-                        </Card>
-
-                        <Card className={styles.Card_sale} style={{ bottom: "80px" }}>
-                            <div style={{ position: "absolute", right: "65%", top: "-15%", transform: "rotate(-20deg)" }}>
-                                <Image src="flashsale.png" style={{ layout: "fill", width: "80px" }} />
-                            </div>
-
-                            <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
-                                <div className={styles.Box_name_garden}>
-                                    <div style={{ padding: "4px" }}>
-                                        หมอนทอง
-                                    </div>
-                                </div>
-                                <Card.Img variant="top" src="2.jpg" />
-                            </div>
-
-                            <Card.Body style={{ padding: "6px", width: "100%", paddingTop: "5px" }}>
-                                <div className={styles.Box_info_durian}>
-                                    <Card.Text className={styles.font_inbox}>
-                                        <div style={{ fontSize: "12px" }}>
-                                            สวนนายดำ
-                                        </div>
-                                        <div style={{ fontSize: "14px" }}>
-                                            ราคา 200 บาท/กก.
-                                        </div>
-                                        <div style={{ fontSize: "10px" }}>
-                                            ขายไปแล้ว 800 กก
-                                        </div>
-                                    </Card.Text>
-                                </div>
-                            </Card.Body>
-                        </Card>
-
-                    </Carousel.Caption>
-                </Carousel.Item>
-
-                {/* หน้าสองของการหมุน */}
-                <Carousel.Item>
-                    <div className={styles.Carousel_pos}>
-                        <Image className={styles.Carousel_img} src="promo.png" />
-                    </div>
-
-                    <Carousel.Caption style={{ padding: "0px", display: "flex", justifyContent: "center" }}>
-                        <Card className={styles.Card_sale} style={{ bottom: "80px", marginRight: "10px" }}>
-                            <div style={{ position: "absolute", right: "65%", top: "-15%", transform: "rotate(-20deg)" }}>
-                                <Image src="flashsale.png" style={{ layout: "fill", width: "80px" }} />
-                            </div>
-
-                            <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
-                                <div className={styles.Box_name_garden}>
-                                    <div style={{ padding: "4px" }}>
-                                        หมอนทอง
-                                    </div>
-                                </div>
-                                <Card.Img variant="top" src="2.jpg" />
-                            </div>
-
-                            <Card.Body style={{ padding: "6px", width: "100%", paddingTop: "5px" }}>
-                                <div className={styles.Box_info_durian}>
-                                    <Card.Text className={styles.font_inbox}>
-                                        <div style={{ fontSize: "12px" }}>
-                                            สวนนายดำ
-                                        </div>
-                                        <div style={{ fontSize: "14px" }}>
-                                            ราคา 200 บาท/กก.
-                                        </div>
-                                        <div style={{ fontSize: "10px" }}>
-                                            ขายไปแล้ว 800 กก
-                                        </div>
-                                    </Card.Text>
-                                </div>
-                            </Card.Body>
-                        </Card>
-                        <Card className={styles.Card_sale} style={{ bottom: "80px" }}>
-                            <div style={{ position: "absolute", right: "65%", top: "-15%", transform: "rotate(-20deg)" }}>
-                                <Image src="flashsale.png" style={{ layout: "fill", width: "80px" }} />
-                            </div>
-
-                            <div style={{ width: "100%", display: "flex", justifyContent: "end" }}>
-                                <div className={styles.Box_name_garden}>
-                                    <div style={{ padding: "4px" }}>
-                                        หมอนทอง
-                                    </div>
-                                </div>
-                                <Card.Img variant="top" src="3.jpg" />
-                            </div>
-
-                            <Card.Body style={{ padding: "6px", width: "100%", paddingTop: "5px" }}>
-                                <div className={styles.Box_info_durian}>
-                                    <Card.Text className={styles.font_inbox}>
-                                        <div style={{ fontSize: "12px" }}>
-                                            สวนนายดำ
-                                        </div>
-                                        <div style={{ fontSize: "14px" }}>
-                                            ราคา 200 บาท/กก.
-                                        </div>
-                                        <div style={{ fontSize: "10px" }}>
-                                            ขายไปแล้ว 800 กก
-                                        </div>
-                                    </Card.Text>
-                                </div>
-                            </Card.Body>
-                        </Card>
-
-                    </Carousel.Caption>
-                </Carousel.Item>
-            </Carousel>
+                        </Carousel.Item>
+                    ))}
+                </Carousel>
+            )}
 
             <div className={styles.products_con}>
                 {product}
