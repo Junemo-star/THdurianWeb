@@ -31,7 +31,8 @@
     width: 150px;
     height: 150px;
     background-color: white;
-    border-radius: 50%;
+    /* border-radius: 50%; */
+    border-radius: 10px;
     position: relative;
     top: 80px;
 }
@@ -127,23 +128,27 @@
         margin: 0;
         height: 100%;
     }
-    
+
     .pos_img {
         display: flex;
         justify-content: center;
         align-items: center;
         flex-direction: column;
     }
-    
+
     .userimg {
         width: 150px;
+        /* ปรับขนาดตามต้องการ */
         height: 150px;
+        /* ปรับขนาดตามต้องการ */
+        /* border-radius: 50%; */
+        /* ทำให้ภาพเป็นรูปวงกลม */
+        object-fit: cover;
+        /* ป้องกันการยืดขยายภาพ */
         background-color: white;
-        border-radius: 50%;
-        position: relative;
         top: 0px;
     }
-    
+
     .box {
         width: 900px;
         height: 600px;
@@ -155,7 +160,7 @@
         align-items: center;
         margin: 100px;
     }
-    
+
     .box_inside_profile {
         width: 90%;
         height: 236px;
@@ -164,7 +169,7 @@
         margin-bottom: 20px;
         margin-Top: 70px;
     }
-    
+
     .body_history {
         border-radius: 10px;
         color: white;
@@ -183,4 +188,3 @@
         border-radius: 25px;
     }
 }
-
