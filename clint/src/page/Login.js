@@ -4,7 +4,7 @@ import NavbarHead from '../componet/Navbar';
 import styles from '../css/CssLogin.module.css'
 import Footers from '../componet/Footerbar';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { Link,useNavigate } from 'react-router-dom';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import toast, { Toaster } from 'react-hot-toast';
@@ -39,23 +39,22 @@ const LoginApp = () => {
             saveTokenToLocalStorage(result.data.jwt)
 
             //เช็ค role
-            result = await axios.get('http://localhost:1337/api/users/me?populate=role', token)
+            result = await axios.get('http://localhost:1337/api/users/me?populate=role', {
+                headers: {
+                  'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+                }
+              })
 
             if (result.data.role) {
 
                 localStorage.setItem('userRole', result.data.role.name)
-
+                localStorage.setItem('username', username)
                 setRole(localStorage.getItem('userRole'));
 
-                if (result.data.role.name === 'Customer') {
-                    navigate('/');
-                    toast.success('Successfully toasted!')
-                }
-                if (result.data.role.name === 'Farmer') {
-                    navigate('/');
-                }
                 if (result.data.role.name === 'Admin') {
                     navigate('/Admin');
+                } else {
+                    navigate('/')
                 }
 
             }
@@ -81,6 +80,8 @@ const LoginApp = () => {
                 <title>Login</title>
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
+
+            {/* {console.log(token)} */}
 
             {windowWidth > 450 && <NavbarHead />}
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
@@ -117,9 +118,10 @@ const LoginApp = () => {
                         </div>
                     </div>
 
-                    <div style={{marginTop: "10px"}}>
-                        <button className={styles.buttonlogin_re_lo} style={{ marginRight: "20px", backgroundColor: "#FFEF60", borderStyle: "hidden", fontWeight: "bold" }}>submit</button>
-                        <button className={styles.buttonlogin_re_lo} style={{ backgroundColor: "#FFEF60", borderStyle: "hidden", fontWeight: "bold"}} onClick={() => Regis()}>register</button>
+                    <div style={{marginTop: "10px", display: 'flex', flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
+                        <button className={styles.buttonlogin_re_lo} style={{backgroundColor: "#FFEF60", borderStyle: "hidden", fontWeight: "bold", display: 'flex', flexDirection: "column", justifyContent: "center", }}>เข้าสู่ระบบ</button>
+                        {/* <button className={styles.buttonlogin_re_lo} style={{ backgroundColor: "#FFEF60", borderStyle: "hidden", fontWeight: "bold"}} onClick={() => Regis()}>register</button> */}
+                        <Link style={{marginTop: "10px", color: "white"}} onClick={() => Regis()}>ยังไม่มีบัญชี ?</Link>
                     </div>
 
                 </Form>

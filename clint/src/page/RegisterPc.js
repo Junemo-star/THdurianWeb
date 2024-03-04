@@ -102,7 +102,7 @@ const RegisterPc = () => {
                         </div>
 
                         <div style={{ width: "500px", color: "white" }}>
-                            <Form.Group style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+                            <Form.Group style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <Form.Label style={{ marginRight: "10px" }}>ผู้ใช้งาน :</Form.Label>
                                 <Form.Control
                                     id="username"
@@ -114,7 +114,7 @@ const RegisterPc = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "left", alignItems: "center" }}>
+                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <Form.Label style={{ marginRight: "10px" }}>รหัสผ่าน :</Form.Label>
                                 <Form.Control
                                     id="password"
@@ -126,7 +126,7 @@ const RegisterPc = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "left", alignItems: "center" }}>
+                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <Form.Label style={{ marginRight: "10px" }}>ยืนยันรหัสผ่าน :</Form.Label>
                                 <Form.Control
                                     id="con-password"
@@ -138,7 +138,7 @@ const RegisterPc = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "left", alignItems: "center" }}>
+                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <Form.Label style={{ marginRight: "10px" }}>อีเมล :</Form.Label>
                                 <Form.Control
                                     id="email"
@@ -150,11 +150,11 @@ const RegisterPc = () => {
                                 />
                             </Form.Group>
 
-                            <div style={{margin: "10px"}}>
+                            <div style={{marginTop: "10px", fontSize: "20px", fontWeight: "bold", marginBottom: "10px"}}>
                                 ที่อยู่การจัดส่ง
                             </div>
 
-                            <Form.Group style={{ display: "flex", justifyContent: "left", alignItems: "center"}}>
+                            <Form.Group style={{ display: "flex", justifyContent: "space-between", alignItems: "center"}}>
                                 <Form.Label style={{ marginRight: "10px" }}>ชื่อ :</Form.Label>
                                 <Form.Control
                                     id="firstname"
@@ -166,7 +166,7 @@ const RegisterPc = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "left", alignItems: "center" }}>
+                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <Form.Label style={{ marginRight: "10px" }}>นามสกุล :</Form.Label>
                                 <Form.Control
                                     id="lastname"
@@ -178,7 +178,7 @@ const RegisterPc = () => {
                                 />
                             </Form.Group>
 
-                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "left", alignItems: "center" }}>
+                            <Form.Group style={{ marginTop: "10px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                                 <Form.Label style={{ marginRight: "10px" }}>ที่อยู่ :</Form.Label>
                                 <Form.Control
                                     id="location"

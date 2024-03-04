@@ -24,7 +24,7 @@
     height: 41px;
     border-radius: 10px;
     color: white;
-    background-color: #B0BF07;
+    background-color: #697E50;
     border-style: hidden;
     position: relative;
     top: -60px;
@@ -35,7 +35,7 @@
 .box {
     width: 345px;
     height: 680px;
-    background-color: #568203;
+    background-color: #697E50;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
@@ -54,7 +54,7 @@
 .head_box {
     width: 126px;
     height: 36px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -63,13 +63,13 @@
 }
 
 .text_head_box {
-    color: white;
+    color: black;
 }
 
 .box_inside_profile {
     width: 312px;
     height: 174px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 25px;
     margin-top: 10px;
 }
@@ -77,7 +77,7 @@
 .box_inside_profile2 {
     width: 312px;
     height: 152px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 25px;
     margin-top: 20px;
 }
@@ -86,14 +86,14 @@
     padding-top: 10px;
     padding-left: 10px;
     padding-right: 10px;
-    color: white;
+    color: black;
 }
 
 .inside_box_profile2 {
     width: 294px;
     height: 54px;
-    background-color: white;
-    color: black;
+    background-color: #8F3E00;
+    color: white;
     margin: 10px;
     border-radius: 10px;
     padding: 5px;
@@ -107,7 +107,7 @@
 .box_inside_profile3 {
     width: 312px;
     height: 170px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 25px;
     margin-top: 20px;
 }
@@ -115,8 +115,8 @@
 .inside_box_profile3 {
     width: 294px;
     height: 30px;
-    background-color: white;
-    color: black;
+    background-color: #8F3E00;
+    color: white;
     margin: 10px;
     border-radius: 10px;
     padding: 5px;

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tag, Radio, Space, Button } from 'antd';
+import { Card, Tag, Radio, Space, Button, Modal, Form, Input, DatePicker, Popconfirm } from 'antd';
 import styles from '../css/CssAdmin.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import NavbarHead from '../componet/Navbar';
@@ -9,12 +9,16 @@ import useWindowWidth from '../componet/Check_size';
 import axios from 'axios';
 import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
+import { PlusOutlined } from '@ant-design/icons';
 
+const { RangePicker } = DatePicker;
 const { Meta } = Card;
 const head = "http://localhost:1337"
 const ADMIN_URL = head + "/api/adminget";
 const UPDATE_URL = head + "/api/farm-post-news";
 const PROMO_URL = head + "/api/adminPromo";
+const API_PROMO_URL = head + "/api/news-promotions";
+const UPLOAD = head + "/api/upload/";
 
 const statusOptions = [
     {
@@ -43,31 +47,23 @@ const promoOptions = [
 ];
 
 const HomeApp = () => {
+    const [form] = Form.useForm();
+
     const { userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const navigate = useNavigate()
     const [product, setProduct] = useState([])
     const [promo, setPromo] = useState([])
-    const [showModal, setShowModal] = useState(false);
+    const [promoModalOpen, setPromoModalOpen] = useState(false);
     const [searchhh, setSearchhh] = useState('ก้านยาว')
+    const [image, setImage] = useState(null);
 
-    const handleCloseModal = () => {
-        setShowModal(false)
-    };
+
     const token = localStorage.getItem('jwtToken');
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
-    const idpost = (durian) => {
-        // console.log(durian.length)
-        // console.log(durian)
-        if (durian.length > 1) {
-            const latest = durian[durian.length - 1]
-            navigate(`/Detail/${durian}/${latest}`)
-        } else {
-            navigate(`/Detail/${durian}/${durian}`)
-        }
-    }
+
 
     const onRadioChange = async (value, add) => {
         console.log('radio1 checked', value.target.value);
@@ -81,6 +77,100 @@ const HomeApp = () => {
             }
             , config);
         fetchItems()
+    };
+
+    const onPromoRadioChange = async (value, add) => {
+        console.log('radio2 checked', value.target.value);
+        console.log(add)
+        const response = await axios.put(API_PROMO_URL + `/${add}`,
+            {
+                "data": {
+                    "activation": value.target.value
+                }
+
+            }
+            , config);
+        fetchItems()
+    };
+
+    const handlePromoPicChange = (e) => {
+        console.log(e.target.files);
+
+        setImage(e.target.files[0])
+    }
+
+    const handlePromoSubmit = async (formDatas) => {
+        // console.log("idSpecies =", idSpecies)
+        // console.log("image =", image)
+        // console.log("detail =", detail)
+        // console.log("note =", note)
+        // console.log(image)
+        const formData = new FormData();
+        formData.append('files', image, image.name);
+        console.log(formData)
+
+        console.log(new Date(formDatas.date[0]))
+        const response = await axios.post(UPLOAD,
+            formData
+            , config);
+
+        console.log('File uploaded successfully:', response.data);
+        const pictureId = response.data[0].id
+        console.log(pictureId)
+        try {
+            let result = await axios.post(API_PROMO_URL, {
+                pictureId: pictureId,
+                startDate: new Date(formDatas.date[0]),
+                endDate: new Date(formDatas.date[1])
+            }, config);
+            //setSuccess(true)
+            console.log("success");
+            window.location.reload()
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
+    const handlePromoModal = () => {
+        setPromoModalOpen(true)
+    }
+
+    const handleModalCancel = () => {
+        setPromoModalOpen(false);
+        //setEditModalOpen(false)
+        form.resetFields();
+    };
+    const delButtonClick = async (record) => {
+        //console.log("Deleting")
+        //console.log(record.id)
+        const response2 = await axios.delete(API_PROMO_URL + `/${record.id}`, config)
+        fetchItems()
+    };
+    const handleEditModalOk = async (formData) => {
+
+        // console.log("Complete")
+        // console.log(formData.subject)
+        // console.log(formData.date)
+        // console.log(formData.buttonid)
+
+        // const response2 = await axios.post(`/api/events/${formData.buttonid}/edit`, {
+        //     subject: formData.subject,
+        //     date: formData.date
+        // })
+
+        // if (response2.data.Stats == "Success") {
+        //     messageApi.open({
+        //         type: 'success',
+        //         content: 'Update Subject Success',
+        //     });
+        //     fetchItems()
+        // } else {
+        //     messageApi.open({
+        //         type: "error",
+        //         content: 'Update Fail',
+        //     });
+        // }
+        //setEditModalOpen(false);
     };
 
     const fetchItems = async () => {
@@ -111,6 +201,7 @@ const HomeApp = () => {
                     <Card
                         size="small"
                         hoverable
+                        //onClick={}
                         style={{
                             width: 250,
                         }}
@@ -122,23 +213,27 @@ const HomeApp = () => {
                             <img src={url} style={{ height: "100%", width: "100%" }} />
                         </div>}
                     >
-
                         <div style={{ fontSize: "15px" }}>
-                            {item.Farmer}
+                            Id: {item.id}
                         </div>
                         <div style={{ fontSize: "15px" }}>
-                            Price {item.Price} Baht/kg.
+                            Username: {item.Farmer}
                         </div>
                         <p></p>
+                        
                         <div style={{ fontSize: "10px" }}>
                             Original Stock {item.Amount} kg.
                         </div>
                         <div style={{ fontSize: "15px" }}>
-                            Net Stock {item.NetAmount} kg.
+                            Stock {item.NetAmount} kg.
                         </div>
                         <div style={{ fontSize: "15px" }}>
                             Total Sale {item.TotalSale} kg
                         </div>
+                        <div style={{ fontSize: "15px" }}>
+                            Price {item.Price} Baht/kg.
+                        </div>
+                        
                         <div style={{ fontSize: "15px" }}>
                             Status: <Tag color={tagColor}>{item.Status}</Tag>
                         </div>
@@ -172,7 +267,7 @@ const HomeApp = () => {
             const Proresponse = await axios.get(PROMO_URL, config);
 
             const Prodata = Proresponse.data
-            console.log(Prodata)
+            //console.log(Prodata)
             const promotions = Prodata.map((item) => {
                 let url = "2.jpg";
                 if (item.picture) {
@@ -193,6 +288,7 @@ const HomeApp = () => {
                     <Card
                         size="small"
                         hoverable
+
                         style={{
                             width: 400,
                         }}
@@ -233,11 +329,17 @@ const HomeApp = () => {
                         <br></br>
                         <Radio.Group
                             options={promoOptions}
-                            //onChange={(e) => onRadioChange(e, item.id)}
+                            onChange={(e) => onPromoRadioChange(e, item.id)}
                             value={item.activation}
                             optionType="button"
                             buttonStyle="solid"
                         />
+                        <br></br>
+                        <br></br>
+                        <Popconfirm title="Confirm Delete?" onConfirm={() => delButtonClick(item)}>
+                            <Button type="primary" danger>Delete Promotion</Button>
+                        </Popconfirm>
+
 
                     </Card>
 
@@ -268,22 +370,88 @@ const HomeApp = () => {
                     <h2>รายการสินค้าประจำวัน</h2>
                 </div>
             </div> */}
-            <Space size={[8, 16]} wrap>
-                {promo}
-            </Space>
+
+            <div class="container">
+                <p>Promotions</p>
+                <p><PlusOutlined />
+                    <Button type="primary" onClick={handlePromoModal}>Create new promotion </Button>
+                </p>
+
+                <Space size={[8, 16]} wrap>
+                    {promo}
+                </Space>
+
+                <p>Product</p>
+                <Space size={[8, 16]} wrap>
+                    {product}
+                </Space>
+            </div>
 
 
-            <Space size={[8, 16]} wrap>
-                {product}
-            </Space>
 
 
 
 
+            <Modal
+                title={"Create New Promotion"}
+                centered
+                open={promoModalOpen}
+                onCancel={handleModalCancel}
+                footer={null}
+            >
+
+                <Form
+                    form={form}
+                    layout="vertical"
+                    name='edit-post'
+                    onFinish={handlePromoSubmit}
+                    labelCol={{
+                        span: 15,
+                    }}
+
+                >
+                    <Form.Item
+                        label="Picture"
+                        name="picture"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Picture Require!',
+                            },
+                        ]}
+                    >
+                        <input class="input1" type="file" onChange={handlePromoPicChange} />
+                    </Form.Item>
+                    <Form.Item
+                        label="Promotion's Date Range"
+                        name="date"
+                        rules={[
+                            {
+                                required: true,
+                                message: 'Start Date Require!',
+                            },
+                        ]}
+                    >
+                        <RangePicker showTime />
+                    </Form.Item>
+                    <Form.Item >
+                        <Space >
+                            <Button htmlType="button" onClick={handleModalCancel} >
+                                Cancel
+                            </Button>
+
+                            <Button type="primary" htmlType="submit" >
+                                Create
+                            </Button>
+
+                        </Space>
+                    </Form.Item>
+
+                </Form>
 
 
-            <Modaldurian show={showModal} handleClose={() => handleCloseModal()} />
 
+            </Modal>
             {windowWidth < 450 && <Footers />}
 
             {windowWidth > 450 && (

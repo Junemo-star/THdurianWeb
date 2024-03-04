@@ -6,11 +6,14 @@ import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
 import NavbarHead from '../componet/Navbar';
 import { Helmet } from "react-helmet";
+import React, { useState, useEffect } from 'react';
+
 
 
 const Gardener = () => {
     const navigate = useNavigate()
-    const { setRole } = useAuth();
+    const { setRole, token, userRole } = useAuth();
+    const [userdata, setUserdata] = useState();
 
     const windowWidth = useWindowWidth();
 
@@ -25,9 +28,21 @@ const Gardener = () => {
         navigate("/");
     }
 
+    const infouser = async () => {
+        const response = await axios.get("http://localhost:1337/api/users/me?populate=*", token)
+        setUserdata(response.data)
+    }
+
     const postsell = () => {
         navigate('/Post')
     }
+
+    useEffect(() => {
+        if (userRole !== "Farmer"){
+            navigate("/")
+        }
+        infouser()
+    }, [])
 
     return (
         <div className={styles.set_pos}>
@@ -37,7 +52,7 @@ const Gardener = () => {
             </Helmet>
 
             {windowWidth > 450 && <NavbarHead />}
-            
+
             <div className={styles.box}>
                 {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}
                 <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />
@@ -55,9 +70,24 @@ const Gardener = () => {
                     </button>
                 </div>
 
-                <div className={styles.box_inside_profile}>
-
-                </div>
+                {userdata &&
+                    <div className={styles.box_inside_profile}>
+                        <div style={{ color: "white",display: "flex", flexDirection: "column", justifyContent: "center", width: "310px", height: "100%", color: "black" }}>
+                            <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
+                                <span style={{marginLeft: "10px"}}>ชื่อ : </span>
+                                <div style={{ marginLeft: "10px", backgroundColor: "#FFEF60", color: "black", borderRadius: "10px", }}>{userdata.firstname}</div>
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "left", alignItems: "center", marginTop: "10px" }}>
+                            <span style={{marginLeft: "10px"}}>นามสกุล : </span>
+                                <div style={{ marginLeft: "10px", backgroundColor: "#FFEF60", color: "black", borderRadius: "10px", }}>{userdata.surname}</div>
+                            </div>
+                            <div style={{ display: "flex", justifyContent: "left", alignItems: "center", marginTop: "10px" }}>
+                                <span style={{marginLeft: "10px"}}>ที่อยู่ :</span> 
+                                <div style={{ marginLeft: "10px", backgroundColor: "#FFEF60", color: "black", borderRadius: "10px", }}>{userdata.location === null ? null : userdata.location}</div>
+                            </div>
+                        </div>
+                    </div>
+                }
 
                 <div className={styles.box_inside_profile2}>
                     <div className={styles.text_inside_profile2}>

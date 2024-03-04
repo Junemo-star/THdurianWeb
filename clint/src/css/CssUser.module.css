@@ -28,8 +28,8 @@
 }
 
 .userimg {
-    width: 150px;
-    height: 150px;
+    width: 200px;
+    height: 200px;
     background-color: white;
     /* border-radius: 50%; */
     border-radius: 10px;
@@ -55,8 +55,8 @@
     height: 236px;
     background-color: #B0BF07;
     border-radius: 25px;
-    margin-bottom: 20px;
-    margin-Top: 70px;
+    padding: 10px;
+    /* font-size: 20px; */
 }
 
 .box_inside_text {

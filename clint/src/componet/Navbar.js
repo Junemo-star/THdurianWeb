@@ -4,6 +4,7 @@ import Modaldurian from './Modal';
 import { useAuth } from './AuthContext';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
+import Logout from '../page/Logout';
 
 function NavbarHead() {
     const [showModal, setShowModal] = useState(false);
@@ -15,10 +16,8 @@ function NavbarHead() {
     const homee = () => navigate('/')
 
     const user = () => {
-        console.log("-----------------")
-        console.log(userRole)
         if (userRole === 'Customer') {
-            navigate('/User');
+            navigate('/Users');
         } else if (userRole === 'Farmer') {
             navigate('/Gardeners')
         } else {
@@ -32,14 +31,14 @@ function NavbarHead() {
 
     const handleLogout = () => {
         // Remove JWT Token from Local Storage
-        // window.localStorage.removeItem("jwtToken");
-        window.localStorage.removeItem("userRole");
-        setRole(null)
+        window.localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userRole")
         // Clear Authorization Header in Axios Defaults
         axios.defaults.headers.common.Authorization = "";
+        setRole("")
         // Navigate to the "/" path (adjust this if using a different routing library)
         navigate("/");
-    }
+      }
 
     return (
         <Navbar expand="xxl" style={{ width: "100%", fontWeight: "bold", backgroundColor: "#697E50" }}>
@@ -80,7 +79,7 @@ function NavbarHead() {
                                     <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0" />
                                     <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1" />
                                 </svg>
-                                <span style={{ marginLeft: "10px" }}>User</span>
+                                <span style={{ marginLeft: "10px" }}>{localStorage.getItem('username')}</span>
                             </Button>
                         </Form>
                         :
@@ -93,7 +92,9 @@ function NavbarHead() {
                     {userRole
                         ?
                         <Form className="d-flex" style={{ marginLeft: "10px" }}>
-                            <Button style={{backgroundColor: "#FFEF60", color: "black", borderStyle: "hidden", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={() => handleLogout()}>Logout</Button>
+                            <Button style={{backgroundColor: "#FFEF60", color: "black", borderStyle: "hidden", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={() => handleLogout()}>
+                                ออกจากระบบ
+                            </Button>
                         </Form>
                         : null}
                 </div>

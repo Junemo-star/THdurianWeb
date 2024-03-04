@@ -176,6 +176,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 NetAmount: findPost.amount - totalSale,
                 Picture: findPost.picture,
                 Description: findPost.descriptions,
+                Location: findPost.location,
                 
             }
             combinedData.push(returnData);

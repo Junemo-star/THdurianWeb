@@ -10,6 +10,8 @@ export const AuthProvider = ({ children }) => {
     return storedRole || null;
   });
 
+  // const [userRole, setUserRole] = useState();
+
   const token = {
     headers: {
       'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

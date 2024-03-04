@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
+import { useAuth } from '../componet/AuthContext';
 
 const PostGarden = () => {
     const [species, setSpecies] = useState([]);
     const [success, setSuccess] = useState(false)
-
     const [idSpecies, setIdSpecies] = useState()
     const [image, setImage] = useState(null);
     const [detail, setDetail] = useState();
@@ -17,10 +17,15 @@ const PostGarden = () => {
     const [location, setLocation] = useState()
     const [amount, setAmount] = useState()
     const [price, setPrice] = useState()
+    const { userRole } = useAuth()
 
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (userRole !== "Farmer"){
+            navigate("/")
+        } 
+
         const config = {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
@@ -59,7 +64,12 @@ const PostGarden = () => {
 
         const response = await axios.post('http://localhost:1337/api/upload/',
             formData
-        );
+        , {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+                // สามารถเพิ่ม header อื่น ๆ ตามต้องการได้
+            }
+        });
 
         console.log('File uploaded successfully:', response.data);
         const pictureId = response.data[0].id
@@ -106,7 +116,8 @@ const PostGarden = () => {
                             <Form.Control
                                 as="textarea"
                                 rows={2}
-                                style={{ borderStyle: "hidden" }}
+                                className={styles.color_placehoder}
+                                // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                 placeholder='note : '
                                 onChange={(e) => setNote(e.target.value)}
                             />
@@ -115,7 +126,8 @@ const PostGarden = () => {
                             <Form.Control
                                 as="textarea"
                                 rows={2}
-                                style={{ borderStyle: "hidden" }}
+                                className={styles.color_placehoder}
+                                // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                 placeholder='location : '
                                 onChange={(e) => setLocation(e.target.value)}
                             />
@@ -123,7 +135,7 @@ const PostGarden = () => {
 
                         <input type="file" accept="image/*" name='file' onChange={handleChange} className={styles.button_input} />
 
-                        <div className={styles.text3}>
+                        <div className={styles.text3} style={{color: "black"}}>
 
                             ราคา : <input 
                                         className={styles.input_price} 
@@ -151,7 +163,8 @@ const PostGarden = () => {
                                 <Form.Control
                                     as="textarea"
                                     rows={3}
-                                    style={{ borderStyle: "hidden" }}
+                                    className={styles.color_placehoder}
+                                    // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                     placeholder='รายละเอียด : '
                                     onChange={(e) => setDetail(e.target.value)}
                                 />

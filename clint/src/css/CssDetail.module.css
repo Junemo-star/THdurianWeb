@@ -19,7 +19,7 @@
     width: 345px;
     height: auto;
     margin-top: 80px;
-    background-color: #568203;
+    background-color: #697E50;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
@@ -38,21 +38,22 @@
 
 .box_inside {
     width: 300px;
-    height: 380px;
-    background-color: #B0BF07;
+    height: 470px;
+    background-color: #FFEF60;
     border-radius: 10px;
 }
 
 .text_head_inside {
-    color: white;
+    color: black;
     font-weight: bold;
     font-size: 30px;
 }
 
 .text_body_inside {
-    color: white;
+    color: blck;
     font-weight: bold;
     font-size: 20px;
+    color: black;
 }
 
 .describ {
@@ -66,10 +67,21 @@
 .text_describ {
     padding: 8px;
     height: 100%;
-    background-color: #FFEF60;
+    background-color: #8F3E00;
     border-radius: 10px;
     width: 280px;
     height: 87px;
+    color: white;
+}
+
+.text_location {
+    padding: 8px;
+    height: 100%;
+    background-color: #8F3E00;
+    border-radius: 10px;
+    width: 280px;
+    height: auto;
+    color: white;
 }
 
 .size_img2 {
@@ -81,7 +93,7 @@
 .box_num {
     height: 40px;
     width: 100px;
-    background-color: #FFEF60;
+    background-color: #8F3E00;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -90,9 +102,9 @@
 }
 
 .button_s {
-    background-color: #FFEF60;
+    background-color: #8F3E00;
     font-size: 20px;
-    color: black;
+    color: white;
     font-weight: bold;
     border-radius: 10px;
     margin-top: 10px;
@@ -180,6 +192,30 @@
         width: 100%;
     }
 
+    .text_head_inside {
+        color: white;
+        font-weight: bold;
+        font-size: 30px;
+    }
+    
+    .text_body_inside {
+        color: blck;
+        font-weight: bold;
+        font-size: 20px;
+        color: white;
+    }
+
+    .box_num {
+        height: 40px;
+        width: 100px;
+        background-color: #FFEF60;
+        border-radius: 10px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 20px;
+    }
+
     .box {
         width: 1000px;
         height: auto;
@@ -240,13 +276,24 @@
         border-radius: 10px;
         width: 280px;
         height: 87px;
+        color: black;
+    }
+
+    .text_location {
+        padding: 8px;
+        height: 100%;
+        background-color: #FFEF60;
+        border-radius: 10px;
+        width: 280px;
+        height: auto;
+        color: black;
     }
 
     .describ {
         /* background-color: white; */
         /* border-radius: 10px; */
         width: 280px;
-        height: 200px;
+        height: auto;
         margin: 10px;
     }
 

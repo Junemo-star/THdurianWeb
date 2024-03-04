@@ -41,21 +41,21 @@
 .box {
     width: 360px;
     height: 740px;
-    background-color: #568203;
+    background-color: #697E50;
     border-radius: 25px;
 }
 
 .inside_box {
     width: 312px;
     height: 137px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 25px;
 }
 
 .inside_box2 {
     width: 312px;
     height: 600px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 25px;
     margin-top: 20px;
     display: flex;
@@ -66,7 +66,7 @@
 .userimg {
     width: 100px;
     height: 100px;
-    background-color: white;
+    background-color: black;
     border-radius: 50%;
 }
 
@@ -81,7 +81,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: white;
+    background-color: #8F3E00;
     border-radius: 25px;
     margin: 10px;
 }
@@ -101,7 +101,7 @@
 .inside_box3 {
     width: 290px;
     height: 114px;
-    background-color:white;
+    background-color: #8F3E00;
     border-radius: 25px;
     padding: 5px;
 }
@@ -116,7 +116,7 @@
     border-radius: 10px;
     border-style: hidden;
     color: white;
-    background-color: #2E792D;
+    background-color: #8F3E00;
     margin-top: 20px;
 }
 
@@ -127,14 +127,14 @@
 }
 
 .back_pos button{
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
     border-style: hidden;
     font-size: 20px;
-    color: white;
+    color: black;
     font-weight: bold;
 }
 
@@ -147,6 +147,20 @@
 .setting_select option {
     font-size: 12px; /* ขนาด font ที่เล็กลง */
     padding: 4px 8px; /* ปรับระยะขอบ */
+}
+
+.color_placehoder {
+    border-style: hidden;
+    background-color: #8F3E00;
+}
+
+.color_placehoder::placeholder {
+    color: white;
+    opacity: 1; /* Firefox */
+}
+  
+.color_placehoder::-ms-input-placeholder { /* Edge 12 -18 */
+    color: white;
 }
 
 @media (min-width: 450px) {
