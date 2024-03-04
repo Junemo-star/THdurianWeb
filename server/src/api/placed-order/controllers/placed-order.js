@@ -30,6 +30,7 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
             return {
                 id: post.id,
                 Farmer: post.farmPost.owner.username,
+                Category:post.product.durianType,
                 FarmerName: post.farmPost.owner.firstname + " " + post.farmPost.owner.surname,
                 FarmPostID: post.farmPost.id,
                 OrderDate: post.createdAt,
