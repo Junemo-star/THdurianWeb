@@ -64,7 +64,12 @@ const PostGarden = () => {
 
         const response = await axios.post('http://localhost:1337/api/upload/',
             formData
-        );
+        , {
+            headers: {
+                'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
+                // สามารถเพิ่ม header อื่น ๆ ตามต้องการได้
+            }
+        });
 
         console.log('File uploaded successfully:', response.data);
         const pictureId = response.data[0].id
