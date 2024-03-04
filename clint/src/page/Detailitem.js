@@ -16,7 +16,7 @@ const Detail = () => {
     const windowWidth = useWindowWidth();
     const { id, durian } = useParams()
     const Num_id = Number(id)
-    const { token, Addcart } = useAuth()
+    const { token, Addcart, userRole } = useAuth()
     const navigate = useNavigate()
     const [infomation, setInfomation] = useState()
     const [datalist, setDatalist] = useState([])
@@ -64,7 +64,12 @@ const Detail = () => {
 
     const add = async () => {
         try {
-            Addcart([id, num])
+            console.log(userRole)
+            if (userRole) {
+                Addcart([id, num])
+            } else {
+                navigate("/Login")
+            }
         } catch (err) {
             console.error(err);
         }
@@ -177,11 +182,15 @@ const Detail = () => {
                                     {console.log(infomation)}
                                     รายละเอียด : {infomation.Description}
                                 </div>
+                                <div style={{marginTop: "10px", color: windowWidth > 450 ? "white" : "black", fontWeight: "bold"}}>ที่อยู่</div>
+                                <div className={styles.text_location} style={{marginTop: "10px"}}>
+                                    {infomation.Location}   
+                                </div>
                                 <div className={styles.text_body_inside} style={{ width: "fit-content", marginTop: "10px" }}>
                                     สั่งซื้อ
                                 </div>
                                 <div className={styles.set_pos_r}>
-                                    <div onClick={() => minus()} style={{ marginRight: "10px", color: "#FFEF60" }}>
+                                    <div onClick={() => minus()} style={{ marginRight: "10px", color: windowWidth > 450 ? "#FFEF60": "#8F3E00"}}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
@@ -190,7 +199,7 @@ const Detail = () => {
                                     <div className={styles.box_num}>
                                         {num}
                                     </div>
-                                    <div onClick={() => plus()} style={{ marginLeft: "10px", color: "#FFEF60" }}>
+                                    <div onClick={() => plus()} style={{ marginLeft: "10px", color: windowWidth > 450 ? "#FFEF60": "#8F3E00" }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />

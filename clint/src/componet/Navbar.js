@@ -32,9 +32,10 @@ function NavbarHead() {
     const handleLogout = () => {
         // Remove JWT Token from Local Storage
         window.localStorage.removeItem("jwtToken");
+        localStorage.removeItem("userRole")
         // Clear Authorization Header in Axios Defaults
         axios.defaults.headers.common.Authorization = "";
-        setRole(null)
+        setRole("")
         // Navigate to the "/" path (adjust this if using a different routing library)
         navigate("/");
       }

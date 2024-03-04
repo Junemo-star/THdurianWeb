@@ -12,7 +12,7 @@ import { Form, Row, Col } from 'react-bootstrap';
 const PostgardenPC = () => {
     const [species, setSpecies] = useState([]);
     const [success, setSuccess] = useState(false)
-    const { token } = useAuth()
+    const { token, userRole } = useAuth()
     const [idSpecies, setIdSpecies] = useState()
     const [image, setImage] = useState(null);
     const [detail, setDetail] = useState();
@@ -23,6 +23,9 @@ const PostgardenPC = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (userRole !== "Farmer"){
+            navigate("/")
+        }
         axios.get("http://localhost:1337/api/categories", token
         ).then((response) => {
             const filterdata = response.data.data.filter(item => item.attributes.durianType)

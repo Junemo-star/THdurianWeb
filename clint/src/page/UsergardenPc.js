@@ -9,7 +9,7 @@ import React, { useState, useEffect } from 'react';
 
 
 const UsergardenPc = () => {
-    const { setRole, token } = useAuth();
+    const { token, userRole } = useAuth();
     const navigate = useNavigate()
     const [userdata, setUserdata] = useState();
 
@@ -25,6 +25,9 @@ const UsergardenPc = () => {
     }
 
     useEffect(() => {
+        if (userRole !== "Farmer"){
+            navigate("/")
+        }
         infouser()
     }, [])
 

@@ -38,8 +38,9 @@ const Modaldurian = ( {show, handleClose} ) => {
                 <Modal.Header>
                     <FormControl onChange={(e) => setSearch(e.target.value)} placeholder="ค้นหาชื่อที่ต้องการ" className={styles.search_box}/>
                 </Modal.Header>
-                <Modal.Body>
-                    <div style={{ display: "flex" }}>
+
+                <Modal.Body style={{height: "auto"}}>
+                    <div style={{ display: "flex", flexWrap: "wrap" }}>
                         {durinaType.filter(({ id, attributes }) => {
                             return search === ''
                             ? attributes
@@ -50,6 +51,7 @@ const Modaldurian = ( {show, handleClose} ) => {
                             </button>
                         ))}
                     </div>
+                    
                 </Modal.Body>
 
                 <Modal.Footer>
