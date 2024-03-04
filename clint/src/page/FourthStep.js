@@ -2,8 +2,11 @@ import React, { useEffect } from 'react';
 import { Card, Button } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate hooks
 
 const FourthStep = () => {
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   useEffect(() => {
     const fetchLocationData = async () => {
       try {
@@ -66,10 +69,10 @@ const FourthStep = () => {
           const farmPostResponse = await axios.get(`http://localhost:1337/api/farm-post-news/${order.FarmPostNewID}`, config);
           const farmPostData = farmPostResponse.data.data;
       
-          // Deduct the ordered amount from the current amount
+          // Deduct the ordered amount
           const updatedAmount = farmPostData.attributes.amount - order.Amount;
       
-          // Prepare the updated data object
+          // Prepare the updated data
           const updatedData = {
             data: {
               id: farmPostData.id,
@@ -93,8 +96,10 @@ const FourthStep = () => {
     
       console.log('Orders placed successfully:', postResponses.map(res => res.data));
     
-      // Clear cart after successful order placement
+      // Clear cart
       localStorage.removeItem('cart');
+      
+      navigate('/Delivery');
     
     } catch (error) {
       console.error('Error placing orders:', error);

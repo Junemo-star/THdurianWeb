@@ -131,7 +131,7 @@ const StatusPage = () => {
           <>
             <p>Email : group10@email.com</p>
             <p>Tel Number : 123-456-7890</p>
-            <p>Line ID: @group10</p>
+            <p>Line : @group10</p>
           </>
         )}
       </div>
