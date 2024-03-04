@@ -20,10 +20,19 @@
     color: white;
 }
 
-.button_modal {
+.button_modal_C{
     border-radius: 10px;
     border-style: hidden;
-    background-color: #B0BF07;
+    background-color: red;
+    color: white;
+    font-weight: bold;
+    font-size: 20px;
+}
+
+.button_modal_A{
+    border-radius: 10px;
+    border-style: hidden;
+    background-color: red;
     color: white;
     font-weight: bold;
     font-size: 20px;

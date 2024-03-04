@@ -9,11 +9,11 @@
 
 .score_line {
     overflow-y: auto;
-    max-height: 80px;
+    max-height: 210px;
 }
 
 .inside_box_profile2 {
-    width: 294px;
+    width: 95%;
     height: 54px;
     background-color: #8F3E00;
     color: white;

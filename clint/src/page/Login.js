@@ -48,7 +48,7 @@ const LoginApp = () => {
             if (result.data.role) {
 
                 localStorage.setItem('userRole', result.data.role.name)
-
+                localStorage.setItem('username', username)
                 setRole(localStorage.getItem('userRole'));
 
                 if (result.data.role.name === 'Admin') {

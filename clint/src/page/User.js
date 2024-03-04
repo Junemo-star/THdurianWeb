@@ -15,6 +15,7 @@ const UserProfile = () => {
     const { setRole, token, userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const [userdata, setUserdata] = useState();
+    
 
     const infouser = async () => {
         const response = await axios.get("http://localhost:1337/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
@@ -24,7 +25,7 @@ const UserProfile = () => {
     console.log(userdata)
 
     useEffect(() => {
-        if (userRole !== "Customer"){
+        if (userRole !== "Customer") {
             navigate("/")
         }
         infouser()
@@ -48,40 +49,35 @@ const UserProfile = () => {
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
 
-            {windowWidth > 450 && <NavbarHead />}
             <div className={styles.set_pos}>
                 {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}
-                {windowWidth < 450 && <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} />}
-
+                <div style={{ margin: "20px" }}>
+                    {userdata?.Profile? (
+                        <img src={"http://localhost:1337" + userdata.Profile.url} className={styles.userimg} />
+                    ) : (
+                        <img src="user.png" className={styles.userimg} />
+                    )}
+                </div>
 
                 {userdata && (
                     <div className={styles.box}>
-                        {windowWidth > 450 &&
-                            <div style={{ margin: "20px" }}>
-                                {userdata.Profile ? (
-                                    <img src={"http://localhost:1337" + userdata.Profile.url} className={styles.userimg} />
-                                    // <img src="user.png" className={styles.userimg} />
-                                ) : (
-                                    <img src="user.png" className={styles.userimg} />
-                                )}
-                            </div>
-                        }
+
                         <div className={windowWidth > 450 ? styles.size_pc : null}>
-                            <div className={windowWidth > 450 ? null : styles.box_inside_profile}>
+                            <div className={styles.box_inside_profile}>
                                 <div className={styles.box_inside_text}>
-                                    <div style={{ display: 'flex' }}>
-                                        ชื่อ : <div className={windowWidth > 450 ? styles.text_pc : null}>{userdata.firstname}</div><br />
+                                    <div style={{ display: 'flex' , fontSize: "20px", fontSize: "20px"}}>
+                                        ชื่อ : <div>{userdata.firstname}</div><br />
                                     </div>
-                                    <div style={{ display: 'flex', marginTop: "15px" }}>
-                                        นามสกุล : <div className={windowWidth > 450 ? styles.text_pc : null}>{userdata.surname}</div> <br />
+                                    <div style={{ display: 'flex', marginTop: "10px", fontSize: "20px" }}>
+                                        นามสกุล : <div>{userdata.surname}</div> <br />
                                     </div>
-                                    <div style={{ display: 'flex', marginTop: "15px" }}>
-                                        ที่อยู่ : <div className={windowWidth > 450 ? styles.text_pc : null}>{userdata.location === null ? null : userdata.location}</div>
+                                    <div style={{ display: 'flex', marginTop: "10px", fontSize: "20px", flexWrap: "wrap" }}>
+                                        ที่อยู่ : <div>{userdata.location === null ? null : userdata.location}</div>
                                     </div>
                                 </div>
                             </div>
 
-                            <div className={windowWidth > 450 ? styles.box_inside_history_pc : styles.box_inside_history} >
+                            <div className={styles.box_inside_history} style={{marginTop: "20px"}}>
                                 <div className={styles.text_head_history}>
                                     ประวัติ - สถานะการจัดส่ง :
                                 </div>

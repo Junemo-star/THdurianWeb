@@ -22,6 +22,7 @@ import UsergardenPc from './page/UsergardenPc';
 import PostgardenPC from './page/PostgardenrPC';
 import RegisterPc from './page/RegisterPc';
 import DeliveryPc from './page/DeliveryPC';
+import UserPc from './page/UserPc';
 
 
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
   {
     path: "/User",
     element: <UserProfile />
+  },
+  {
+    path: "/Users",
+    element: <UserPc />
   },
   {
     path: "/Post",
