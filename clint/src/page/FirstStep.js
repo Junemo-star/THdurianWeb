@@ -89,7 +89,11 @@ const FirstStep = () => {
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: '1', marginRight: '10px' }}>
-                <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
+                {item.picture ? 
+                  <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
+                  :
+                  <Image src='/noimg.png' alt={item.category} />
+                }
               </div>
               <div style={{ flex: '2' }}>
                 <div>{`${item.category} x ${item.amount}`}</div>

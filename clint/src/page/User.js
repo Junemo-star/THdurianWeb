@@ -12,7 +12,7 @@ import { Helmet } from "react-helmet";
 
 const UserProfile = () => {
     const navigate = useNavigate()
-    const { setRole, token } = useAuth();
+    const { setRole, token, userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const [userdata, setUserdata] = useState();
 
@@ -24,6 +24,9 @@ const UserProfile = () => {
     console.log(userdata)
 
     useEffect(() => {
+        if (userRole !== "Customer"){
+            navigate("/")
+        }
         infouser()
     }, [])
 

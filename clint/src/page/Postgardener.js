@@ -5,11 +5,11 @@ import { useNavigate } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
+import { useAuth } from '../componet/AuthContext';
 
 const PostGarden = () => {
     const [species, setSpecies] = useState([]);
     const [success, setSuccess] = useState(false)
-
     const [idSpecies, setIdSpecies] = useState()
     const [image, setImage] = useState(null);
     const [detail, setDetail] = useState();
@@ -17,10 +17,15 @@ const PostGarden = () => {
     const [location, setLocation] = useState()
     const [amount, setAmount] = useState()
     const [price, setPrice] = useState()
+    const { userRole } = useAuth()
 
     const navigate = useNavigate()
 
     useEffect(() => {
+        if (userRole !== "Farmer"){
+            navigate("/")
+        } 
+
         const config = {
             headers: {
                 'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,

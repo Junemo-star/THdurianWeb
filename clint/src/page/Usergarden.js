@@ -12,7 +12,7 @@ import React, { useState, useEffect } from 'react';
 
 const Gardener = () => {
     const navigate = useNavigate()
-    const { setRole, token } = useAuth();
+    const { setRole, token, userRole } = useAuth();
     const [userdata, setUserdata] = useState();
 
     const windowWidth = useWindowWidth();
@@ -38,6 +38,9 @@ const Gardener = () => {
     }
 
     useEffect(() => {
+        if (userRole !== "Farmer"){
+            navigate("/")
+        }
         infouser()
     }, [])
 
