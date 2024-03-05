@@ -147,7 +147,7 @@ const DeliveryPc = () => {
       : orders.filter((order) => order.Category === category);
 
   return (
-    <>
+    <div>
       <NavbarHead />
       
       
@@ -199,7 +199,7 @@ const DeliveryPc = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
