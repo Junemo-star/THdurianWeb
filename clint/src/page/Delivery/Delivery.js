@@ -39,26 +39,19 @@ const Delivery = () => {
   }, []);
 
   useEffect(() => {
-    // Set the active step based on the status of the first order
-    if (orders.length > 0) {
-      switch (orders[0].Status) {
-        case "Placed":
-          setActiveStep(0);
-          break;
+    const newActiveStep = orders.reduce((maxStep, order) => {
+      switch (order.Status) {
         case "Verifying":
-          setActiveStep(0);
-          break;
+          return Math.max(maxStep, 0);
         case "Packaging":
-          setActiveStep(1);
-          break;
+          return Math.max(maxStep, 1);
         case "Delivered":
-          setActiveStep(2);
-          break;
+          return Math.max(maxStep, 2);
         default:
-          setActiveStep(0);
-          break;
+          return maxStep;
       }
-    }
+    }, -1);
+    setActiveStep(newActiveStep);
   }, [orders]);
   const filteredOrders =
     category === "" ||
@@ -109,7 +102,7 @@ const Delivery = () => {
                         <div>
                           <Steps
                             progressDot
-                            current={index}
+                            current={activeStep}
                             direction="vertical"
                             items={[
                               {
