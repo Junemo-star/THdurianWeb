@@ -54,7 +54,7 @@ const LoginApp = () => {
                 setRole(localStorage.getItem('userRole'));
 
                 if (result.data.role.name === 'Admin') {
-                    navigate('/Admin');
+                    navigate('/AdminPage');
                 } else {
                     navigate('/')
                 }
