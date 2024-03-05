@@ -15,6 +15,7 @@ const UsergardenPc = () => {
     const { token, userRole } = useAuth();
     const navigate = useNavigate()
     const [userdata, setUserdata] = useState();
+    const [historySell, setHistorySell] = useState()
     const [showModal, setShowModal] = useState(false);
 
     const handleClose = () => setShowModal(false);
@@ -25,8 +26,24 @@ const UsergardenPc = () => {
     }
 
     const infouser = async () => {
-        const response = await axios.get(head+"/api/users/me?populate=*", token)
+        const response = await axios.get(head + "/api/users/me?populate=*", token)
         setUserdata(response.data)
+
+        const data = await axios.get(head + "/api/farm-post-news", token)
+        // console.log(data.data)
+        const filterdata = data.data.filter(item =>
+            item.orders.length !== 0
+        )
+        setHistorySell(filterdata)
+        // const ans = filterdata.map(item => {
+        //     return item.orders.flatMap(item2 => item2)
+        // })
+        // const ans = filterdata.map(item => {
+        //     item.orders.map(item2 => {
+        //         console.log(item2)
+        //     })
+        // })
+        // console.log(ans)
     }
 
     // console.log(userdata)
@@ -48,7 +65,7 @@ const UsergardenPc = () => {
                 <title>User</title>
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
-            {console.log(userdata)}
+            {console.log(historySell)}
             <NavbarHead />
 
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "100%", margin: "80px" }}>
@@ -86,48 +103,28 @@ const UsergardenPc = () => {
                         ประวัติการขาย
                     </div>
                     <div style={{ display: "flex", justifyContent: "center" }}>
-                        <div style={{ backgroundColor: "#FFEF60", borderRadius: "10px", width: "95%", height: "210px" }}>
-                            <div className={styles.score_line}>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-
-                            </div>
+                        <div className={styles.score_line} style={{ width: "95%", backgroundColor: "#FFEF60" }}>
+                            {historySell?.map((item) => (
+                                <>
+                                    {item.orders.map((item2) => (
+                                        <div className={styles.inside_box_profile2}>
+                                            ขายวันที่ : {new Date(item2.date).toLocaleString("th-TH", {
+                                                year: "numeric",
+                                                month: "long",
+                                                day: "numeric",
+                                                hour: "numeric",
+                                                minute: "numeric",
+                                                hour12: false,
+                                            })}
+                                            <span style={{marginLeft: "10px"}}>จำนวน : {item2.amount} กิโลกรัม ราคา {item2.price} บาท</span>
+                                        </div>
+                                    ))}
+                                </>
+                            ))}
                         </div>
                     </div>
+
+
                 </div>
 
                 <div style={{ width: "900px", height: "300px", backgroundColor: "#697E50", marginTop: "20px", borderRadius: "10px" }}>
@@ -139,8 +136,8 @@ const UsergardenPc = () => {
                             <div className={styles.score_line}>
                                 {userdata?.farm_post_histories?.map((item) => (
                                     <div className={styles.inside_box_profile2}>
-                                        <div style={{marginRight: "10px"}}>{userdata.username}</div>
-                                        <div style={{marginRight: "10px"}}>{new Date(item.date).toLocaleString("th-TH", {
+                                        <div style={{ marginRight: "10px" }}>{userdata.username}</div>
+                                        <div style={{ marginRight: "10px" }}>{new Date(item.date).toLocaleString("th-TH", {
                                             year: "numeric",
                                             month: "long",
                                             day: "numeric",
@@ -148,8 +145,8 @@ const UsergardenPc = () => {
                                             minute: "numeric",
                                             hour12: false,
                                         })}</div>
-                                        <div style={{marginRight: "10px"}}>จำนวน : {item.amount} กิโลกรัม</div> 
-                                        <div style={{marginRight: "10px"}}>ราคา {item.price} บาท</div>
+                                        <div style={{ marginRight: "10px" }}>จำนวน : {item.amount} กิโลกรัม</div>
+                                        <div style={{ marginRight: "10px" }}>ราคา {item.price} บาท</div>
                                     </div>
                                 ))}
                             </div>
@@ -168,7 +165,7 @@ const UsergardenPc = () => {
 
                 <Editdata open={showModal} onHide={handleClose} user={userdata} />
             </div>
-        </div>
+        </div >
     )
 }
 

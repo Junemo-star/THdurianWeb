@@ -16,7 +16,7 @@ const Gardener = () => {
     const navigate = useNavigate()
     const { setRole, token, userRole } = useAuth();
     const [userdata, setUserdata] = useState();
-
+    const [historySell, setHistorySell] = useState()
     const windowWidth = useWindowWidth();
 
     const handleLogout = () => {
@@ -31,8 +31,15 @@ const Gardener = () => {
     }
 
     const infouser = async () => {
-        const response = await axios.get(head+"/api/users/me?populate=*", token)
+        const response = await axios.get(head + "/api/users/me?populate=*", token)
         setUserdata(response.data)
+
+        const data = await axios.get(head + "/api/farm-post-news", token)
+        // console.log(data.data)
+        const filterdata = data.data.filter(item =>
+            item.orders.length !== 0
+        )
+        setHistorySell(filterdata)
     }
 
     const postsell = () => {
@@ -40,7 +47,7 @@ const Gardener = () => {
     }
 
     useEffect(() => {
-        if (userRole !== "Farmer"){
+        if (userRole !== "Farmer") {
             navigate("/")
         }
         infouser()
@@ -74,17 +81,17 @@ const Gardener = () => {
 
                 {userdata &&
                     <div className={styles.box_inside_profile}>
-                        <div style={{ color: "white",display: "flex", flexDirection: "column", justifyContent: "center", width: "310px", height: "100%", color: "black" }}>
+                        <div style={{ color: "white", display: "flex", flexDirection: "column", justifyContent: "center", width: "310px", height: "100%", color: "black" }}>
                             <div style={{ display: "flex", justifyContent: "left", alignItems: "center" }}>
-                                <span style={{marginLeft: "10px"}}>ชื่อ : </span>
+                                <span style={{ marginLeft: "10px" }}>ชื่อ : </span>
                                 <div style={{ marginLeft: "10px", backgroundColor: "#FFEF60", color: "black", borderRadius: "10px", }}>{userdata.firstname}</div>
                             </div>
                             <div style={{ display: "flex", justifyContent: "left", alignItems: "center", marginTop: "10px" }}>
-                            <span style={{marginLeft: "10px"}}>นามสกุล : </span>
+                                <span style={{ marginLeft: "10px" }}>นามสกุล : </span>
                                 <div style={{ marginLeft: "10px", backgroundColor: "#FFEF60", color: "black", borderRadius: "10px", }}>{userdata.surname}</div>
                             </div>
                             <div style={{ display: "flex", justifyContent: "left", alignItems: "center", marginTop: "10px" }}>
-                                <span style={{marginLeft: "10px"}}>ที่อยู่ :</span> 
+                                <span style={{ marginLeft: "10px" }}>ที่อยู่ :</span>
                                 <div style={{ marginLeft: "10px", backgroundColor: "#FFEF60", color: "black", borderRadius: "10px", }}>{userdata.location === null ? null : userdata.location}</div>
                             </div>
                         </div>
@@ -96,20 +103,24 @@ const Gardener = () => {
                         ประวัติการขาย
                     </div>
                     <div className={styles.score_line}>
-                        <div className={styles.inside_box_profile2}>
-                            สวนนายดำ ขายวันที่ : xx/xx/xx <br />
-                            จำนวน : xx กิโลกรัม ราคา xx บาท
-                        </div>
-
-                        <div className={styles.inside_box_profile2}>
-                            สวนนายดำ ขายวันที่ : xx/xx/xx <br />
-                            จำนวน : xx กิโลกรัม ราคา xx บาท
-                        </div>
-
-                        <div className={styles.inside_box_profile2}>
-                            สวนนายดำ ขายวันที่ : xx/xx/xx <br />
-                            จำนวน : xx กิโลกรัม ราคา xx บาท
-                        </div>
+                        {historySell?.map((item) => (
+                            <>
+                                {item.orders.map((item2) => (
+                                    <div className={styles.inside_box_profile2} style={{height: "auto"}}>
+                                        <div>ขายวันที่ :</div> 
+                                        {new Date(item2.date).toLocaleString("th-TH", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                            hour12: false,
+                                        })}
+                                        <div>จำนวน : {item2.amount} กิโลกรัม ราคา {item2.price} บาท</div>
+                                    </div>
+                                ))}
+                            </>
+                        ))}
                     </div>
                 </div>
 
@@ -118,29 +129,21 @@ const Gardener = () => {
                         โพสการขาย
                     </div>
                     <div className={styles.score_line}>
-                        <div className={styles.inside_box_profile3}>
-                            หมอนทอง วันที่ : xx/xx/xx
-                        </div>
-
-                        <div className={styles.inside_box_profile3}>
-                            หมอนทอง วันที่ : xx/xx/xx
-                        </div>
-
-                        <div className={styles.inside_box_profile3}>
-                            หมอนทอง วันที่ : xx/xx/xx
-                        </div>
-
-                        <div className={styles.inside_box_profile3}>
-                            หมอนทอง วันที่ : xx/xx/xx
-                        </div>
-
-                        <div className={styles.inside_box_profile3}>
-                            หมอนทอง วันที่ : xx/xx/xx
-                        </div>
-
-                        <div className={styles.inside_box_profile3}>
-                            หมอนทอง วันที่ : xx/xx/xx
-                        </div>
+                        {userdata?.farm_post_histories?.map((item) => (
+                            <div className={styles.inside_box_profile2} style={{ height: "auto" }}>
+                                <div style={{ marginRight: "10px" }}>{userdata.username}</div>
+                                <div style={{ marginRight: "10px" }}>{new Date(item.date).toLocaleString("th-TH", {
+                                    year: "numeric",
+                                    month: "long",
+                                    day: "numeric",
+                                    hour: "numeric",
+                                    minute: "numeric",
+                                    hour12: false,
+                                })}</div>
+                                <div style={{ marginRight: "10px" }}>จำนวน : {item.amount} กิโลกรัม</div>
+                                <div style={{ marginRight: "10px" }}>ราคา {item.price} บาท</div>
+                            </div>
+                        ))}
                     </div>
                 </div>
             </div>
