@@ -43,11 +43,13 @@ const HomeApp = () => {
     const idpost = (durian) => {
         // console.log(durian.length)
         // console.log(durian)
-        if (durian.length > 1) {
-            const latest = durian[durian.length - 1]
-            navigate(`/Detail/${durian}/${latest}`)
-        } else {
-            navigate(`/Detail/${durian}/${durian}`)
+        if (userRole !== "Farmer") {
+            if (durian.length > 1) {
+                const latest = durian[durian.length - 1]
+                navigate(`/Detail/${durian}/${latest}`)
+            } else {
+                navigate(`/Detail/${durian}/${durian}`)
+            }
         }
     }
 

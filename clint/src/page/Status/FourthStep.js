@@ -104,11 +104,11 @@ const FourthStep = () => {
       localStorage.removeItem('cart');
       
       if (windowWidth > 450){
-        window.location.reload()
+        // window.location.reload()
         navigate('/Deliverys');
       } else {
         navigate('/Delivery');
-        window.location.reload()
+        // window.location.reload()
       }
     
     } catch (error) {
