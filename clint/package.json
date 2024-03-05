@@ -9,10 +9,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@heroicons/react": "^2.1.1",
     "@material-tailwind/react": "^2.1.9",
-<<<<<<< HEAD
-=======
     "@react-navigation/native": "^6.1.14",
->>>>>>> de17bb324eaa2274cf2fd91d7500d04d967ee0b5
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",

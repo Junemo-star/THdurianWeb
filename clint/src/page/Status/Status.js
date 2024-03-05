@@ -4,9 +4,9 @@ import FirstStep from './FirstStep';
 import SecondStep from './SecondStep';
 import ThirdStep from './ThirdStep';
 import FourthStep from './FourthStep';
-import Footers from '../componet/Footerbar';
-import useWindowWidth from '../componet/Check_size';
-import NavbarHead from '../componet/Navbar';
+import Footers from '../../componet/Footerbar';
+import useWindowWidth from '../../componet/Check_size';
+import NavbarHead from '../../componet/Navbar';
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 
