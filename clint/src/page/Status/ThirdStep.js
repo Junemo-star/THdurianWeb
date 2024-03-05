@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Input, Cascader, Button } from 'antd';
 import axios from 'axios';
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 const { TextArea } = Input;
 
 const ThirdStep = () => {
@@ -20,7 +22,7 @@ const ThirdStep = () => {
 
   const fetchLocationData = async (token) => {
     try {
-      const response = await axios.get('http://localhost:1337/api/users/me', {
+      const response = await axios.get(head+'/api/users/me', {
         headers: {
           Authorization: `Bearer ${token}`
         }

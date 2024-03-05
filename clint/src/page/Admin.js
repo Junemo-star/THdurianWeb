@@ -9,6 +9,7 @@ import useWindowWidth from '../componet/Check_size';
 import axios from 'axios';
 import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
+import Urlconfig from '..config';
 import {
     PlusOutlined,
     MailOutlined,
@@ -18,7 +19,7 @@ import {
 const { Header, Content, Footer } = Layout;
 const { RangePicker } = DatePicker;
 const { Meta } = Card;
-const head = "http://localhost:1337"
+const head = Urlconfig.serverUrlPrefix
 const ADMIN_URL = head + "/api/adminget";
 const UPDATE_URL = head + "/api/farm-post-news";
 const PROMO_URL = head + "/api/adminPromo";

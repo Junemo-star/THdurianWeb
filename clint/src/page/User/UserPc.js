@@ -9,7 +9,9 @@ import { useAuth } from '../../componet/AuthContext';
 import useWindowWidth from '../../componet/Check_size';
 import { Helmet } from "react-helmet";
 import Editdata from '../../componet/Edit';
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const UserPc = () => {
     const navigate = useNavigate()
@@ -26,7 +28,7 @@ const UserPc = () => {
     }
 
     const infouser = async () => {
-        const response = await axios.get("http://localhost:1337/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
+        const response = await axios.get(head+"/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
         setUserdata(response.data)
     }
 
@@ -57,7 +59,7 @@ const UserPc = () => {
                 <div style={{ display: "flex", justifyContent: "space-around", width: "900px", height: "auto", backgroundColor: "#697E50", padding: "20px", borderRadius: "10px" }}>
                     <div>
                         {userdata?.Profile ? (
-                            <img src={"http://localhost:1337" + userdata.Profile.url} style={{ width: "150px", height: "150px", backgroundColor: "white" }} />
+                            <img src={head + userdata.Profile.url} style={{ width: "150px", height: "150px", backgroundColor: "white" }} />
                         ) : (
                             <img src="user.png" style={{ width: "150px", height: "150px", borderRadius: "50%", backgroundColor: "white" }} />
                         )}

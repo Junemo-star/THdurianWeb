@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
+import Urlconfig from '..config';
+
+const head = Urlconfig.serverUrlPrefix;
 
 const FirstStep = () => {
   const [cartData, setCartData] = useState([]);
@@ -11,7 +14,7 @@ const FirstStep = () => {
     const localStorageData = JSON.parse(localStorage.getItem('cart')) || [];
     setCartData(localStorageData);
 
-    fetch('http://localhost:1337/api/public')
+    fetch(head+'/api/public')
       .then(response => response.json())
       .then(data => setApiData(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -31,7 +34,7 @@ const FirstStep = () => {
       const dataPromises = Object.entries(aggregatedData).map(([id, amount]) => {
         const matchingItem = apiData.find(item => item.Id.includes(Number(id)));
         if (matchingItem) {
-          return fetch(`http://localhost:1337/api/farm-post-news/${id}`)
+          return fetch(head+`/api/farm-post-news/${id}`)
             .then(response => response.json())
             .then(dateData => {
               const date = new Date(dateData?.data?.attributes?.date);
@@ -90,7 +93,7 @@ const FirstStep = () => {
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: '1', marginRight: '10px' }}>
                 {item.picture ? 
-                  <Image src={`http://localhost:1337${item.picture.formats.thumbnail.url}`} alt={item.category} />
+                  <Image src={head+`${item.picture.formats.thumbnail.url}`} alt={item.category} />
                   :
                   <Image src='/noimg.png' alt={item.category} />
                 }

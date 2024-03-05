@@ -6,7 +6,9 @@ import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
 import { useAuth } from '../../componet/AuthContext';
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 const PostGarden = () => {
     const [species, setSpecies] = useState([]);
     const [success, setSuccess] = useState(false)
@@ -33,7 +35,7 @@ const PostGarden = () => {
             },
         };
 
-        axios.get("http://localhost:1337/api/categories", config
+        axios.get(head+"/api/categories", config
         ).then((response) => {
             const filterdata = response.data.data.filter(item => item.attributes.durianType)
             setSpecies(filterdata)
@@ -62,7 +64,7 @@ const PostGarden = () => {
         formData.append('files', image, image.name);
         console.log(formData)
 
-        const response = await axios.post('http://localhost:1337/api/upload/',
+        const response = await axios.post(head+'/api/upload/',
             formData
         , {
             headers: {
@@ -75,7 +77,7 @@ const PostGarden = () => {
         const pictureId = response.data[0].id
         console.log(pictureId)
         try {
-            let result = await axios.post("http://localhost:1337/api/farm-post-news", {
+            let result = await axios.post(head+"/api/farm-post-news", {
 
                 note: note,
                 amount: amount,

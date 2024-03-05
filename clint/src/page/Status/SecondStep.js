@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import { Card, Button, Upload, Typography, Row, Col } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
+import Urlconfig from '..config';
+
+const head = Urlconfig.serverUrlPrefix;
 
 const { Text } = Typography;
 

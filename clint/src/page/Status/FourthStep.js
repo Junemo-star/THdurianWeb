@@ -3,7 +3,9 @@ import { Card, Button } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate hooks
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 const FourthStep = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
 
@@ -12,7 +14,7 @@ const FourthStep = () => {
       try {
         const token = localStorage.getItem('jwtToken');
         if (token) {
-          const response = await axios.get('http://localhost:1337/api/users/me', {
+          const response = await axios.get(head+'/api/users/me', {
             headers: {
               Authorization: `Bearer ${token}`
             }
@@ -43,10 +45,10 @@ const FourthStep = () => {
         headers: { Authorization: `Bearer ${token}` }
       };
     
-      const productsResponse = await axios.get('http://localhost:1337/api/public', config);
+      const productsResponse = await axios.get(head+'/api/public', config);
       const productsData = productsResponse.data;
     
-      const userResponse = await axios.get('http://localhost:1337/api/users/me', config);
+      const userResponse = await axios.get(head+'/api/users/me', config);
       const userLocation = userResponse.data.location;
     
       const orders = cart.map(([id, amount]) => {
@@ -66,7 +68,7 @@ const FourthStep = () => {
   
       await Promise.all(orders.map(async order => {
         try {
-          const farmPostResponse = await axios.get(`http://localhost:1337/api/farm-post-news/${order.FarmPostNewID}`, config);
+          const farmPostResponse = await axios.get(head+`/api/farm-post-news/${order.FarmPostNewID}`, config);
           const farmPostData = farmPostResponse.data.data;
       
           // Deduct the ordered amount
@@ -84,14 +86,14 @@ const FourthStep = () => {
           };
       
           // Send a PUT request to update the farm-post-news
-          await axios.put(`http://localhost:1337/api/farm-post-news/${order.FarmPostNewID}`, updatedData, config);
+          await axios.put(head+`/api/farm-post-news/${order.FarmPostNewID}`, updatedData, config);
         } catch (error) {
           console.error(`Error updating farm-post-news with ID ${order.FarmPostNewID}:`, error);
         }
       }));
     
       const postResponses = await Promise.all(orders.map(order =>
-        axios.post('http://localhost:1337/api/placed-orders', order, config)
+        axios.post(head+'/api/placed-orders', order, config)
       ));
     
       console.log('Orders placed successfully:', postResponses.map(res => res.data));

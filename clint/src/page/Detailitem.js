@@ -10,6 +10,10 @@ import { Helmet } from "react-helmet";
 import NavbarHead from '../componet/Navbar';
 import RatingStarss from '../componet/RatingStar';
 import RatingStarsFix from '../componet/RatingStarFix';
+import Urlconfig from '..config';
+
+const head = Urlconfig.serverUrlPrefix;
+const URL_DETAIL = head + "/api/detail";
 
 
 const Detail = () => {
@@ -41,11 +45,11 @@ const Detail = () => {
 
     const show = async () => {
         try {
-            const result = await axios.post('http://localhost:1337/api/detail', {
+            const result = await axios.post(URL_DETAIL, {
                 Id: [id]
             })
             const requests = listdurian.map((item) => {
-                return axios.post('http://localhost:1337/api/detail', {
+                return axios.post(URL_DETAIL, {
                     Id: [item]
                 });
             });
@@ -100,7 +104,7 @@ const Detail = () => {
                 }
             }
             console.log(data)
-            let result = await axios.post("http://localhost:1337/api/comments", data, token)
+            let result = await axios.post(head+"/api/comments", data, token)
             console.log("success")
             setCommentt("")
         } catch (err) {
@@ -109,10 +113,10 @@ const Detail = () => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:1337/api/users/me", token)
+        axios.get(head+"/api/users/me", token)
             .then((item) => setUserr(item.data.id)).catch((err) => console.log(err))
 
-        axios.get(`http://localhost:1337/api/comments?populate[farm_post_new][filters][id][$eq]=${Num_id}&populate[users_permissions_user]=*`, token)
+        axios.get(head+`/api/comments?populate[farm_post_new][filters][id][$eq]=${Num_id}&populate[users_permissions_user]=*`, token)
             .then((item) => {
                 const filteredData = item.data.data.filter(item => 
                     item.attributes.farm_post_new.data !== null
@@ -138,7 +142,7 @@ const Detail = () => {
                     <div className={windowWidth > 450 ? styles.pos_pc : null}>
                         <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column" }}>
                             {infomation.Picture ? (
-                                <img className={styles.size_img} src={"http://localhost:1337" + infomation.Picture.url} />
+                                <img className={styles.size_img} src={head + infomation.Picture.url} />
                             ) : (
                                 <img className={styles.size_img} src='/noimg.png' />
                             )}

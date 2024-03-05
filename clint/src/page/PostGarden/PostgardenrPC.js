@@ -7,7 +7,9 @@ import NavbarHead from '../../componet/Navbar';
 import { Helmet } from "react-helmet";
 import styles from '../../css/CssUsergardenPc.module.css'
 import { Form, Row, Col } from 'react-bootstrap';
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const PostgardenPC = () => {
     const [species, setSpecies] = useState([]);
@@ -26,7 +28,7 @@ const PostgardenPC = () => {
         if (userRole !== "Farmer"){
             navigate("/")
         }
-        axios.get("http://localhost:1337/api/categories", token
+        axios.get(head+"/api/categories", token
         ).then((response) => {
             const filterdata = response.data.data.filter(item => item.attributes.durianType)
             setSpecies(filterdata)
@@ -49,7 +51,7 @@ const PostgardenPC = () => {
         formData.append('files', image, image.name);
         console.log(formData)
 
-        const response = await axios.post('http://localhost:1337/api/upload/',
+        const response = await axios.post(head+'/api/upload/',
             formData
         );
 
@@ -57,7 +59,7 @@ const PostgardenPC = () => {
         const pictureId = response.data[0].id
         console.log(pictureId)
         try {
-            let result = await axios.post("http://localhost:1337/api/farm-post-news", {
+            let result = await axios.post(head+"/api/farm-post-news", {
                 note: note,
                 amount: amount,
                 location: location,
