@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Card, Tag, Radio, Space, Button, Modal, Form, Input, DatePicker, Popconfirm } from 'antd';
+import { Card, Tag, Radio, Space, Button, Modal, Form, Layout, DatePicker, Popconfirm, Menu } from 'antd';
 import styles from '../css/CssAdmin.module.css'
 import { Link, useNavigate } from "react-router-dom";
 import NavbarHead from '../componet/Navbar';
@@ -9,8 +9,13 @@ import useWindowWidth from '../componet/Check_size';
 import axios from 'axios';
 import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
-import { PlusOutlined } from '@ant-design/icons';
+import {
+    PlusOutlined,
+    MailOutlined,
+    AppstoreOutlined
+} from '@ant-design/icons';
 
+const { Header, Content, Footer } = Layout;
 const { RangePicker } = DatePicker;
 const { Meta } = Card;
 const head = "http://localhost:1337"
@@ -19,6 +24,7 @@ const UPDATE_URL = head + "/api/farm-post-news";
 const PROMO_URL = head + "/api/adminPromo";
 const API_PROMO_URL = head + "/api/news-promotions";
 const UPLOAD = head + "/api/upload/";
+const ORDER_URL = head + "/api/placed-orders"
 
 const statusOptions = [
     {
@@ -46,6 +52,41 @@ const promoOptions = [
     },
 ];
 
+const orderOptions = [
+    {
+        label: 'Verifying',
+        value: 'Verifying',
+    },
+    {
+        label: 'Packaging',
+        value: 'Packaging',
+    },
+    {
+        label: 'Delivered',
+        value: 'Delivered',
+    },
+];
+
+const menuItems = [
+    {
+        label: 'Promotion',
+        key: 'pro',
+        icon: <MailOutlined />,
+    },
+    {
+        label: 'Farm post',
+        key: 'farm',
+        icon: <AppstoreOutlined />,
+
+    },
+    {
+        label: 'Order',
+        key: 'order',
+        icon: <AppstoreOutlined />,
+
+    },
+]
+
 const HomeApp = () => {
     const [form] = Form.useForm();
 
@@ -54,6 +95,7 @@ const HomeApp = () => {
     const navigate = useNavigate()
     const [product, setProduct] = useState([])
     const [promo, setPromo] = useState([])
+    const [order, setOrder] = useState([])
     const [promoModalOpen, setPromoModalOpen] = useState(false);
     const [searchhh, setSearchhh] = useState('ก้านยาว')
     const [image, setImage] = useState(null);
@@ -86,6 +128,20 @@ const HomeApp = () => {
             {
                 "data": {
                     "activation": value.target.value
+                }
+
+            }
+            , config);
+        fetchItems()
+    };
+
+    const onOrderRadioChange = async (value, add) => {
+        console.log('radio2 checked', value.target.value);
+        console.log(add)
+        const response = await axios.put(ORDER_URL + `/${add}`,
+            {
+                "data": {
+                    "status": value.target.value
                 }
 
             }
@@ -220,7 +276,7 @@ const HomeApp = () => {
                             Username: {item.Farmer}
                         </div>
                         <p></p>
-                        
+
                         <div style={{ fontSize: "10px" }}>
                             Original Stock {item.Amount} kg.
                         </div>
@@ -231,9 +287,9 @@ const HomeApp = () => {
                             Total Sale {item.TotalSale} kg
                         </div>
                         <div style={{ fontSize: "15px" }}>
-                            Price {item.Price} Baht/kg.
+                            Price {item.Price} Baht/kg.cd
                         </div>
-                        
+
                         <div style={{ fontSize: "15px" }}>
                             Status: <Tag color={tagColor}>{item.Status}</Tag>
                         </div>
@@ -347,6 +403,88 @@ const HomeApp = () => {
 
             })
             setPromo(promotions);
+
+
+            const Orderresponse = await axios.get(ORDER_URL+ "/adminget", config);
+
+            const Orderdata = Orderresponse.data
+            //console.log(Prodata)
+            const orders = Orderdata.map((item) => {
+                let url = "nopayment.png";
+                if (item.picture) {
+                    url = head + item.picture.url;
+                    // console.log(item.Picture.url)
+                }
+                let tagColor = "red"
+                if (item.Status == "Verifying") {
+                    tagColor = "orange-inverse"
+                } else if (item.Status == "Packaging") {
+                    tagColor = "blue-inverse"
+                } else if (item.Status == "Delivered") {
+                    tagColor = "green-inverse"
+                }
+
+
+                return (
+                    <Card
+                        size="small"
+                        hoverable
+
+                        style={{
+                            width: 300,
+                        }}
+                        cover={<div style={{ width: "300px", height: "210px" }}>
+
+                            <img src={url} style={{ height: "100%", width: "100%" }} />
+                        </div>}
+                    >
+
+
+                        <div style={{ fontSize: "15px" }}>
+                            Status: <Tag color={tagColor}>{item.Status}</Tag>
+                        </div>
+                        <div style={{ fontSize: "15px" }}>
+                        Id: {item.id}<br></br>
+                        Customer: {item.Customer}<br></br>
+                        Placed order on <br></br>
+                        Farmer: {item.Farmer} <br></br>
+                        Amount: {item.Amount} <br></br>
+                        Price: {item.Price} <br></br>
+                        Order Date: {new Date(item.OrderDate).toLocaleString("en-EN", {
+                                year: "numeric",
+                                month: "long",
+                                day: "numeric",
+                                hour: "numeric",
+                                minute: "numeric",
+                                hour12: false,
+                            })}<br></br>
+                        <br></br>
+                        Deliver to: {item.UserLocation} <br></br>
+                        </div>
+
+                        <br></br>
+                     
+
+                        <br></br>
+                        <Radio.Group
+                            options={orderOptions}
+                            onChange={(e) => onOrderRadioChange(e, item.id)}
+                            value={item.Status}
+                            optionType="button"
+                            buttonStyle="solid"
+                        />
+                        <br></br>
+                        <br></br>
+
+
+
+                    </Card>
+
+                );
+
+            })
+            setOrder(orders);
+
         } catch (err) {
             //console.log(err)
         } finally { }
@@ -356,15 +494,73 @@ const HomeApp = () => {
     useEffect(() => {
         fetchItems();
     }, [])
+    const [selectedMenu, setSelectedMenu] = useState('pro');
 
+    const handleMenuClick = (e) => {
+        console.log(e)
+        setSelectedMenu(e.key);
+    };
+    let contentToRender;
+
+    if (selectedMenu === 'pro') {
+        contentToRender = (
+            <div>
+                <p>Promotions</p>
+                <p>
+                    <PlusOutlined />
+                    <Button type="primary" onClick={handlePromoModal}>Create new promotion</Button>
+                </p>
+                <Space size={[8, 16]} wrap>
+                    {promo}
+                </Space>
+            </div>
+        );
+    } else if (selectedMenu === 'farm') {
+        contentToRender = (
+            <div>
+                <p>Product</p>
+                <Space size={[8, 16]} wrap>
+                    {product}
+                </Space>
+            </div>
+        )
+    }else if (selectedMenu === 'order') {
+        contentToRender = (
+            <div>
+                <p>Order</p>
+                <Space size={[8, 16]} wrap>
+                    {order}
+                </Space>
+            </div>
+        )
+    }
     return (
-        <div className={styles.position_all}>
+        <div >
             <Helmet>
                 <title>Home</title>
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
 
             {windowWidth > 450 && <NavbarHead />}
+            <Menu
+                selectedKeys={[selectedMenu]} onClick={handleMenuClick}
+                mode="horizontal"
+                defaultSelectedKeys={['pro']}
+                items={menuItems}
+                style={{
+                    flex: 1,
+                    minWidth: 0,
+                }}>
+                <Menu.Item key="pro">
+
+
+
+                </Menu.Item>
+            </Menu>
+
+
+
+
             {/* <div className={styles.headweb_pos}>
                 <div className={styles.headweb} style={{ marginTop: "65px" }}>
                     <h2>รายการสินค้าประจำวัน</h2>
@@ -372,19 +568,9 @@ const HomeApp = () => {
             </div> */}
 
             <div class="container">
-                <p>Promotions</p>
-                <p><PlusOutlined />
-                    <Button type="primary" onClick={handlePromoModal}>Create new promotion </Button>
-                </p>
+                {contentToRender}
 
-                <Space size={[8, 16]} wrap>
-                    {promo}
-                </Space>
 
-                <p>Product</p>
-                <Space size={[8, 16]} wrap>
-                    {product}
-                </Space>
             </div>
 
 

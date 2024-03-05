@@ -173,7 +173,7 @@ const Detail = () => {
                                     ราคา : {infomation.Price} บาท
                                 </div>
                                 <div className={styles.text_body_inside}>
-                                    สินค้าคงเหลือ : {infomation.Amount}
+                                    สินค้าคงเหลือ : {infomation.NetAmount}
                                 </div>
                             </div>
 
