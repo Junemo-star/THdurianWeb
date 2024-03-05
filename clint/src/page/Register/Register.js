@@ -6,7 +6,9 @@ import styles from '../../css/CssRegis.module.css'
 import { Form, Container, Image } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const Register = () => {
     const [username, setUsername] = useState()
@@ -37,7 +39,7 @@ const Register = () => {
         // console.log(location)
 
         try {
-            let result = await axios.post("http://localhost:1337/api/users", {
+            let result = await axios.post(head+"/api/users", {
                 username: username,
                 password: password,
                 email: email,

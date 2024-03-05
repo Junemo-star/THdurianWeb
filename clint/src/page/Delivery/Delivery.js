@@ -8,6 +8,10 @@ import { MDBTypography } from "mdb-react-ui-kit";
 import { Steps } from "antd";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
+import Urlconfig from '..config';
+
+const head = Urlconfig.serverUrlPrefix;
+
 const Delivery = () => {
   const windowWidth = useWindowWidth();
   const [orders, setOrders] = useState([]);
@@ -21,7 +25,7 @@ const Delivery = () => {
   const fetchData = async () => {
     try {
       const ordersResponse = await axios.get(
-        "http://localhost:1337/api/delivery",
+        head+"/api/delivery",
         token
       );
       setOrders(ordersResponse.data);

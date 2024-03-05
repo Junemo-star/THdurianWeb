@@ -10,7 +10,9 @@ import useWindowWidth from '../componet/Check_size';
 import toast, { Toaster } from 'react-hot-toast';
 import '../css/style.css'
 import { Helmet } from "react-helmet";
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const LoginApp = () => {
     const [username, setUsername] = useState()
@@ -26,7 +28,7 @@ const LoginApp = () => {
         setSubmitEnabled(false);
 
         try {
-            let result = await axios.post('http://localhost:1337/api/auth/local', {
+            let result = await axios.post(head+'/api/auth/local', {
                 identifier: username,
                 password: password
             })
@@ -39,7 +41,7 @@ const LoginApp = () => {
             saveTokenToLocalStorage(result.data.jwt)
 
             //เช็ค role
-            result = await axios.get('http://localhost:1337/api/users/me?populate=role', {
+            result = await axios.get(head+'/api/users/me?populate=role', {
                 headers: {
                   'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
                 }

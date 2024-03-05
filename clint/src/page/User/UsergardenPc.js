@@ -7,7 +7,9 @@ import { Helmet } from "react-helmet";
 import styles from '../../css/CssUsergardenPc.module.css'
 import React, { useState, useEffect } from 'react';
 import Editdata from "../../componet/Edit";
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const UsergardenPc = () => {
     const { token, userRole } = useAuth();
@@ -23,7 +25,7 @@ const UsergardenPc = () => {
     }
 
     const infouser = async () => {
-        const response = await axios.get("http://localhost:1337/api/users/me?populate=*", token)
+        const response = await axios.get(head+"/api/users/me?populate=*", token)
         setUserdata(response.data)
     }
 
@@ -55,7 +57,7 @@ const UsergardenPc = () => {
                     <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", margin: "20px" }}>
                         {/* <img src="user.png" className={styles.userimg} style={{ layout: "fill" }} /> */}
                         {userdata?.Profile ? (
-                            <img src={"http://localhost:1337" + userdata.Profile.url} style={{ width: "150px", height: "150px", backgroundColor: "white" }} />
+                            <img src={head + userdata.Profile.url} style={{ width: "150px", height: "150px", backgroundColor: "white" }} />
                         ) : (
                             <img src="user.png" style={{ width: "150px", height: "150px", borderRadius: "50%", backgroundColor: "white" }} />
                         )}

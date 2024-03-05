@@ -12,7 +12,7 @@ const Modaldurian = ( {show, handleClose} ) => {
     const [durinaType, setDurianType] = useState([])
     
     const fetchItems = async () => {
-        const response = await axios.get("http://localhost:1337/api/categories", token)
+        const response = await axios.get(head+"/api/categories", token)
         setDurianType(response.data.data)
     }
     

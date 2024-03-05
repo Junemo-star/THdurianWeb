@@ -8,7 +8,9 @@ import axios from 'axios';
 import { useAuth } from '../../componet/AuthContext';
 import useWindowWidth from '../../componet/Check_size';
 import { Helmet } from "react-helmet";
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const UserProfile = () => {
     const navigate = useNavigate()
@@ -18,7 +20,7 @@ const UserProfile = () => {
 
 
     const infouser = async () => {
-        const response = await axios.get("http://localhost:1337/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
+        const response = await axios.get(head+"/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
         setUserdata(response.data)
     }
 
@@ -52,8 +54,8 @@ const UserProfile = () => {
             <div className={styles.set_pos}>
                 {windowWidth < 450 && <button onClick={() => handleLogout()} className={styles.button_logout}>Logout</button>}
                 <div style={{ margin: "20px" }}>
-                    {userdata?.Profile ? (
-                        <img src={"http://localhost:1337" + userdata.Profile.url} className={styles.userimg} />
+                    {userdata?.Profile? (
+                        <img src={head + userdata.Profile.url} className={styles.userimg} />
                     ) : (
                         <img src="user.png" className={styles.userimg} />
                     )}

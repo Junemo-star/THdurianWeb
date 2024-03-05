@@ -8,7 +8,9 @@ import NavbarHead from '../../componet/Navbar';
 import { Helmet } from "react-helmet";
 import React, { useState, useEffect } from 'react';
 
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const Gardener = () => {
     const navigate = useNavigate()
@@ -29,7 +31,7 @@ const Gardener = () => {
     }
 
     const infouser = async () => {
-        const response = await axios.get("http://localhost:1337/api/users/me?populate=*", token)
+        const response = await axios.get(head+"/api/users/me?populate=*", token)
         setUserdata(response.data)
     }
 

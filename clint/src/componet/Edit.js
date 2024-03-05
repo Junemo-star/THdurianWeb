@@ -4,7 +4,9 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useAuth } from './AuthContext';
 import axios from 'axios';
+import Urlconfig from '..config';
 
+const head = Urlconfig.serverUrlPrefix;
 
 const Editdata = ({ open, onHide, user }) => {
     const [newfirst, setNewfirst] = useState()
@@ -23,12 +25,12 @@ const Editdata = ({ open, onHide, user }) => {
             if (image !== null) {
                 const formData = new FormData();
                 formData.append('files', image, image.name);
-                const response = await axios.post('http://localhost:1337/api/upload/',
+                const response = await axios.post(head+'/api/upload/',
                     formData
                 );
                 console.log('File uploaded successfully:', response.data);
                 const PictureId = response.data[0].id
-                const up = await axios.put(`http://localhost:1337/api/users/${user.id}`, {
+                const up = await axios.put(head+`/api/users/${user.id}`, {
                     firstname: newfirst || user.firstname,
                     surname: newsur || user.surname,
                     location: newloca || user.location,
@@ -37,7 +39,7 @@ const Editdata = ({ open, onHide, user }) => {
 
                 console.log("succeed")
             } else {
-                const up = await axios.put(`http://localhost:1337/api/users/${user.id}`, {
+                const up = await axios.put(head+`/api/users/${user.id}`, {
                     firstname: newfirst || user.firstname,
                     surname: newsur || user.surname,
                     location: newloca || user.location,

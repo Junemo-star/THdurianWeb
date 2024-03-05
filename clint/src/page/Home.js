@@ -11,9 +11,12 @@ import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
+import Urlconfig from '..config';
 
-const PUBLIC_URL = "http://localhost:1337/api/public";
-const PROMOTION = "http://localhost:1337/api/news-promotions"
+const head = Urlconfig.serverUrlPrefix;
+
+const PUBLIC_URL = head+"/api/public";
+const PROMOTION = head+"/api/news-promotions";
 
 const HomeApp = () => {
     const { userRole } = useAuth();
@@ -64,7 +67,7 @@ const HomeApp = () => {
                 products = filterdata.map((item) => {
                     let url = "2.jpg";
                     if (item.Picture) {
-                        url = "http://localhost:1337" + item.Picture.url;
+                        url = head + item.Picture.url;
                         // console.log(item.Picture.url)
                     }
                     return (
@@ -97,7 +100,7 @@ const HomeApp = () => {
                 products = data.map((item) => {
                     let url = "2.jpg";
                     if (item.Picture) {
-                        url = "http://localhost:1337" + item.Picture.url;
+                        url = head + item.Picture.url;
                         // console.log(item.Picture.url)
                     }
                     return (
@@ -156,7 +159,7 @@ const HomeApp = () => {
                     {promotionItem.map(({ id, picture }) => (
                         <Carousel.Item key={id} >
                             <div className={styles.Carousel_img} style={{display: "flex", justifyContent: "center", alignItems: "center"}}>
-                                <Image src={"http://localhost:1337" + picture.url} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}/>
+                                <Image src={head + picture.url} style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain' }}/>
                             </div>
                         </Carousel.Item>
                     ))}

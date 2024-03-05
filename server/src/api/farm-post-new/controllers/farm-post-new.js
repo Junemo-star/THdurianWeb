@@ -53,6 +53,12 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
                 },
 
             },
+            populate:{
+                owner: true,
+                category: true,
+                picture: true,
+                orders: true
+            },
         });
         console.log(entries);
         //Function called when user want to search by category
