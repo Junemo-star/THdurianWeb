@@ -5,10 +5,10 @@ import React, { useEffect, useState } from "react";
 import styles from "../../css/CssDeliveryPc.module.css";
 import { useAuth } from "../../componet/AuthContext";
 import NavbarHead from "../../componet/Navbar";
-import { Steps } from "antd";
+import { Divider, Steps } from "antd";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import Urlconfig from '../../config';
+import Urlconfig from "../../config";
 
 const DeliveryPc = () => {
   const head = Urlconfig.serverUrlPrefix;
@@ -22,10 +22,7 @@ const DeliveryPc = () => {
 
   const fetchData = async () => {
     try {
-      const ordersResponse = await axios.get(
-        head + "/api/delivery",
-        token
-      );
+      const ordersResponse = await axios.get(head + "/api/delivery", token);
       setOrders(ordersResponse.data);
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -37,25 +34,26 @@ const DeliveryPc = () => {
   }, []);
 
   useEffect(() => {
-    // Set the active step based on the status of each order
-    orders.forEach((order) => {
+    const newActiveStep = orders.reduce((maxStep, order) => {
       switch (order.Status) {
         case "Verifying":
-          setActiveStep(0);
-          break;
+          return Math.max(maxStep, 0);
         case "Packaging":
-          setActiveStep(1);
-          break;
+          return Math.max(maxStep, 1);
         case "Delivered":
-          setActiveStep(2);
-          break;
+          return Math.max(maxStep, 2);
+        default:
+          return maxStep;
       }
-    });
+    }, -1);
+    setActiveStep(newActiveStep);
   }, [orders]);
 
   // Filter orders based on selected category
   const filteredOrders =
-    category === "" || category === "ทั้งหมด" || category === "กรุณาเลือกประเภททุเรียน"
+    category === "" ||
+    category === "ทั้งหมด" ||
+    category === "กรุณาเลือกประเภททุเรียน"
       ? orders
       : orders.filter((order) => order.Category === category);
 
@@ -69,8 +67,7 @@ const DeliveryPc = () => {
           alignItems: "center",
           flexDirection: "column",
           height: "100%",
-          margin: "100px"
-
+          margin: "100px",
         }}
       >
         <div
@@ -83,7 +80,6 @@ const DeliveryPc = () => {
             alignItems: "center",
             borderRadius: "10px",
             flexDirection: "column",
-
           }}
         >
           <div className={styles.set_pos}>
@@ -129,27 +125,25 @@ const DeliveryPc = () => {
                         </div>
                       </div>
 
-                      <div style={{ width: "95%", marginBottom: "10px" }}>
-                        <Steps
-                          progressDot
-                          current={index}
-                          items={[
-                            {
-                              title: "รับคำสั่งซื้อ",
-                              description: "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
-                            },
-                            {
-                              title: "เตรียมจัดส่ง",
-                              description: "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
-                            },
-                            {
-                              title: "กำลังจัดส่ง",
-                              description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
-                            },
-                          ]}
-                        />
-                      </div>
-
+                      <Steps
+                        progressDot
+                        current={activeStep}
+                        items={[
+                          {
+                            title: "รับคำสั่งซื้อ",
+                            description:
+                              "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
+                          },
+                          {
+                            title: "เตรียมจัดส่ง",
+                            description: "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
+                          },
+                          {
+                            title: "กำลังจัดส่ง",
+                            description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
+                          },
+                        ]}
+                      />
                     </div>
                   </div>
                 </MDBTypography>
