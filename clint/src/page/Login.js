@@ -54,7 +54,7 @@ const LoginApp = () => {
                 setRole(localStorage.getItem('userRole'));
 
                 if (result.data.role.name === 'Admin') {
-                    navigate('/Admin');
+                    navigate('/PageAdmin');
                 } else {
                     navigate('/')
                 }
@@ -89,9 +89,9 @@ const LoginApp = () => {
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", height: "100vh", flexDirection: "column", padding: "0px" }}>
                 <Toaster position="top-center" reverseOrder={false} />
 
-                <div className={styles.pos_user}>
+                {/* <div className={styles.pos_user}>
                     <Image src="user.png" className={styles.userimg} style={{ layout: "fill" }} />
-                </div>
+                </div> */}
 
                 <Form onSubmit={handleSubmit} className={styles.Formlogin}>
 

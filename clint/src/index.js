@@ -31,7 +31,7 @@ const router = createBrowserRouter([
     element: <HomeApp />
   },
   {
-    path: "/Admin",
+    path: "/PageAdmin",
     element: <AdminPage />
   },
   {
