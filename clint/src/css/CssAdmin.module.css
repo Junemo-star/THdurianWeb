@@ -155,6 +155,11 @@
 
 }
 
+
+.ant-menu.ant-menu-dark .ant-menu-item-selected.customclass {
+    background-color: #B039CC;
+}
+
 .space-align-block {
     flex: none;
     margin: 8px 4px;

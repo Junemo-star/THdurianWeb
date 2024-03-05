@@ -62,13 +62,45 @@ module.exports = createCoreController('api::placed-order.placed-order',({ strapi
                 owner: ctx.state.user,
                 product: findCatagoryById,
                 farmPost: findPostById,
-                status: "Packaging",
+                status: "Verifying",
                 payment: pictureObj,
                 publishedAt: new Date(),
             },
         });
 
         return newOrder
+    },
+    async adminFind(ctx){
+        if (ctx.state.user.role.name != "Admin") {
+            return ctx.body = { response: "Invalid Role" }
+        }
+        const data = ctx.request["body"];
+
+        //console.log(data);
+        const entries = await strapi.db.query("api::placed-order.placed-order").findMany({
+            populate:["farmPost.owner","product","owner", "payment"]
+        });
+
+        const newData = entries.map(post => {
+            return {
+                id: post.id,
+                Farmer: post.farmPost.owner.username,
+                Category:post.product.durianType,
+                FarmerName: post.farmPost.owner.firstname + " " + post.farmPost.owner.surname,
+                FarmPostID: post.farmPost.id,
+                OrderDate: post.createdAt,
+                Amount: post.amount,
+                Price: post.price,
+                Status: post.status,
+                UserLocation: post.location,
+                FarmLocation: post.farmPost.location,
+                Customer: post.owner.username,
+                picture: post.payment,
+            }
+        })
+
+        //console.log(newData);
+        return newData
     }
 
 
