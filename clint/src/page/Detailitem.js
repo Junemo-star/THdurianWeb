@@ -11,6 +11,7 @@ import NavbarHead from '../componet/Navbar';
 import RatingStarss from '../componet/RatingStar';
 import RatingStarsFix from '../componet/RatingStarFix';
 import Urlconfig from '../config';
+import { Button, message, Space } from 'antd';
 
 const Detail = () => {
     const head = Urlconfig.serverUrlPrefix;
@@ -26,6 +27,7 @@ const Detail = () => {
     const listdurian = durian.split(",")
     const [userr, setUserr] = useState()
     const [status, setStatus] = useState(true)
+    const [messageApi, contextHolder] = message.useMessage();
 
     //ข้อมูล comment
     const [commentt, setCommentt] = useState()
@@ -60,7 +62,7 @@ const Detail = () => {
             console.log(id);
             console.log(result.data[0]);
             setInfomation(result.data[0]);
-            
+
             if (infomation.NetAmount === 0) {
                 setStatus(false)
             }
@@ -74,6 +76,13 @@ const Detail = () => {
             console.log(userRole)
             if (userRole) {
                 Addcart([id, num])
+
+                messageApi.open({
+                    type: 'success',
+                    content: 'สินค้าถูกเพิ่มเรียบร้อย',
+                    duration: 3
+                  });
+
             } else {
                 navigate("/Login")
             }
@@ -132,6 +141,8 @@ const Detail = () => {
 
     return (
         <div className={styles.set_pos}>
+            {contextHolder}
+
             <Helmet>
                 <title>Detail</title>
                 {/* <meta name="description" content="Helmet application" /> */}

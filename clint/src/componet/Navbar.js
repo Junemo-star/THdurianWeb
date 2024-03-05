@@ -19,9 +19,9 @@ function NavbarHead() {
     const user = () => {
         if (userRole === 'Customer') {
             navigate('/Users');
-        } if (userRole === 'Farmer') {
+        } else if (userRole === 'Farmer') {
             navigate('/Gardeners')
-        } if (userRole === 'Admin'){
+        } else if (userRole === 'Admin'){
             navigate('/PageAdmin')
         } else {
             navigate('/Login')

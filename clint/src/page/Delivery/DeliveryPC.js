@@ -23,7 +23,7 @@ const DeliveryPc = () => {
   const fetchData = async () => {
     try {
       const ordersResponse = await axios.get(
-        head+"/api/delivery",
+        head + "/api/delivery",
         token
       );
       setOrders(ordersResponse.data);
@@ -110,20 +110,20 @@ const DeliveryPc = () => {
                 <MDBTypography>
                   <div>
                     <div className={styles.inside_box}>
-                      <div style={{ padding: "10px", display: "flex", justifyContent: "start", flexDirection: "column", alignItems: "center", width: "100%"}}>
-                        <div style={{width: "95%", fontSize: "30px", fontWeight: "bold"}}>
+                      <div style={{ padding: "10px", display: "flex", justifyContent: "start", flexDirection: "column", alignItems: "center", width: "100%" }}>
+                        <div style={{ width: "95%", fontSize: "30px", fontWeight: "bold" }}>
                           สถานะการจัดส่ง
                         </div>
-                        <div style={{width: "95%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", fontSize: "20px"}}>
-                          <div style={{width: "50%", display: "flex", justifyContent: "space-around"}}>
-                            <div>สวน : {order.Farmer}</div>
+                        <div style={{ width: "95%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", fontSize: "20px" }}>
+                          <div style={{ width: "80%", display: "flex", justifyContent: "start", marginBottom: "10px" }}>
+                            <div style={{marginRight: "20px"}}>สวน : {order.Farmer}</div>
                             <div>ชนิด : {order.Category}</div>
                           </div>
-                          <div style={{width: "50%", display: "flex", justifyContent: "space-around"}}>
-                            <div>จำนวน : {order.Amount} กิโลกรัม</div> 
+                          <div style={{ width: "80%", display: "flex", justifyContent: "start", marginBottom: "10px" }}>
+                            <div style={{marginRight: "20px"}}>จำนวน : {order.Amount} กิโลกรัม</div>
                             <div>ราคา : {order.Price} บาท</div>
                           </div>
-                          <div style={{width: "50%"}}>
+                          <div style={{ width: "80%", marginBottom: "10px" }}>
                             สถานะ : {order.Status}
                           </div>
                         </div>
