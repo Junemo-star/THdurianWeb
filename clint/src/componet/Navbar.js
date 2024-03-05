@@ -22,7 +22,7 @@ function NavbarHead() {
         } if (userRole === 'Farmer') {
             navigate('/Gardeners')
         } if (userRole === 'Admin'){
-            navigate('/AdminPage')
+            navigate('/PageAdmin')
         } else {
             navigate('/Login')
         }

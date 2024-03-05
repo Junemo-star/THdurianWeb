@@ -25,6 +25,7 @@ const Detail = () => {
     const [num, setNum] = useState(0);
     const listdurian = durian.split(",")
     const [userr, setUserr] = useState()
+    const [status, setStatus] = useState(true)
 
     //ข้อมูล comment
     const [commentt, setCommentt] = useState()
@@ -59,6 +60,10 @@ const Detail = () => {
             console.log(id);
             console.log(result.data[0]);
             setInfomation(result.data[0]);
+            
+            if (infomation.NetAmount === 0) {
+                setStatus(false)
+            }
         } catch (err) {
             console.error(err);
         }
@@ -102,7 +107,7 @@ const Detail = () => {
                 }
             }
             console.log(data)
-            let result = await axios.post(head+"/api/comments", data, token)
+            let result = await axios.post(head + "/api/comments", data, token)
             console.log("success")
             setCommentt("")
         } catch (err) {
@@ -111,12 +116,12 @@ const Detail = () => {
     }
 
     useEffect(() => {
-        axios.get(head+"/api/users/me", token)
+        axios.get(head + "/api/users/me", token)
             .then((item) => setUserr(item.data.id)).catch((err) => console.log(err))
 
-        axios.get(head+`/api/comments?populate[farm_post_new][filters][id][$eq]=${Num_id}&populate[users_permissions_user]=*`, token)
+        axios.get(head + `/api/comments?populate[farm_post_new][filters][id][$eq]=${Num_id}&populate[users_permissions_user]=*`, token)
             .then((item) => {
-                const filteredData = item.data.data.filter(item => 
+                const filteredData = item.data.data.filter(item =>
                     item.attributes.farm_post_new.data !== null
                 );
                 setUserComment(filteredData)
@@ -184,15 +189,15 @@ const Detail = () => {
                                     {console.log(infomation)}
                                     รายละเอียด : {infomation.Description}
                                 </div>
-                                <div style={{marginTop: "10px", color: windowWidth > 450 ? "white" : "black", fontWeight: "bold"}}>ที่อยู่</div>
-                                <div className={styles.text_location} style={{marginTop: "10px"}}>
-                                    {infomation.Location}   
+                                <div style={{ marginTop: "10px", color: windowWidth > 450 ? "white" : "black", fontWeight: "bold" }}>ที่อยู่</div>
+                                <div className={styles.text_location} style={{ marginTop: "10px" }}>
+                                    {infomation.Location}
                                 </div>
                                 <div className={styles.text_body_inside} style={{ width: "fit-content", marginTop: "10px" }}>
                                     สั่งซื้อ
                                 </div>
                                 <div className={styles.set_pos_r}>
-                                    <div onClick={() => minus()} style={{ marginRight: "10px", color: windowWidth > 450 ? "#FFEF60": "#8F3E00"}}>
+                                    <div onClick={() => minus()} style={{ marginRight: "10px", color: windowWidth > 450 ? "#FFEF60" : "#8F3E00" }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-dash-circle" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                             <path d="M4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8" />
@@ -201,7 +206,7 @@ const Detail = () => {
                                     <div className={styles.box_num}>
                                         {num}
                                     </div>
-                                    <div onClick={() => plus()} style={{ marginLeft: "10px", color: windowWidth > 450 ? "#FFEF60": "#8F3E00" }}>
+                                    <div onClick={() => plus()} style={{ marginLeft: "10px", color: windowWidth > 450 ? "#FFEF60" : "#8F3E00" }}>
                                         <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
                                             <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
                                             <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
@@ -209,7 +214,7 @@ const Detail = () => {
                                     </div>
                                 </div>
                                 <div className={styles.set_pos_r} >
-                                    <button className={styles.button_s} onClick={() => add()}>เพิ่มลงในตะกร้า</button>
+                                    <button className={styles.button_s} onClick={() => add()} disabled={!status}>เพิ่มลงในตะกร้า</button>
                                 </div>
                             </div>
 
