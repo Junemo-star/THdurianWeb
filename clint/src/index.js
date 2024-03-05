@@ -11,19 +11,19 @@ import useWindowWidth from './componet/Check_size'
 import App from './App';
 import HomeApp from './page/Home';
 import AdminPage from './page/Admin'
-import UserProfile from './page/User';
-import PostGarden from './page/Postgardener';
-import Gardener from './page/Usergarden';
-import Register from './page/Register';
-import Delivery from './page/Delivery';
-import StatusPage from './page/Status';
+import UserProfile from './page/User/User';
+import PostGarden from './page/PostGarden/Postgardener';
+import Gardener from './page/User/Usergarden';
+import Register from './page/Register/Register';
+import StatusPage from './page/Status/Status';
 import Detail from './page/Detailitem';
-import UsergardenPc from './page/UsergardenPc';
-import PostgardenPC from './page/PostgardenrPC';
-import RegisterPc from './page/RegisterPc';
-import DeliveryPc from './page/DeliveryPC';
-import UserPc from './page/UserPc';
+import UsergardenPc from './page/User/UsergardenPc';
+import PostgardenPC from './page/PostGarden/PostgardenrPC';
+import RegisterPc from './page/Register/RegisterPc';
+import UserPc from './page/User/UserPc';
 
+import Delivery from './page/Delivery/Delivery';
+import DeliveryPc from './page/Delivery/DeliveryPC';
 
 const router = createBrowserRouter([
   {
@@ -52,7 +52,6 @@ const router = createBrowserRouter([
   },
   {
     path: "/Gardener",
-    // element: useWindowWidth < 450 ? <Gardener /> : <UsergardenPc />
     element: <Gardener /> 
   },
   {

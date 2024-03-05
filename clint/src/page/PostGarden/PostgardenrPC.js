@@ -1,11 +1,11 @@
 import React, { useState, useEffect, cloneElement } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { useAuth } from '../componet/AuthContext';
-import useWindowWidth from '../componet/Check_size';
-import NavbarHead from '../componet/Navbar';
+import { useAuth } from '../../componet/AuthContext';
+import useWindowWidth from '../../componet/Check_size';
+import NavbarHead from '../../componet/Navbar';
 import { Helmet } from "react-helmet";
-import styles from '../css/CssUsergardenPc.module.css'
+import styles from '../../css/CssUsergardenPc.module.css'
 import { Form, Row, Col } from 'react-bootstrap';
 
 

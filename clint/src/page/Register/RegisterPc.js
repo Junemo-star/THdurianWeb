@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import useWindowWidth from '../componet/Check_size';
-import Footers from '../componet/Footerbar';
-import styles from '../css/CssRegis.module.css'
+import useWindowWidth from '../../componet/Check_size';
+import Footers from '../../componet/Footerbar';
+import styles from '../../css/CssRegis.module.css'
 import { Form, Container, Image } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";

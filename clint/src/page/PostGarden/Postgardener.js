@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import styles from '../css/CssPost.module.css'
-import Footers from '../componet/Footerbar';
+import styles from '../../css/CssPost.module.css'
+import Footers from '../../componet/Footerbar';
 import { useNavigate } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
-import { useAuth } from '../componet/AuthContext';
+import { useAuth } from '../../componet/AuthContext';
 
 const PostGarden = () => {
     const [species, setSpecies] = useState([]);

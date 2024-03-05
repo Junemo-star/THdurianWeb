@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { Form, Container, Image } from 'react-bootstrap';
-import styles from '../css/CssUser.module.css'
-import Footers from '../componet/Footerbar';
-import NavbarHead from '../componet/Navbar';
+import styles from '../../css/CssUser.module.css'
+import Footers from '../../componet/Footerbar';
+import NavbarHead from '../../componet/Navbar';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
-import { useAuth } from '../componet/AuthContext';
-import useWindowWidth from '../componet/Check_size';
+import { useAuth } from '../../componet/AuthContext';
+import useWindowWidth from '../../componet/Check_size';
 import { Helmet } from "react-helmet";
-import Editdata from '../componet/Edit';
+import Editdata from '../../componet/Edit';
 
 
 const UserPc = () => {
