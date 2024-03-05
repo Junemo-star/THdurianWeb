@@ -9,11 +9,11 @@ import { useAuth } from '../../componet/AuthContext';
 import useWindowWidth from '../../componet/Check_size';
 import { Helmet } from "react-helmet";
 import Editdata from '../../componet/Edit';
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const UserPc = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const navigate = useNavigate()
     const { setRole, token, userRole } = useAuth();
     const windowWidth = useWindowWidth();

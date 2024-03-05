@@ -4,12 +4,14 @@ import styles from '../css/CssModal.module.css'
 import axios from 'axios';
 import { Card, Form, FormControl, Button } from "react-bootstrap";
 import { useAuth } from './AuthContext';
+import Urlconfig from '../config';
 
 
 const Modaldurian = ( {show, handleClose} ) => {
     const { token } = useAuth
     const [search, setSearch] = useState('')
     const [durinaType, setDurianType] = useState([])
+    const head = Urlconfig.serverUrlPrefix;
     
     const fetchItems = async () => {
         const response = await axios.get(head+"/api/categories", token)

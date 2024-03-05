@@ -6,10 +6,10 @@ import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
 import { useAuth } from '../../componet/AuthContext';
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 const PostGarden = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const [species, setSpecies] = useState([]);
     const [success, setSuccess] = useState(false)
     const [idSpecies, setIdSpecies] = useState()

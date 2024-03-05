@@ -9,7 +9,7 @@ import useWindowWidth from '../componet/Check_size';
 import axios from 'axios';
 import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
-import Urlconfig from '..config';
+import Urlconfig from '../config';
 import {
     PlusOutlined,
     MailOutlined,
@@ -19,13 +19,7 @@ import {
 const { Header, Content, Footer } = Layout;
 const { RangePicker } = DatePicker;
 const { Meta } = Card;
-const head = Urlconfig.serverUrlPrefix
-const ADMIN_URL = head + "/api/adminget";
-const UPDATE_URL = head + "/api/farm-post-news";
-const PROMO_URL = head + "/api/adminPromo";
-const API_PROMO_URL = head + "/api/news-promotions";
-const UPLOAD = head + "/api/upload/";
-const ORDER_URL = head + "/api/placed-orders"
+
 
 const statusOptions = [
     {
@@ -89,6 +83,13 @@ const menuItems = [
 ]
 
 const HomeApp = () => {
+    const head = Urlconfig.serverUrlPrefix
+    const ADMIN_URL = head + "/api/adminget";
+    const UPDATE_URL = head + "/api/farm-post-news";
+    const PROMO_URL = head + "/api/adminPromo";
+    const API_PROMO_URL = head + "/api/news-promotions";
+    const UPLOAD = head + "/api/upload/";
+    const ORDER_URL = head + "/api/placed-orders"
     const [form] = Form.useForm();
 
     const { userRole } = useAuth();
@@ -406,7 +407,7 @@ const HomeApp = () => {
             setPromo(promotions);
 
 
-            const Orderresponse = await axios.get(ORDER_URL+ "/adminget", config);
+            const Orderresponse = await axios.get(ORDER_URL + "/adminget", config);
 
             const Orderdata = Orderresponse.data
             //console.log(Prodata)
@@ -445,13 +446,13 @@ const HomeApp = () => {
                             Status: <Tag color={tagColor}>{item.Status}</Tag>
                         </div>
                         <div style={{ fontSize: "15px" }}>
-                        Id: {item.id}<br></br>
-                        Customer: {item.Customer}<br></br>
-                        Placed order on <br></br>
-                        Farmer: {item.Farmer} <br></br>
-                        Amount: {item.Amount} <br></br>
-                        Price: {item.Price} <br></br>
-                        Order Date: {new Date(item.OrderDate).toLocaleString("en-EN", {
+                            Id: {item.id}<br></br>
+                            Customer: {item.Customer}<br></br>
+                            Placed order on <br></br>
+                            Farmer: {item.Farmer} <br></br>
+                            Amount: {item.Amount} <br></br>
+                            Price: {item.Price} <br></br>
+                            Order Date: {new Date(item.OrderDate).toLocaleString("en-EN", {
                                 year: "numeric",
                                 month: "long",
                                 day: "numeric",
@@ -459,12 +460,12 @@ const HomeApp = () => {
                                 minute: "numeric",
                                 hour12: false,
                             })}<br></br>
-                        <br></br>
-                        Deliver to: {item.UserLocation} <br></br>
+                            <br></br>
+                            Deliver to: {item.UserLocation} <br></br>
                         </div>
 
                         <br></br>
-                     
+
 
                         <br></br>
                         <Radio.Group
@@ -525,7 +526,7 @@ const HomeApp = () => {
                 </Space>
             </div>
         )
-    }else if (selectedMenu === 'order') {
+    } else if (selectedMenu === 'order') {
         contentToRender = (
             <div>
                 <p>Order</p>

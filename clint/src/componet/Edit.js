@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-bootstrap/Modal';
 import { useAuth } from './AuthContext';
 import axios from 'axios';
-import Urlconfig from '..config';
+import Urlconfig from '../config';
+// import Urlconfig from ''
 
 const head = Urlconfig.serverUrlPrefix;
 

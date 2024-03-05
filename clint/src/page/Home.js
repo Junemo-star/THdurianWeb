@@ -11,14 +11,13 @@ import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
 import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
-import Urlconfig from '..config';
+import Urlconfig from '../config';
 
-const head = Urlconfig.serverUrlPrefix;
-
-const PUBLIC_URL = head+"/api/public";
-const PROMOTION = head+"/api/news-promotions";
 
 const HomeApp = () => {
+    const head = Urlconfig.serverUrlPrefix;
+    const PUBLIC_URL = head+"/api/public";
+    const PROMOTION = head+"/api/news-promotions";
     const { userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const navigate = useNavigate()

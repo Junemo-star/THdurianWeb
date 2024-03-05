@@ -7,11 +7,11 @@ import { Helmet } from "react-helmet";
 import styles from '../../css/CssUsergardenPc.module.css'
 import React, { useState, useEffect } from 'react';
 import Editdata from "../../componet/Edit";
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const UsergardenPc = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const { token, userRole } = useAuth();
     const navigate = useNavigate()
     const [userdata, setUserdata] = useState();

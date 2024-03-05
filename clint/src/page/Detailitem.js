@@ -10,13 +10,11 @@ import { Helmet } from "react-helmet";
 import NavbarHead from '../componet/Navbar';
 import RatingStarss from '../componet/RatingStar';
 import RatingStarsFix from '../componet/RatingStarFix';
-import Urlconfig from '..config';
-
-const head = Urlconfig.serverUrlPrefix;
-const URL_DETAIL = head + "/api/detail";
-
+import Urlconfig from '../config';
 
 const Detail = () => {
+    const head = Urlconfig.serverUrlPrefix;
+    const URL_DETAIL = head + "/api/detail";
     const windowWidth = useWindowWidth();
     const { id, durian } = useParams()
     const Num_id = Number(id)

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Image } from 'antd';
 import { DeleteOutlined } from '@ant-design/icons';
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const FirstStep = () => {
+  const head = Urlconfig.serverUrlPrefix;
   const [cartData, setCartData] = useState([]);
   const [apiData, setApiData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);

@@ -6,11 +6,11 @@ import styles from '../../css/CssRegis.module.css'
 import { Form, Container, Image } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const Register = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
     const [conpassword, setConpassword] = useState()

@@ -7,11 +7,11 @@ import NavbarHead from '../../componet/Navbar';
 import { Helmet } from "react-helmet";
 import styles from '../../css/CssUsergardenPc.module.css'
 import { Form, Row, Col } from 'react-bootstrap';
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const PostgardenPC = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const [species, setSpecies] = useState([]);
     const [success, setSuccess] = useState(false)
     const { token, userRole } = useAuth()

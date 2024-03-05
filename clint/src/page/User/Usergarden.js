@@ -8,11 +8,11 @@ import NavbarHead from '../../componet/Navbar';
 import { Helmet } from "react-helmet";
 import React, { useState, useEffect } from 'react';
 
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const Gardener = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const navigate = useNavigate()
     const { setRole, token, userRole } = useAuth();
     const [userdata, setUserdata] = useState();

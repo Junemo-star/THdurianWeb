@@ -10,11 +10,11 @@ import useWindowWidth from '../componet/Check_size';
 import toast, { Toaster } from 'react-hot-toast';
 import '../css/style.css'
 import { Helmet } from "react-helmet";
-import Urlconfig from '..config';
+import Urlconfig from '../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const LoginApp = () => {
+    const head = Urlconfig.serverUrlPrefix;
     const [username, setUsername] = useState()
     const [password, setPassword] = useState()
 

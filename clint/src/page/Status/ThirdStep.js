@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Input, Cascader, Button } from 'antd';
 import axios from 'axios';
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 const { TextArea } = Input;
 
 const ThirdStep = () => {
+  const head = Urlconfig.serverUrlPrefix;
   const [value, setValue] = useState('');
   const [locationOptions, setLocationOptions] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState('');

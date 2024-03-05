@@ -4,10 +4,10 @@ import { CheckCircleFilled } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate hooks
 import useWindowWidth from '../../componet/Check_size';
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 const FourthStep = () => {
+  const head = Urlconfig.serverUrlPrefix;
   const navigate = useNavigate(); // Initialize useNavigate hook
   const windowWidth = useWindowWidth();
 

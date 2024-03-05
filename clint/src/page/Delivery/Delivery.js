@@ -8,11 +8,11 @@ import { MDBTypography } from "mdb-react-ui-kit";
 import { Steps } from "antd";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
-import Urlconfig from '..config';
+import Urlconfig from '../../config';
 
-const head = Urlconfig.serverUrlPrefix;
 
 const Delivery = () => {
+  const head = Urlconfig.serverUrlPrefix;
   const windowWidth = useWindowWidth();
   const [orders, setOrders] = useState([]);
   const [category, setCategory] = useState("");
