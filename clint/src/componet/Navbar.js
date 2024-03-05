@@ -13,14 +13,16 @@ function NavbarHead() {
     const { userRole, setRole } = useAuth();
 
     const handleCloseModal = () => setShowModal(false);
-    const Search = () => setShowModal(true);
+    const Search = () => setShowModal(true)
     const homee = () => navigate('/')
 
     const user = () => {
         if (userRole === 'Customer') {
             navigate('/Users');
-        } else if (userRole === 'Farmer') {
+        } if (userRole === 'Farmer') {
             navigate('/Gardeners')
+        } if (userRole === 'Admin'){
+            navigate('/Admin')
         } else {
             navigate('/Login')
         }
@@ -94,7 +96,7 @@ function NavbarHead() {
                             </Button>
                         </Form>
                     }
-                    {userRole
+                    {userRole && userRole !== "Admin"
                         ?
                         <Form className="d-flex" style={{ display: "flex", justifyContent: "center", alignItems: "center", marginLeft: "10px" }}>
                             <Button style={{ backgroundColor: "#FFEF60", color: "black", borderStyle: "hidden", maxHeight: "29.6px", display: "flex", justifyContent: "center", alignItems: "center" }} onClick={() => Delivery()}>

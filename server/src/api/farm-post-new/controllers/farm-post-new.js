@@ -54,9 +54,7 @@ module.exports = createCoreController('api::farm-post-new.farm-post-new', ({ str
 
             },
             populate:{
-                owner: true,
-                category: true,
-                picture: true,
+                
                 orders: true
             },
         });
