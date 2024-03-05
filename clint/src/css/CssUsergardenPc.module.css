@@ -22,4 +22,7 @@
     margin-bottom: 10px;
     border-radius: 10px;
     padding: 5px;
+    display: flex;
+    justify-content: start;
+    align-items: center;
 }

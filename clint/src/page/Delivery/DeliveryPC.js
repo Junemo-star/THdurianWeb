@@ -96,7 +96,7 @@ const DeliveryPc = () => {
                 {console.log(orders)}
                 {orders.map((order) => (
                   <option key={order.id} value={order.Category}>
-                    {order.Category} {order.FarmerName}
+                    {order.Category}
                   </option>
                 ))}
               </Form.Select>

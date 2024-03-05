@@ -40,20 +40,22 @@
 
 .box {
     width: 345px;
-    height: 700px;
-    background-color: #568203;
+    height: auto;
+    padding: 20px;
+    padding-top: 100px;
+    background-color: #697E50;
     border-radius: 25px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-bottom: 200px;
+    margin-bottom: 20px;
 }
 
 .box_inside_profile {
     width: 312px;
     height: 236px;
-    background-color: #B0BF07;
+    background-color: #FFEF60;
     border-radius: 25px;
     padding: 10px;
     /* font-size: 20px; */
@@ -62,14 +64,14 @@
 .box_inside_text {
     margin: 10px;
     font-size: 25px;
-    color: white;
+    color: black;
     /* display: flex; */
 }
 
 .box_inside_history {
     width: 312px;
     height: 193px;
-    background-color: #B0BF07;
+    /* background-color: #B0BF07; */
     border-radius: 25px;
 }
 
@@ -88,16 +90,20 @@
 .body_history {
     border-radius: 10px;
     color: black;
-    background-color: white;
+    background-color: #FFEF60;
     margin-left: 10px;
     margin-right: 10px;
     margin-bottom: 5px;
-    padding: 5px;
+    padding: 10px;
 }
 
 .text_body_history {
-    padding: 4px;
+    padding: 10px;
+    color: white;
+    background-color: #8F3E00;
+    border-radius: 10px;
     font-size: 14px;
+    margin-bottom: 10px;
 }
 
 .score_line {

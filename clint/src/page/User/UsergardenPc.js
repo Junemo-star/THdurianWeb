@@ -12,16 +12,16 @@ import Editdata from "../../componet/Edit";
 const UsergardenPc = () => {
     const { token, userRole } = useAuth();
     const navigate = useNavigate()
-    const [userdata, setUserdata] = useState();    
+    const [userdata, setUserdata] = useState();
     const [showModal, setShowModal] = useState(false);
 
     const handleClose = () => setShowModal(false);
-    
+
     const open = () => {
         setShowModal(true);
         console.log(showModal)
     }
-    
+
     const infouser = async () => {
         const response = await axios.get("http://localhost:1337/api/users/me?populate=*", token)
         setUserdata(response.data)
@@ -46,7 +46,7 @@ const UsergardenPc = () => {
                 <title>User</title>
                 {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
-            {/* {console.log(userdata)} */}
+            {console.log(userdata)}
             <NavbarHead />
 
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "100%", margin: "80px" }}>
@@ -135,43 +135,21 @@ const UsergardenPc = () => {
                     <div style={{ display: "flex", justifyContent: "center" }}>
                         <div style={{ backgroundColor: "#FFEF60", borderRadius: "10px", width: "95%", height: "210px" }}>
                             <div className={styles.score_line}>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-                                <div className={styles.inside_box_profile2}>
-                                    สวนนายดำ ขายวันที่ : xx/xx/xx
-                                    จำนวน : xx กิโลกรัม ราคา xx บาท
-                                </div>
-
+                                {userdata?.farm_post_histories?.map((item) => (
+                                    <div className={styles.inside_box_profile2}>
+                                        <div style={{marginRight: "10px"}}>{userdata.username}</div>
+                                        <div style={{marginRight: "10px"}}>{new Date(item.date).toLocaleString("th-TH", {
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                            hour12: false,
+                                        })}</div>
+                                        <div style={{marginRight: "10px"}}>จำนวน : {item.amount} กิโลกรัม</div> 
+                                        <div style={{marginRight: "10px"}}>ราคา {item.price} บาท</div>
+                                    </div>
+                                ))}
                             </div>
                         </div>
                     </div>

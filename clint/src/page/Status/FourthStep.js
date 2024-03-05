@@ -3,9 +3,11 @@ import { Card, Button } from 'antd';
 import { CheckCircleFilled } from '@ant-design/icons';
 import axios from 'axios';
 import { Link, useNavigate } from 'react-router-dom'; // Import Link and useNavigate hooks
+import useWindowWidth from '../../componet/Check_size';
 
 const FourthStep = () => {
   const navigate = useNavigate(); // Initialize useNavigate hook
+  const windowWidth = useWindowWidth();
 
   useEffect(() => {
     const fetchLocationData = async () => {
@@ -99,7 +101,13 @@ const FourthStep = () => {
       // Clear cart
       localStorage.removeItem('cart');
       
-      navigate('/Delivery');
+      if (windowWidth > 450){
+        window.location.reload()
+        navigate('/Deliverys');
+      } else {
+        navigate('/Delivery');
+        window.location.reload()
+      }
     
     } catch (error) {
       console.error('Error placing orders:', error);

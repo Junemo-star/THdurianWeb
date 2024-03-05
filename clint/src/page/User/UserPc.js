@@ -37,7 +37,7 @@ const UserPc = () => {
             navigate("/")
         }
         infouser()
-    }, []) 
+    }, [])
 
     const handleLogout = () => {
         // Remove JWT Token from Local Storage
@@ -102,44 +102,37 @@ const UserPc = () => {
                     </div>
                     <div style={{ display: "flex", justifyContent: "center", marginTop: "20px" }}>
                         <div style={{ width: "95%", backgroundColor: "#FFEF60", overflowY: "auto", maxHeight: "250px", padding: "5px" }}>
-                            <div className={styles.body_history}>
-                                <div className={styles.text_body_history}>
-                                    สวนนายดำ<br />
-                                    สั่งวันที่ : 16 กุมภา 2548 <br />
-                                    จำนวน : 25 กิโลกรัม ราคา : 200 บาท <br />
-                                    สถานะ : กำลังจัดส่ง
+                            {userdata?.order_histories?.map((item) => (
+                                <div className={styles.body_history}>
+                                    <div className={styles.text_body_history}>
+                                        {item.farmPost.owner.username} <br />
+                                        สั่งวันที่ : {new Date(item.createdAt).toLocaleString("th-TH", {
+                                                    year: "numeric",
+                                                    month: "long",
+                                                    day: "numeric",
+                                                    hour: "numeric",
+                                                    minute: "numeric",
+                                                    hour12: false,
+                                                })} <br />
+                                        จำนวน : {item.amount} กิโลกรัม ราคา : {item.price} บาท <br />
+                                        สถานะ : {item.status}
+                                    </div>
                                 </div>
-                            </div>
-                            <div className={styles.body_history}>
-                                <div className={styles.text_body_history}>
-                                    สวนนายดำ<br />
-                                    สั่งวันที่ : 16 กุมภา 2548 <br />
-                                    จำนวน : 25 กิโลกรัม ราคา : 200 บาท <br />
-                                    สถานะ : กำลังจัดส่ง
-                                </div>
-                            </div>
-                            <div className={styles.body_history}>
-                                <div className={styles.text_body_history}>
-                                    สวนนายดำ<br />
-                                    สั่งวันที่ : 16 กุมภา 2548 <br />
-                                    จำนวน : 25 กิโลกรัม ราคา : 200 บาท <br />
-                                    สถานะ : กำลังจัดส่ง
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
 
                 <div style={{ width: '100%', display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                    <button 
-                        style={{ padding: "10px", backgroundColor: "#697E50", fontWeight: "bold", borderRadius: "10px", borderStyle: "hidden", fontSize: "20px" , color: "white"}}
-                        onClick={() => open()}    
+                    <button
+                        style={{ padding: "10px", backgroundColor: "#697E50", fontWeight: "bold", borderRadius: "10px", borderStyle: "hidden", fontSize: "20px", color: "white" }}
+                        onClick={() => open()}
                     >
                         แก้ไขข้อมูลส่วนตัว
                     </button>
                 </div>
-            
-            <Editdata open={showModal} onHide={handleClose} user={userdata}/>
+
+                <Editdata open={showModal} onHide={handleClose} user={userdata} />
 
             </div>
         </>
