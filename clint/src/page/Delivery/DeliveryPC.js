@@ -10,46 +10,135 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Urlconfig from "../../config";
 
-const DeliveryPc = () => {
-  const head = Urlconfig.serverUrlPrefix;
-  const windowWidth = useWindowWidth();
-  const [orders, setOrders] = useState([]);
-  const [activeStep, setActiveStep] = useState([]);
-  const [category, setCategory] = useState("");
-  const statusColor = ["#697E50", "#697E50", "#697E50"];
-  const { token } = useAuth();
-  const Step = Steps.Step;
+const { Step } = Steps;
 
-  const fetchData = async () => {
-    try {
-      const ordersResponse = await axios.get(head + "/api/delivery", token);
-      setOrders(ordersResponse.data);
-    } catch (error) {
-      console.error("Error fetching data: ", error);
-    }
-  };
+const OrderStep = ({ order }) => {
+  const [currentStep, setCurrentStep] = useState(0); // กำหนดค่าเริ่มต้นของ step เป็น 0
 
   useEffect(() => {
+    // ตั้งค่า step ของแต่ละ order โดยอ้างอิงจาก order.Status
+    switch (order.Status) {
+      case "Packaging":
+        setCurrentStep(1);
+        break;
+      case "Delivered":
+        setCurrentStep(2);
+        break;
+      default:
+        setCurrentStep(0);
+        break;
+    }
+  }, [order.Status]);
+
+  return (
+    
+    <div className={styles.inside_box}>
+      <div className={styles.inside_box}>
+        <div
+          style={{
+            padding: "10px",
+            display: "flex",
+            justifyContent: "start",
+            flexDirection: "column",
+            alignItems: "center",
+            width: "100%",
+          }}
+        >
+          
+          <div
+            style={{
+              width: "95%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              flexDirection: "column",
+              fontSize: "20px",
+            }}
+          >
+            <div
+              style={{
+                width: "80%",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <div style={{ marginRight: "20px" }}>สวน : {order.Farmer}</div>
+              <div>ชนิด : {order.Category}</div>
+            </div>
+            <div
+              style={{
+                width: "80%",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "10px",
+              }}
+            >
+              <div style={{ marginRight: "20px" }}>
+                จำนวน : {order.Amount} กิโลกรัม
+              </div>
+              <div>ราคา : {order.Price} บาท</div>
+            </div>
+            <div style={{ width: "80%",
+                display: "flex",
+                justifyContent: "center",
+                marginBottom: "10px", }}>
+              สถานะ : {order.Status}
+            </div>
+          </div>
+        </div>
+      </div>
+      <Steps
+        progressDot
+        current={currentStep}
+        items={[
+          {
+            title: "รับคำสั่งซื้อ",
+            description: "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
+          },
+          {
+            title: "เตรียมจัดส่ง",
+            description: "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
+          },
+          {
+            title: "กำลังจัดส่ง",
+            description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
+          },
+        ]}
+      />
+    </div>
+  );
+};
+
+const DeliveryPc = () => {
+  const head = Urlconfig.serverUrlPrefix;
+  const { token } = useAuth();
+  const [category, setCategory] = useState("");
+  const [orders, setOrders] = useState([]);
+  const [uniqueCategories, setUniqueCategories] = useState(new Set());
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const ordersResponse = await axios.get(head + "/api/delivery", token);
+        setOrders(ordersResponse.data);
+
+        // เก็บประเภททุเรียนที่ไม่ซ้ำกันลงใน Set
+        const categories = new Set(
+          ordersResponse.data.map((order) => order.Category)
+        );
+        setUniqueCategories(categories);
+      } catch (error) {
+        console.error("Error fetching data: ", error);
+      }
+    };
     fetchData();
   }, []);
 
-  useEffect(() => {
-    const newActiveStep = orders.reduce((maxStep, order) => {
-      switch (order.Status) {
-        case "Verifying":
-          return Math.max(maxStep, 0);
-        case "Packaging":
-          return Math.max(maxStep, 1);
-        case "Delivered":
-          return Math.max(maxStep, 2);
-        default:
-          return maxStep;
-      }
-    }, -1);
-    setActiveStep(newActiveStep);
-  }, [orders]);
+  const handleCategoryChange = (e) => {
+    setCategory(e.target.value);
+  };
 
-  // Filter orders based on selected category
   const filteredOrders =
     category === "" ||
     category === "ทั้งหมด" ||
@@ -60,6 +149,9 @@ const DeliveryPc = () => {
   return (
     <>
       <NavbarHead />
+      
+      
+           
       <div
         style={{
           display: "flex",
@@ -82,73 +174,28 @@ const DeliveryPc = () => {
             flexDirection: "column",
           }}
         >
+          <div className={styles.inside_box} style={{ marginBottom: "10px" }}>
+              <h1 class="text-center">สถานะการจัดส่ง</h1>
+            </div>
           <div className={styles.set_pos}>
             <FloatingLabel controlId="floatingSelect" label="ประเภท">
               <Form.Select
                 aria-label="Floating label select example"
                 value={category}
-                onChange={(e) => setCategory(e.target.value)}
+                onChange={handleCategoryChange}
               >
                 <option>กรุณาเลือกประเภททุเรียน</option>
                 <option>ทั้งหมด</option>
-                {console.log(orders)}
-                {orders.map((order) => (
-                  <option key={order.id} value={order.Category}>
-                    {order.Category}
+                {[...uniqueCategories].map((cat, index) => (
+                  <option key={index} value={cat}>
+                    {cat}
                   </option>
                 ))}
               </Form.Select>
             </FloatingLabel>
           </div>
-          {filteredOrders.map((order, index) => (
-            <div key={order.id}>
-              <div>
-                <MDBTypography>
-                  <div>
-                    <div className={styles.inside_box}>
-                      <div style={{ padding: "10px", display: "flex", justifyContent: "start", flexDirection: "column", alignItems: "center", width: "100%" }}>
-                        <div style={{ width: "95%", fontSize: "30px", fontWeight: "bold" }}>
-                          สถานะการจัดส่ง
-                        </div>
-                        <div style={{ width: "95%", display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", fontSize: "20px" }}>
-                          <div style={{ width: "80%", display: "flex", justifyContent: "start", marginBottom: "10px" }}>
-                            <div style={{marginRight: "20px"}}>สวน : {order.Farmer}</div>
-                            <div>ชนิด : {order.Category}</div>
-                          </div>
-                          <div style={{ width: "80%", display: "flex", justifyContent: "start", marginBottom: "10px" }}>
-                            <div style={{marginRight: "20px"}}>จำนวน : {order.Amount} กิโลกรัม</div>
-                            <div>ราคา : {order.Price} บาท</div>
-                          </div>
-                          <div style={{ width: "80%", marginBottom: "10px" }}>
-                            สถานะ : {order.Status}
-                          </div>
-                        </div>
-                      </div>
-
-                      <Steps
-                        progressDot
-                        current={activeStep}
-                        items={[
-                          {
-                            title: "รับคำสั่งซื้อ",
-                            description:
-                              "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
-                          },
-                          {
-                            title: "เตรียมจัดส่ง",
-                            description: "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
-                          },
-                          {
-                            title: "กำลังจัดส่ง",
-                            description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
-                          },
-                        ]}
-                      />
-                    </div>
-                  </div>
-                </MDBTypography>
-              </div>
-            </div>
+          {filteredOrders.map((order) => (
+            <OrderStep key={order.id} order={order} />
           ))}
         </div>
       </div>
