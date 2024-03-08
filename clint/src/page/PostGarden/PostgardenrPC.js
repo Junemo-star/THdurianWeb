@@ -25,10 +25,10 @@ const PostgardenPC = () => {
     const navigate = useNavigate()
 
     useEffect(() => {
-        if (userRole !== "Farmer"){
+        if (userRole !== "Farmer") {
             navigate("/")
         }
-        axios.get(head+"/api/categories", token
+        axios.get(head + "/api/categories", token
         ).then((response) => {
             const filterdata = response.data.data.filter(item => item.attributes.durianType)
             setSpecies(filterdata)
@@ -45,39 +45,63 @@ const PostgardenPC = () => {
         navigate("/Gardeners")
     }
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        const formData = new FormData();
-        formData.append('files', image, image.name);
-        console.log(formData)
+    const handleSubmit = async () => {
+        // e.preventDefault();
+        console.log(image)
 
-        const response = await axios.post(head+'/api/upload/',
-            formData
-        );
-
-        console.log('File uploaded successfully:', response.data);
-        const pictureId = response.data[0].id
-        console.log(pictureId)
-        try {
-            let result = await axios.post(head+"/api/farm-post-news", {
-                note: note,
-                amount: amount,
-                location: location,
-                price: price,
-                descriptions: detail,
-                categoryID: idSpecies,
-                pictureId: pictureId
-            }, token);
-            setSuccess(true)
-            console.log("success");
-            window.location.reload()
-        } catch (e) {
-            console.log(e);
-            messageApi.open({
-                type: 'warning',
-                content: 'ข้อมูลไม่ถูกต้อง',
-                duration: 3
-            });
+        if (image !== null) {
+            const formData = new FormData();
+            formData.append('files', image, image.name);
+            console.log(formData)
+            const response = await axios.post(head + '/api/upload/',
+                formData
+            );
+            console.log('File uploaded successfully:', response.data);
+            const pictureId = response.data[0].id
+            console.log(pictureId)
+            try {
+                let result = await axios.post(head + "/api/farm-post-news", {
+                    note: note,
+                    amount: amount,
+                    location: location,
+                    price: price,
+                    descriptions: detail,
+                    categoryID: idSpecies,
+                    pictureId: pictureId
+                }, token);
+                setSuccess(true)
+                console.log("success");
+                window.location.reload()
+            } catch (e) {
+                console.log(e);
+                messageApi.open({
+                    type: 'warning',
+                    content: 'ข้อมูลไม่ถูกต้อง',
+                    duration: 3
+                });
+            }
+        } else {
+            try {
+                let result = await axios.post(head + "/api/farm-post-news", {
+                    note: note,
+                    amount: amount,
+                    location: location,
+                    price: price,
+                    descriptions: detail,
+                    categoryID: idSpecies,
+                    pictureId: '/noimg.png'
+                }, token);
+                setSuccess(true)
+                console.log("success");
+                window.location.reload()
+            } catch (e) {
+                console.log(e);
+                messageApi.open({
+                    type: 'warning',
+                    content: 'ข้อมูลไม่ถูกต้อง',
+                    duration: 3
+                });
+            }
         }
     }
 
@@ -112,7 +136,7 @@ const PostgardenPC = () => {
                         </div>
 
                         <div style={{ width: "500px", color: "white" }}>
-                            <div style={{ display: "flex", alignItems: "center",marginTop: "10px" }}>
+                            <div style={{ display: "flex", alignItems: "center", marginTop: "10px" }}>
                                 <span style={{ marginRight: "10px", width: "82.73px" }}>พันธุ์เรียน :</span>
                                 <Form.Select onChange={(e) => setIdSpecies(e.target.value)} style={{ width: "250px", backgroundColor: "#FFEF60" }}>
                                     <option>เลือกสายพันธุ์</option>
@@ -122,7 +146,7 @@ const PostgardenPC = () => {
                                 </Form.Select>
                             </div>
 
-                            <div style={{ display: "flex", alignItems: "center",marginTop: "20px" }}>
+                            <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
                                 <span style={{ marginRight: "10px", width: "82.73px" }}>ราคา : </span>
                                 <input
                                     type='number'
@@ -131,15 +155,15 @@ const PostgardenPC = () => {
                                 />
                             </div>
 
-                            <div style={{ display: "flex", alignItems: "center",marginTop: "20px" }}>
-                            <span style={{ marginRight: "10px", width: "82.73px" }}>จำนวน : </span>
+                            <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
+                                <span style={{ marginRight: "10px", width: "82.73px" }}>จำนวน : </span>
                                 <input
                                     style={{ borderRadius: "10px", borderStyle: "hidden", backgroundColor: "#FFEF60", color: "black", padding: "10px" }}
                                     type='number'
                                     onChange={(e) => setAmount(e.target.value)} />
                             </div>
 
-                            <div style={{ display: "flex", alignItems: "center",marginTop: "20px" }}>
+                            <div style={{ display: "flex", alignItems: "center", marginTop: "20px" }}>
                                 <span style={{ marginRight: "10px" }}>รายละเอียด : </span>
                                 <Form.Control
                                     as="textarea"
@@ -161,7 +185,7 @@ const PostgardenPC = () => {
                                 />
                             </div>
 
-                            <div style={{ marginTop: "20px", display: "flex", alignItems: "center"}}>
+                            <div style={{ marginTop: "20px", display: "flex", alignItems: "center" }}>
                                 <span style={{ marginRight: "10px", width: "82.73px" }}>location : </span>
                                 <Form.Control
                                     as="textarea"
@@ -175,7 +199,7 @@ const PostgardenPC = () => {
                     </div>
 
                     <div style={{ marginTop: "20px" }}>
-                        <button style={{ backgroundColor: "#FFEF60", padding: "10px", borderRadius: "10px", borderStyle: "hidden" }} onClick={handleSubmit}>
+                        <button style={{ backgroundColor: "#FFEF60", padding: "10px", borderRadius: "10px", borderStyle: "hidden" }} onClick={() => handleSubmit()}>
                             ยืนยันการโพส
                         </button>
                         <button style={{ backgroundColor: "#FFEF60", padding: "10px", borderRadius: "10px", borderStyle: "hidden", marginLeft: "10px" }} onClick={() => back()}>
