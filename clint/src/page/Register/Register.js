@@ -33,13 +33,6 @@ const Register = () => {
             alert("ข้อมูลไม่ถูกต้อง")
         }
 
-        // console.log(username)
-        // console.log(password)
-        // console.log(email)
-        // console.log(lastname)
-        // console.log(firstname)
-        // console.log(location)
-
         try {
             let result = await axios.post(head+"/api/users", {
                 username: username,
@@ -73,7 +66,6 @@ const Register = () => {
         <div className={styles.set_pos}>
             <Helmet>
                 <title>Register</title>
-                {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
 
             <Form onSubmit={handleSubmit} className={styles.Formlogin}>

@@ -24,7 +24,6 @@ const HomeApp = () => {
     const [product, setProduct] = useState([])
     const [showModal, setShowModal] = useState(false);
     const [promotionItem, setPromotionItem] = useState(false);
-    const [searchhh, setSearchhh] = useState('ก้านยาว')
     const [showChatbox, setShowChatbox] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState(null);
 
@@ -41,8 +40,6 @@ const HomeApp = () => {
     };
 
     const idpost = (durian) => {
-        // console.log(durian.length)
-        // console.log(durian)
         if (userRole !== "Farmer") {
             if (durian.length > 1) {
                 const latest = durian[durian.length - 1]
@@ -59,19 +56,15 @@ const HomeApp = () => {
             const promo = await axios.get(PROMOTION);
             setPromotionItem(promo.data)
             const data = response.data
-            console.log("++++", data)
             const datafilter = data.filter(item => item.NetAmount !== 0)
-            console.log(" ------- ",datafilter)
             let products;
             if (sessionStorage.getItem("typedurian")) {
                 const choose = sessionStorage.getItem("typedurian");
                 const filterdata = datafilter.data.filter(item => item.Category === choose);
-
                 products = filterdata.map((item) => {
                     let url = "2.jpg";
                     if (item.Picture) {
                         url = head + item.Picture.url;
-                        // console.log(item.Picture.url)
                     }
                     return (
                         <Link onClick={() => idpost(item.Id)} key={item.Id}>
@@ -104,7 +97,6 @@ const HomeApp = () => {
                     let url = "2.jpg";
                     if (item.Picture) {
                         url = head + item.Picture.url;
-                        // console.log(item.Picture.url)
                     }
                     return (
                         <Link onClick={() => idpost(item.Id)} key={item.Id}>
@@ -155,7 +147,7 @@ const HomeApp = () => {
 
             {windowWidth > 450 && <NavbarHead />}
 
-            {console.log("Promotion", promotionItem)}
+            {/* {console.log("Promotion", promotionItem)} */}
 
             {promotionItem && (
                 <Carousel fade style={{ marginTop: "20px" }}>

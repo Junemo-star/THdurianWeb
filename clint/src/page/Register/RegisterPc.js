@@ -7,6 +7,7 @@ import { Form, Container, Image } from 'react-bootstrap';
 import { useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet";
 import Urlconfig from '../../config';
+import { message } from 'antd';
 
 
 const RegisterPc = () => {
@@ -22,6 +23,7 @@ const RegisterPc = () => {
     const [success, setSuccess] = useState(false)
     const navigate = useNavigate()
     const windowWidth = useWindowWidth();
+    const [messageApi, contextHolder] = message.useMessage();
 
     const handleChange = (e) => {
         console.log(e.target.files);
@@ -60,6 +62,11 @@ const RegisterPc = () => {
         } catch (e) {
             console.log(e);
             console.log("wrong username & password");
+            messageApi.open({
+                type: 'warning',
+                content: 'ข้อมูลไม่ถูกต้อง',
+                duration: 3
+            });
         }
 
         if (success === true) {

@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
       setUserRole(storedRole);
     }
     if (localStorage.getItem('cart')) { //ถ้ามีก็ไม่ต้องทำอะไร
-      console.log("eee")
+      // console.log("eee")
     } else { //ถ้าใน localStorage.getItem('cart') ไม่มีให้สร้างลิสเปล่าขึ้นมา (ทำแบบนี้เพื่อกันเวลาเลือกของใส่ cart แล้วรีเฟรชหน้าจอแล้วของใน cart หาย)
       const duriann = []
       const Arrdurian = JSON.stringify(duriann);

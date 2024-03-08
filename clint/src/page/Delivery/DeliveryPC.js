@@ -31,7 +31,7 @@ const OrderStep = ({ order }) => {
   }, [order.Status]);
 
   return (
-    
+
     <div className={styles.inside_box}>
       <div className={styles.inside_box}>
         <div
@@ -44,7 +44,7 @@ const OrderStep = ({ order }) => {
             width: "100%",
           }}
         >
-          
+
           <div
             style={{
               width: "95%",
@@ -79,10 +79,12 @@ const OrderStep = ({ order }) => {
               </div>
               <div>ราคา : {order.Price} บาท</div>
             </div>
-            <div style={{ width: "80%",
-                display: "flex",
-                justifyContent: "center",
-                marginBottom: "10px", }}>
+            <div style={{
+              width: "80%",
+              display: "flex",
+              justifyContent: "center",
+              marginBottom: "10px",
+            }}>
               สถานะ : {order.Status}
             </div>
           </div>
@@ -141,8 +143,8 @@ const DeliveryPc = () => {
 
   const filteredOrders =
     category === "" ||
-    category === "ทั้งหมด" ||
-    category === "กรุณาเลือกประเภททุเรียน"
+      category === "ทั้งหมด" ||
+      category === "กรุณาเลือกประเภททุเรียน"
       ? orders
       : orders.filter((order) => order.Category === category);
 
@@ -172,8 +174,8 @@ const DeliveryPc = () => {
           }}
         >
           <div className={styles.inside_box} style={{ marginBottom: "10px" }}>
-              <h1 class="text-center">สถานะการจัดส่ง</h1>
-            </div>
+            <h1 class="text-center">สถานะการจัดส่ง</h1>
+          </div>
           <div className={styles.set_pos}>
             <FloatingLabel controlId="floatingSelect" label="ประเภท">
               <Form.Select

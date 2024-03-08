@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Container, Image } from 'react-bootstrap';
 import styles from '../../css/CssUser.module.css'
 import Footers from '../../componet/Footerbar';
-import NavbarHead from '../../componet/Navbar';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../../componet/AuthContext';

@@ -11,14 +11,14 @@ import NavbarHead from '../componet/Navbar';
 import RatingStarss from '../componet/RatingStar';
 import RatingStarsFix from '../componet/RatingStarFix';
 import Urlconfig from '../config';
-import { Button, message, Space } from 'antd';
+import { message } from 'antd';
 
 const Detail = () => {
     const head = Urlconfig.serverUrlPrefix;
     const URL_DETAIL = head + "/api/detail";
     const windowWidth = useWindowWidth();
     const { id, durian } = useParams()
-    const Num_id = Number(id)
+    // const Num_id = Number(id)
     const { token, Addcart, userRole } = useAuth()
     const navigate = useNavigate()
     const [infomation, setInfomation] = useState()
@@ -57,15 +57,7 @@ const Detail = () => {
             const responses = await Promise.all(requests);
             const dataListFromResponses = responses.map(res => res.data[0]);
             setDatalist(dataListFromResponses);
-
-            console.log("DatalistDurian", dataListFromResponses);
-            console.log(id);
-            console.log(result.data[0]);
             setInfomation(result.data[0]);
-
-            if (infomation.NetAmount === 0) {
-                setStatus(false)
-            }
         } catch (err) {
             console.error(err);
         }
@@ -73,21 +65,18 @@ const Detail = () => {
 
     const add = async () => {
         try {
-            // console.log(userRole)
             if (userRole) {
                 Addcart([id, num])
-
                 messageApi.open({
                     type: 'success',
                     content: 'สินค้าถูกเพิ่มเรียบร้อย',
                     duration: 3
                 });
-
             } else {
                 navigate("/Login")
             }
-
-            window.location.reload();
+            setNum(0)
+            // window.location.reload();
         } catch (err) {
             console.error(err);
         }
@@ -100,10 +89,8 @@ const Detail = () => {
     }
 
     const ratingChangedd = (newRating) => {
-        // console.log(newRating);
         let s = String(newRating)
         setStar(s)
-        // console.log(typeof star);
     };
 
     const Postcomment = async () => {
@@ -136,10 +123,6 @@ const Detail = () => {
             axios.get(head + "/api/users/me", token)
                 .then((item) => setUserr(item.data.id)).catch((err) => console.log(err))
         }
-
-
-        // console.log(Num_id)
-
         axios.get(head + `/api/comments?populate[farm_post_new][filters][id][$eq]=${id}&populate[users_permissions_user]=*`)
             .then((item) => {
                 const filteredData = item.data.data.filter(item =>
@@ -172,7 +155,6 @@ const Detail = () => {
                                 <img className={styles.size_img} src='/noimg.png' />
                             )}
 
-                            {console.log("----------", userComment)}
                             {windowWidth > 450 &&
                                 <div>
                                     <div className={styles.box_date}>
@@ -209,7 +191,6 @@ const Detail = () => {
 
                             <div className={styles.describ}>
                                 <div className={styles.text_describ}>
-                                    {/* {console.log(infomation)} */}
                                     รายละเอียด : {infomation.Description}
                                 </div>
                                 <div style={{ marginTop: "10px", color: windowWidth > 450 ? "white" : "black", fontWeight: "bold" }}>ที่อยู่</div>
@@ -297,7 +278,6 @@ const Detail = () => {
                         </div>
                         <div style={{ display: "flex", justifyContent: "center" }}>
                             <div className={styles.scroll_rating} style={{ padding: "30px" }}>
-                                {/* {console.log("............", userComment)} */}
                                 {userComment !== null ? (
                                     userComment?.map(({ id, attributes }) => (
                                         <div className={styles.scroll} style={{ marginBottom: "20px", color: "white" }} key={id}>
@@ -313,7 +293,7 @@ const Detail = () => {
                                             </div>
                                         </div>
                                     ))
-                                ) : null}
+                                ) : null }
                             </div>
                         </div>
                     </div>

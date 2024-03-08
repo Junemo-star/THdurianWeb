@@ -32,65 +32,65 @@ const OrderStep = ({ order }) => {
   }, [order.Status]);
   return (
     <div style={{ marginBottom: "5px" }}>
-    <div className={styles.set_pos}>
-      <div className={styles.set_all} ></div>
+      <div className={styles.set_pos}>
+        <div className={styles.set_all} ></div>
 
-      <div className={styles.set_pos} >
-        <div className={styles.box}  >
-          <div className={styles.set_pos}  >
-            
+        <div className={styles.set_pos} >
+          <div className={styles.box}  >
+            <div className={styles.set_pos}  >
 
-            <div className={styles.set_pos} style={{ marginBottom: "20px" }}>
-              <div>
-                <MDBTypography>
-                  <div>
-                    <div className={styles.inside_box}>
-                      <div className={styles.text2}>
-                        <p className="mb-1">สวน : {order.Farmer}</p>
-                        <p className="mb-1">ชนิด : {order.Category}</p>
-                        <p className="mb-1">จำนวน : {order.Amount} กิโลกรัม</p>
-                        <p className="mb-1">ราคา : {order.Price} บาท</p>
-                        <p className="mb-1">สถานะ : {order.Status}</p>
-                      </div>
-                      <div>
-                        <Steps
-                          progressDot
-                          current={currentStep}
-                          direction="vertical"
-                          items={[
-                            {
-                              title: "รับคำสั่งซื้อ",
-                              description:
-                                "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
-                            },
-                            {
-                              title: "เตรียมจัดส่ง",
-                              description:
-                                "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
-                            },
-                            {
-                              title: "กำลังจัดส่ง",
-                              description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
-                            },
-                          ]}
-                        />
+
+              <div className={styles.set_pos} style={{ marginBottom: "20px" }}>
+                <div>
+                  <MDBTypography>
+                    <div>
+                      <div className={styles.inside_box}>
+                        <div className={styles.text2}>
+                          <p className="mb-1">สวน : {order.Farmer}</p>
+                          <p className="mb-1">ชนิด : {order.Category}</p>
+                          <p className="mb-1">จำนวน : {order.Amount} กิโลกรัม</p>
+                          <p className="mb-1">ราคา : {order.Price} บาท</p>
+                          <p className="mb-1">สถานะ : {order.Status}</p>
+                        </div>
+                        <div>
+                          <Steps
+                            progressDot
+                            current={currentStep}
+                            direction="vertical"
+                            items={[
+                              {
+                                title: "รับคำสั่งซื้อ",
+                                description:
+                                  "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
+                              },
+                              {
+                                title: "เตรียมจัดส่ง",
+                                description:
+                                  "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
+                              },
+                              {
+                                title: "กำลังจัดส่ง",
+                                description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
+                              },
+                            ]}
+                          />
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </MDBTypography>
+                  </MDBTypography>
+                </div>
               </div>
             </div>
+            {windowWidth < 450 && <Footers />}
           </div>
-          {windowWidth < 450 && <Footers />}
         </div>
-      </div>
       </div>
     </div>
   );
 };
 const Delivery = () => {
   const head = Urlconfig.serverUrlPrefix;
-  
+
   const { token } = useAuth();
   const [category, setCategory] = useState("");
   const [orders, setOrders] = useState([]);
@@ -120,8 +120,8 @@ const Delivery = () => {
 
   const filteredOrders =
     category === "" ||
-    category === "ทั้งหมด" ||
-    category === "กรุณาเลือกประเภททุเรียน"
+      category === "ทั้งหมด" ||
+      category === "กรุณาเลือกประเภททุเรียน"
       ? orders
       : orders.filter((order) => order.Category === category);
 
@@ -131,9 +131,9 @@ const Delivery = () => {
         <div >
           <div className={styles.set_pos}>
             <div className={styles.set_pos}>
-          <div className={styles.inside_box} style={{ marginBottom: "10px" }}>
-              <h1 class="text-center">สถานะการจัดส่ง</h1>
-            </div>
+              <div className={styles.inside_box} style={{ marginBottom: "10px" }}>
+                <h1 class="text-center">สถานะการจัดส่ง</h1>
+              </div>
             </div>
             <FloatingLabel controlId="floatingSelect" label="ประเภท">
               <Form.Select
@@ -155,7 +155,7 @@ const Delivery = () => {
             <OrderStep key={order.id} order={order} />
           ))}
         </div>
-        
+
       </div>
     </>
   );

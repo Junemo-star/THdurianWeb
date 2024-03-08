@@ -1,12 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import { Form, Container, Image } from 'react-bootstrap';
 import styles from '../../css/CssUser.module.css'
-import Footers from '../../componet/Footerbar';
 import NavbarHead from '../../componet/Navbar';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../../componet/AuthContext';
-import useWindowWidth from '../../componet/Check_size';
 import { Helmet } from "react-helmet";
 import Editdata from '../../componet/Edit';
 import Urlconfig from '../../config';
@@ -16,7 +13,6 @@ const UserPc = () => {
     const head = Urlconfig.serverUrlPrefix;
     const navigate = useNavigate()
     const { setRole, token, userRole } = useAuth();
-    const windowWidth = useWindowWidth();
     const [userdata, setUserdata] = useState();
     const [showModal, setShowModal] = useState(false);
 
@@ -28,7 +24,7 @@ const UserPc = () => {
     }
 
     const infouser = async () => {
-        const response = await axios.get(head+"/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
+        const response = await axios.get(head + "/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
         setUserdata(response.data)
     }
 
@@ -54,6 +50,10 @@ const UserPc = () => {
 
     return (
         <>
+            <Helmet>
+                <title>User</title>
+                {/* <meta name="description" content="Helmet application" /> */}
+            </Helmet>
             <NavbarHead />
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", margin: "100px", height: "auto" }}>
                 <div style={{ display: "flex", justifyContent: "space-around", width: "900px", height: "auto", backgroundColor: "#697E50", padding: "20px", borderRadius: "10px" }}>
@@ -95,7 +95,6 @@ const UserPc = () => {
                             </div>
                         </div>
                     )}
-
                 </div>
 
                 <div style={{ display: "flex", justifyContent: "start", flexDirection: "column", width: "900px", height: "auto", backgroundColor: "#697E50", padding: "20px", borderRadius: "10px", marginTop: "20px" }}>
@@ -109,13 +108,13 @@ const UserPc = () => {
                                     <div className={styles.text_body_history}>
                                         {item.farmPost.owner.username} <br />
                                         สั่งวันที่ : {new Date(item.createdAt).toLocaleString("th-TH", {
-                                                    year: "numeric",
-                                                    month: "long",
-                                                    day: "numeric",
-                                                    hour: "numeric",
-                                                    minute: "numeric",
-                                                    hour12: false,
-                                                })} <br />
+                                            year: "numeric",
+                                            month: "long",
+                                            day: "numeric",
+                                            hour: "numeric",
+                                            minute: "numeric",
+                                            hour12: false,
+                                        })} <br />
                                         จำนวน : {item.amount} กิโลกรัม ราคา : {item.price} บาท <br />
                                         สถานะ : {item.status}
                                     </div>

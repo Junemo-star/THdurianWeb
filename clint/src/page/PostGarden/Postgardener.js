@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../css/CssPost.module.css'
-import Footers from '../../componet/Footerbar';
 import { useNavigate } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import axios from 'axios';
 import { Helmet } from "react-helmet";
 import { useAuth } from '../../componet/AuthContext';
 import Urlconfig from '../../config';
+import { message } from 'antd';
+
 
 const PostGarden = () => {
     const head = Urlconfig.serverUrlPrefix;
@@ -19,7 +20,9 @@ const PostGarden = () => {
     const [location, setLocation] = useState()
     const [amount, setAmount] = useState()
     const [price, setPrice] = useState()
-    const { userRole } = useAuth()
+    const { userRole, token } = useAuth()
+    const [messageApi, contextHolder] = message.useMessage();
+
 
     const navigate = useNavigate()
 
@@ -55,11 +58,6 @@ const PostGarden = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        // console.log("idSpecies =", idSpecies)
-        // console.log("image =", image)
-        // console.log("detail =", detail)
-        // console.log("note =", note)
-        // console.log(image)
         const formData = new FormData();
         formData.append('files', image, image.name);
         console.log(formData)
@@ -78,7 +76,6 @@ const PostGarden = () => {
         console.log(pictureId)
         try {
             let result = await axios.post(head+"/api/farm-post-news", {
-
                 note: note,
                 amount: amount,
                 location: location,
@@ -86,17 +83,18 @@ const PostGarden = () => {
                 descriptions: detail,
                 categoryID: idSpecies,
                 pictureId: pictureId
-            }, {
-                headers: {
-                    'Authorization': `Bearer ${localStorage.getItem('jwtToken')}`,
-                    // สามารถเพิ่ม header อื่น ๆ ตามต้องการได้
-                }
-            });
+            }, token);
             setSuccess(true)
             console.log("success");
             window.location.reload()
         } catch (e) {
             console.log(e);
+            messageApi.open({
+                type: 'warning',
+                content: 'ข้อมูลไม่ถูกต้อง',
+                duration: 3
+            });
+
         }
     }
 
@@ -104,8 +102,8 @@ const PostGarden = () => {
         <div className={styles.set_pos}>
             <Helmet>
                 <title>Post</title>
-                {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
+            {contextHolder}
 
             <div className={styles.box}>
                 <div className={styles.text}>
@@ -119,7 +117,6 @@ const PostGarden = () => {
                                 as="textarea"
                                 rows={2}
                                 className={styles.color_placehoder}
-                                // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                 placeholder='note : '
                                 onChange={(e) => setNote(e.target.value)}
                             />
@@ -129,7 +126,6 @@ const PostGarden = () => {
                                 as="textarea"
                                 rows={2}
                                 className={styles.color_placehoder}
-                                // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                 placeholder='location : '
                                 onChange={(e) => setLocation(e.target.value)}
                             />
@@ -166,7 +162,6 @@ const PostGarden = () => {
                                     as="textarea"
                                     rows={3}
                                     className={styles.color_placehoder}
-                                    // style={{ borderStyle: "hidden", backgroundColor: "#8F3E00" }}
                                     placeholder='รายละเอียด : '
                                     onChange={(e) => setDetail(e.target.value)}
                                 />

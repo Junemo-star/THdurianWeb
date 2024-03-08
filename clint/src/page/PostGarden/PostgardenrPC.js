@@ -2,13 +2,11 @@ import React, { useState, useEffect, cloneElement } from 'react';
 import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { useAuth } from '../../componet/AuthContext';
-import useWindowWidth from '../../componet/Check_size';
 import NavbarHead from '../../componet/Navbar';
 import { Helmet } from "react-helmet";
-import styles from '../../css/CssUsergardenPc.module.css'
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
 import Urlconfig from '../../config';
-
+import { message } from 'antd';
 
 const PostgardenPC = () => {
     const head = Urlconfig.serverUrlPrefix;
@@ -22,6 +20,8 @@ const PostgardenPC = () => {
     const [location, setLocation] = useState()
     const [amount, setAmount] = useState()
     const [price, setPrice] = useState()
+    const [messageApi, contextHolder] = message.useMessage();
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -73,6 +73,11 @@ const PostgardenPC = () => {
             window.location.reload()
         } catch (e) {
             console.log(e);
+            messageApi.open({
+                type: 'warning',
+                content: 'ข้อมูลไม่ถูกต้อง',
+                duration: 3
+            });
         }
     }
 
@@ -80,8 +85,8 @@ const PostgardenPC = () => {
         <div>
             <Helmet>
                 <title>Post</title>
-                {/* <meta name="description" content="Helmet application" /> */}
             </Helmet>
+            {contextHolder}
             <NavbarHead />
 
             <div style={{ display: "flex", justifyContent: "center", alignItems: "center", flexDirection: "column", height: "100vh" }}>
@@ -90,7 +95,6 @@ const PostgardenPC = () => {
 
                     <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", width: '100%' }}>
                         <div style={{ overflow: "hidden", width: "150px", height: "150px", position: "relative", borderRadius: "10px", borderStyle: "hidden", backgroundColor: "#FFEF60", display: 'flex', justifyContent: "center", alignItems: "center" }}>
-                            {/* <img src="user.png" style={{ layout: "fill", width: "50px", height: "50px" }} /> */}
                             <input
                                 type="file"
                                 accept="image/*"
