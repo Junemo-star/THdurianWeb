@@ -149,9 +149,6 @@ const DeliveryPc = () => {
   return (
     <div>
       <NavbarHead />
-      
-      
-           
       <div
         style={{
           display: "flex",

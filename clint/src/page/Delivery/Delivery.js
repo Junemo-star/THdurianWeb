@@ -46,11 +46,11 @@ const OrderStep = ({ order }) => {
                   <div>
                     <div className={styles.inside_box}>
                       <div className={styles.text2}>
-                        <p class="mb-1">สวน : {order.Farmer}</p>
-                        <p class="mb-1">ชนิด : {order.Category}</p>
-                        <p class="mb-1">จำนวน : {order.Amount} กิโลกรัม</p>
-                        <p class="mb-1">ราคา : {order.Price} บาท</p>
-                        <p class="mb-1">สถานะ : {order.Status}</p>
+                        <p className="mb-1">สวน : {order.Farmer}</p>
+                        <p className="mb-1">ชนิด : {order.Category}</p>
+                        <p className="mb-1">จำนวน : {order.Amount} กิโลกรัม</p>
+                        <p className="mb-1">ราคา : {order.Price} บาท</p>
+                        <p className="mb-1">สถานะ : {order.Status}</p>
                       </div>
                       <div>
                         <Steps

@@ -29,7 +29,7 @@ const RegisterPc = () => {
     }
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         if (password !== conpassword) {
             console.log("Passwords do not match");
             window.alert("รหัสผ่านไม่ถูกต้อง");

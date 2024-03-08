@@ -59,11 +59,13 @@ const HomeApp = () => {
             const promo = await axios.get(PROMOTION);
             setPromotionItem(promo.data)
             const data = response.data
-            console.log(data)
+            console.log("++++", data)
+            const datafilter = data.filter(item => item.NetAmount !== 0)
+            console.log(" ------- ",datafilter)
             let products;
             if (sessionStorage.getItem("typedurian")) {
                 const choose = sessionStorage.getItem("typedurian");
-                const filterdata = response.data.filter(item => item.Category === choose);
+                const filterdata = datafilter.data.filter(item => item.Category === choose);
 
                 products = filterdata.map((item) => {
                     let url = "2.jpg";
@@ -98,7 +100,7 @@ const HomeApp = () => {
                     );
                 });
             } else {
-                products = data.map((item) => {
+                products = datafilter.map((item) => {
                     let url = "2.jpg";
                     if (item.Picture) {
                         url = head + item.Picture.url;

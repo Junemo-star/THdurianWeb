@@ -9,12 +9,12 @@ const FirstStep = () => {
   const [cartData, setCartData] = useState([]);
   const [apiData, setApiData] = useState([]);
   const [filteredData, setFilteredData] = useState([]);
-  
+
   useEffect(() => {
     const localStorageData = JSON.parse(localStorage.getItem('cart')) || [];
     setCartData(localStorageData);
 
-    fetch(head+'/api/public')
+    fetch(head + '/api/public')
       .then(response => response.json())
       .then(data => setApiData(data))
       .catch(error => console.error('Error fetching data:', error));
@@ -34,7 +34,7 @@ const FirstStep = () => {
       const dataPromises = Object.entries(aggregatedData).map(([id, amount]) => {
         const matchingItem = apiData.find(item => item.Id.includes(Number(id)));
         if (matchingItem) {
-          return fetch(head+`/api/farm-post-news/${id}`)
+          return fetch(head + `/api/farm-post-news/${id}`)
             .then(response => response.json())
             .then(dateData => {
               const date = new Date(dateData?.data?.attributes?.date);
@@ -69,6 +69,7 @@ const FirstStep = () => {
     const updatedCartData = cartData.filter(([id, amount]) => id !== idToRemove);
     setCartData(updatedCartData);
     localStorage.setItem('cart', JSON.stringify(updatedCartData));
+    window.location.reload();
   };
 
   const getSumPrice = () => {
@@ -92,15 +93,15 @@ const FirstStep = () => {
             </div>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <div style={{ flex: '1', marginRight: '10px' }}>
-                {item.picture ? 
-                  <Image src={head+`${item.picture.formats.thumbnail.url}`} alt={item.category} />
+                {item.picture ?
+                  <Image src={head + `${item.picture.formats.thumbnail.url}`} alt={item.category} />
                   :
                   <Image src='/noimg.png' alt={item.category} />
                 }
               </div>
               <div style={{ flex: '2' }}>
                 <div>{`${item.category} x ${item.amount}`}</div>
-                <div style={{ opacity: 0.61 }}>{item.date}</div> 
+                <div style={{ opacity: 0.61 }}>{item.date}</div>
               </div>
             </div>
           </div>

@@ -91,53 +91,53 @@ const StatusPage = () => {
 
       {/* Chatbox */}
       {showChatbox && (
-  <Card style={{ position: 'fixed', bottom: 100, right: 20, backgroundColor: '#fff', padding: 20, borderRadius: 8, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
-    {/* FAQ Header */}
-    <h3 style={{ textAlign: 'center', borderBottom: '1px solid #ccc', paddingBottom: 10 }}>FAQ:</h3>
-    
-    {/* FAQ Content */}
-    <Row justify="space-around">
-  <Col span={8}>
-    <Button onClick={() => selectTopic('ขั้นตอนการใช้งาน')} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>ขั้นตอนการใช้งาน</Button>
-  </Col>
-  <Col span={8}>
-    <Button onClick={() => selectTopic('ข้อควรระวัง')} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>ข้อควรระวัง</Button>
-  </Col>
-  <Col span={8}>
-    <Button onClick={() => selectTopic('ช่องทางการติดต่อ')} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>ช่องทางการติดต่อ</Button>
-  </Col>
-</Row>
+        <Card style={{ position: 'fixed', bottom: 100, right: 20, backgroundColor: '#fff', padding: 20, borderRadius: 8, boxShadow: '0 0 10px rgba(0, 0, 0, 0.1)' }}>
+          {/* FAQ Header */}
+          <h3 style={{ textAlign: 'center', borderBottom: '1px solid #ccc', paddingBottom: 10 }}>FAQ:</h3>
 
-    {/* Replies */}
-    {selectedTopic && (
-      <div style={{ marginTop: 16, border: '1px solid #ccc', padding: 10, borderRadius: 8 }}>
-        {selectedTopic === 'ขั้นตอนการใช้งาน' && (
-          <>
-            <p>1. ทำการเลือกสินค้าลงตะกร้า</p>
-            <p>2. กดที่ cart เพื่อทำการชำระเงิน</p>
-            <p>3. ชำระเงินและส่งหลักฐานการโอนเงิน</p>
-            <p>4. ทำการกดปุ่ม "ดำเนินการต่อ"</p>
-            <p>5. เสร็จสิ้นการสั่งซื้อ</p>
-          </>
-        )}
-        {selectedTopic === 'ข้อควรระวัง' && (
-          <>
-            <p>1. ส่งหลักฐานยืนยันการโอนเงินทุกครั้ง</p>
-            <p>2. ตรวจสอบบัญชีที่ทำการโอนเงิน</p>
-            <p>3. ตรวจสอบจำนวนเงินที่โอน</p>
-          </>
-        )}
-        {selectedTopic === 'ช่องทางการติดต่อ' && (
-          <>
-            <p>Email : group10@email.com</p>
-            <p>Tel Number : 123-456-7890</p>
-            <p>Line : @group10</p>
-          </>
-        )}
-      </div>
-    )}
-  </Card>
-)}
+          {/* FAQ Content */}
+          <Row justify="space-around">
+            <Col span={8}>
+              <Button onClick={() => selectTopic('ขั้นตอนการใช้งาน')} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>ขั้นตอนการใช้งาน</Button>
+            </Col>
+            <Col span={8}>
+              <Button onClick={() => selectTopic('ข้อควรระวัง')} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>ข้อควรระวัง</Button>
+            </Col>
+            <Col span={8}>
+              <Button onClick={() => selectTopic('ช่องทางการติดต่อ')} style={{ width: '100%', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>ช่องทางการติดต่อ</Button>
+            </Col>
+          </Row>
+
+          {/* Replies */}
+          {selectedTopic && (
+            <div style={{ marginTop: 16, border: '1px solid #ccc', padding: 10, borderRadius: 8 }}>
+              {selectedTopic === 'ขั้นตอนการใช้งาน' && (
+                <>
+                  <p>1. ทำการเลือกสินค้าลงตะกร้า</p>
+                  <p>2. กดที่ cart เพื่อทำการชำระเงิน</p>
+                  <p>3. ชำระเงินและส่งหลักฐานการโอนเงิน</p>
+                  <p>4. ทำการกดปุ่ม "ดำเนินการต่อ"</p>
+                  <p>5. เสร็จสิ้นการสั่งซื้อ</p>
+                </>
+              )}
+              {selectedTopic === 'ข้อควรระวัง' && (
+                <>
+                  <p>1. ส่งหลักฐานยืนยันการโอนเงินทุกครั้ง</p>
+                  <p>2. ตรวจสอบบัญชีที่ทำการโอนเงิน</p>
+                  <p>3. ตรวจสอบจำนวนเงินที่โอน</p>
+                </>
+              )}
+              {selectedTopic === 'ช่องทางการติดต่อ' && (
+                <>
+                  <p>Email : group10@email.com</p>
+                  <p>Tel Number : 123-456-7890</p>
+                  <p>Line : @group10</p>
+                </>
+              )}
+            </div>
+          )}
+        </Card>
+      )}
 
     </div>
   );

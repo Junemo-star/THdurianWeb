@@ -43,9 +43,9 @@ const SecondStep = () => {
           <Upload beforeUpload={() => false} onChange={handleUpload}>
             <Button icon={<UploadOutlined />}>Upload</Button>
           </Upload>
-          </div>
-          <div style={{marginTop:'20px'}}>
-            <Button type="primary" onClick={handleSubmit}>Submit</Button>
+        </div>
+        <div style={{ marginTop: '20px' }}>
+          <Button type="primary" onClick={handleSubmit}>Submit</Button>
         </div>
       </div>
     </Card>

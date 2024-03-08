@@ -9,6 +9,7 @@ import { useAuth } from '../../componet/AuthContext';
 import useWindowWidth from '../../componet/Check_size';
 import { Helmet } from "react-helmet";
 import Urlconfig from '../../config';
+import Editdata from '../../componet/Edit';
 
 
 const UserProfile = () => {
@@ -17,7 +18,9 @@ const UserProfile = () => {
     const { setRole, token, userRole } = useAuth();
     const windowWidth = useWindowWidth();
     const [userdata, setUserdata] = useState();
+    const [showModal, setShowModal] = useState(false);
 
+    const handleClose = () => setShowModal(false);
 
     const infouser = async () => {
         const response = await axios.get(head+"/api/users/me?populate[order_histories][populate][farmPost][populate]=owner&populate[Profile]=*", token)
@@ -25,6 +28,11 @@ const UserProfile = () => {
     }
 
     console.log(userdata)
+
+    const open = () => {
+        setShowModal(true);
+        console.log(showModal)
+    }
 
     useEffect(() => {
         if (userRole !== "Customer") {
@@ -79,7 +87,7 @@ const UserProfile = () => {
                             </div>
 
                             <div style={{ width: '100%', display: "flex", justifyContent: "center", marginTop: "20px" }}>
-                                <button style={{ padding: "10px", backgroundColor: "#FFEF60", fontWeight: "bold", borderRadius: "10px", borderStyle: "hidden", fontSize: "20px" }}>
+                                <button style={{ padding: "10px", backgroundColor: "#FFEF60", fontWeight: "bold", borderRadius: "10px", borderStyle: "hidden", fontSize: "20px" }} onClick={() => open()}>
                                     แก้ไขข้อมูลส่วนตัว
                                 </button>
                             </div>
@@ -116,6 +124,8 @@ const UserProfile = () => {
                 </div>
                 {windowWidth < 450 && <Footers />}
             </div>
+
+            <Editdata open={showModal} onHide={handleClose} user={userdata} />
         </div>
     )
 }

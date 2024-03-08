@@ -24,11 +24,13 @@ const Register = () => {
     const windowWidth = useWindowWidth();
 
     const handleSubmit = async (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         if (password !== conpassword) {
             console.log("Passwords do not match");
             window.alert("รหัสผ่านไม่ถูกต้อง");
             return; // ไม่ทำการส่งข้อมูลถ้ารหัสผ่านไม่ตรงกัน
+        } else {
+            alert("ข้อมูลไม่ถูกต้อง")
         }
 
         // console.log(username)
