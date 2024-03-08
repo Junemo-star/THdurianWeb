@@ -41,6 +41,8 @@ const ThirdStep = () => {
   };
 
   const handleSubmit = () => {
+    // Save the location to localStorage
+    localStorage.setItem('userLocate', selectedLocation);
   };
 
   return (

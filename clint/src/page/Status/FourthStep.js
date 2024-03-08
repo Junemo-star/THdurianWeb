@@ -37,22 +37,27 @@ const FourthStep = () => {
     try {
       const cart = JSON.parse(localStorage.getItem('cart'));
       const token = localStorage.getItem('jwtToken');
-    
+  
       if (!cart || !Array.isArray(cart) || cart.length === 0) {
         console.error('Cart is empty or invalid');
         return;
       }
-    
+  
       const config = {
         headers: { Authorization: `Bearer ${token}` }
       };
-    
-      const productsResponse = await axios.get(head+'/api/public', config);
+  
+      const productsResponse = await axios.get(head + '/api/public', config);
       const productsData = productsResponse.data;
-    
-      const userResponse = await axios.get(head+'/api/users/me', config);
-      const userLocation = userResponse.data.location;
-    
+  
+      const userLocation = localStorage.getItem('userLocate');
+
+      const filesResponse = await axios.get(head + '/api/upload/files', config);
+      const filesData = filesResponse.data;
+  
+      const paymentFileName = localStorage.getItem('keyPic');
+      const paymentPictureID = filesData.find(file => file.name === paymentFileName)?.id || null;
+  
       const orders = cart.map(([id, amount]) => {
         const product = productsData.find(product => product.Id.includes(parseInt(id)));
         const categoryID = product ? product.CategoryID : null;
@@ -64,35 +69,10 @@ const FourthStep = () => {
           Price: price,
           Location: userLocation,
           FarmPostNewID: parseInt(id),
-          PaymentPictureID: null //Id of uploaded payment picture
+          PaymentPictureID: paymentPictureID
         };
       });
   
-      await Promise.all(orders.map(async order => {
-        try {
-          const farmPostResponse = await axios.get(head+`/api/farm-post-news/${order.FarmPostNewID}`, config);
-          const farmPostData = farmPostResponse.data.data;
-      
-          // Deduct the ordered amount
-          const updatedAmount = farmPostData.attributes.amount - order.Amount;
-      
-          // Prepare the updated data
-          const updatedData = {
-            data: {
-              id: farmPostData.id,
-              attributes: {
-                ...farmPostData.attributes,
-                amount: updatedAmount
-              }
-            }
-          };
-      
-          // Send a PUT request to update the farm-post-news
-          await axios.put(head+`/api/farm-post-news/${order.FarmPostNewID}`, updatedData, config);
-        } catch (error) {
-          console.error(`Error updating farm-post-news with ID ${order.FarmPostNewID}:`, error);
-        }
-      }));
     
       const postResponses = await Promise.all(orders.map(order =>
         axios.post(head+'/api/placed-orders', order, config)
@@ -100,7 +80,8 @@ const FourthStep = () => {
     
       console.log('Orders placed successfully:', postResponses.map(res => res.data));
     
-      // Clear cart
+      // Clear localstorage
+      localStorage.removeItem('keyPic');
       localStorage.removeItem('cart');
       
       if (windowWidth > 450){
