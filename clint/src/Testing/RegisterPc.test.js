@@ -30,13 +30,13 @@ describe('RegisterPc Component', () => {
     render(<Router><RegisterPc /></Router>);
 
     // Fill in the form fields
-    fireEvent.change(screen.getByPlaceholderText('username'), { target: { value: 'testuser' } });
-    fireEvent.change(screen.getByPlaceholderText('password'), { target: { value: 'testpassword' } });
-    fireEvent.change(screen.getByPlaceholderText('confirm password'), { target: { value: 'testpassword' } });
-    fireEvent.change(screen.getByPlaceholderText('example@email.com'), { target: { value: 'test@example.com' } });
-    fireEvent.change(screen.getByPlaceholderText('firstname'), { target: { value: 'John' } });
-    fireEvent.change(screen.getByPlaceholderText('lastname'), { target: { value: 'Doe' } });
-    fireEvent.change(screen.getByPlaceholderText('location'), { target: { value: 'New York' } });
+    fireEvent.change(screen.getByPlaceholderText('username'), { target: { value: 'testtuser' } });
+    fireEvent.change(screen.getByPlaceholderText('password'), { target: { value: 'testtpassword' } });
+    fireEvent.change(screen.getByPlaceholderText('confirm password'), { target: { value: 'testtpassword' } });
+    fireEvent.change(screen.getByPlaceholderText('example@email.com'), { target: { value: 'testt@example.com' } });
+    fireEvent.change(screen.getByPlaceholderText('firstname'), { target: { value: 'Johnn' } });
+    fireEvent.change(screen.getByPlaceholderText('lastname'), { target: { value: 'Doee' } });
+    fireEvent.change(screen.getByPlaceholderText('location'), { target: { value: 'New Yorkk' } });
 
     // Submit the form
     fireEvent.click(screen.getByText('ยืนยันการสมัคร'));
@@ -44,12 +44,12 @@ describe('RegisterPc Component', () => {
     // Wait for the form submission to complete
     await waitFor(() => {
       expect(axios.post).toHaveBeenCalledWith(expect.any(String), {
-        username: 'testuser',
-        password: 'testpassword',
-        email: 'test@example.com',
-        firstname: 'John',
-        surname: 'Doe',
-        location: 'New York',
+        username: 'testtuser',
+        password: 'testtpassword',
+        email: 'testt@example.com',
+        firstname: 'Johnn',
+        surname: 'Doee',
+        location: 'New Yorkk',
         role: 3,
         confirmed: true,
         blocked: false,

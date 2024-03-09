@@ -58,6 +58,7 @@ const RegisterPc = () => {
             });
 
             setSuccess(true)
+            navigate("/Login")
         } catch (e) {
             console.log(e);
             console.log("wrong username & password");
