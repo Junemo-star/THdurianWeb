@@ -225,6 +225,7 @@ const HomeApp = () => {
                     )}
                 </Card>
             )}
+            
             {windowWidth > 450 && (
                 <footer className={styles.footer_pc}>
                     <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center" }}>

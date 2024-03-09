@@ -11,7 +11,6 @@
     "@material-tailwind/react": "^2.1.9",
     "@react-navigation/native": "^6.1.14",
     "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
     "antd": "^5.14.1",
     "axios": "^1.6.7",
@@ -58,5 +57,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@testing-library/react": "^14.2.1"
   }
 }
