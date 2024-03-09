@@ -13,7 +13,6 @@ import { QuestionCircleOutlined } from '@ant-design/icons';
 import { FloatButton } from 'antd';
 import Urlconfig from '../config';
 
-
 const HomeApp = () => {
     const head = Urlconfig.serverUrlPrefix;
     const PUBLIC_URL = head + "/api/public";
@@ -24,6 +23,7 @@ const HomeApp = () => {
     const [product, setProduct] = useState([])
     const [showModal, setShowModal] = useState(false);
     const [promotionItem, setPromotionItem] = useState(false);
+    const [searchhh, setSearchhh] = useState('ก้านยาว')
     const [showChatbox, setShowChatbox] = useState(false);
     const [selectedTopic, setSelectedTopic] = useState(null);
 
@@ -40,6 +40,8 @@ const HomeApp = () => {
     };
 
     const idpost = (durian) => {
+        // console.log(durian.length)
+        // console.log(durian)
         if (userRole !== "Farmer") {
             if (durian.length > 1) {
                 const latest = durian[durian.length - 1]
@@ -56,15 +58,17 @@ const HomeApp = () => {
             const promo = await axios.get(PROMOTION);
             setPromotionItem(promo.data)
             const data = response.data
-            const datafilter = data.filter(item => item.NetAmount !== 0)
+            console.log(data)
             let products;
             if (sessionStorage.getItem("typedurian")) {
                 const choose = sessionStorage.getItem("typedurian");
-                const filterdata = datafilter.data.filter(item => item.Category === choose);
+                const filterdata = response.data.filter(item => item.Category === choose);
+
                 products = filterdata.map((item) => {
                     let url = "2.jpg";
                     if (item.Picture) {
                         url = head + item.Picture.url;
+                        // console.log(item.Picture.url)
                     }
                     return (
                         <Link onClick={() => idpost(item.Id)} key={item.Id}>
@@ -93,10 +97,11 @@ const HomeApp = () => {
                     );
                 });
             } else {
-                products = datafilter.map((item) => {
+                products = data.map((item) => {
                     let url = "2.jpg";
                     if (item.Picture) {
                         url = head + item.Picture.url;
+                        // console.log(item.Picture.url)
                     }
                     return (
                         <Link onClick={() => idpost(item.Id)} key={item.Id}>
@@ -147,7 +152,7 @@ const HomeApp = () => {
 
             {windowWidth > 450 && <NavbarHead />}
 
-            {/* {console.log("Promotion", promotionItem)} */}
+            {console.log("Promotion", promotionItem)}
 
             {promotionItem && (
                 <Carousel fade style={{ marginTop: "20px" }}>
