@@ -9,7 +9,6 @@ import { Helmet } from "react-helmet";
 import Urlconfig from '../../config';
 import { message } from 'antd';
 
-
 const RegisterPc = () => {
     const head = Urlconfig.serverUrlPrefix;
     const [username, setUsername] = useState()

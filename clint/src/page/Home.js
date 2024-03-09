@@ -6,7 +6,7 @@ import NavbarHead from '../componet/Navbar';
 import Footers from '../componet/Footerbar';
 import { useAuth } from '../componet/AuthContext';
 import useWindowWidth from '../componet/Check_size';
-import axios from 'axios';
+// import axios from 'axios';
 import Modaldurian from '../componet/Modal';
 import { Helmet } from "react-helmet";
 import { QuestionCircleOutlined } from '@ant-design/icons';
