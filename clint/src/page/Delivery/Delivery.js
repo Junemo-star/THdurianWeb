@@ -10,85 +10,8 @@ import FloatingLabel from "react-bootstrap/FloatingLabel";
 import Form from "react-bootstrap/Form";
 import Urlconfig from "../../config";
 
-const { Step } = Steps;
-
-const OrderStep = ({ order }) => {
-  const [currentStep, setCurrentStep] = useState(0); // กำหนดค่าเริ่มต้นของ step เป็น 0
-  const windowWidth = useWindowWidth();
-
-  useEffect(() => {
-    // ตั้งค่า step ของแต่ละ order โดยอ้างอิงจาก order.Status
-    switch (order.Status) {
-      case "Packaging":
-        setCurrentStep(1);
-        break;
-      case "Delivered":
-        setCurrentStep(2);
-        break;
-      default:
-        setCurrentStep(0);
-        break;
-    }
-  }, [order.Status]);
-  return (
-    <div style={{ marginBottom: "5px" }}>
-      <div className={styles.set_pos}>
-        <div className={styles.set_all} ></div>
-
-        <div className={styles.set_pos} >
-          <div className={styles.box}  >
-            <div className={styles.set_pos}  >
-
-
-              <div className={styles.set_pos} style={{ marginBottom: "20px" }}>
-                <div>
-                  <MDBTypography>
-                    <div>
-                      <div className={styles.inside_box}>
-                        <div className={styles.text2}>
-                          <p className="mb-1">สวน : {order.Farmer}</p>
-                          <p className="mb-1">ชนิด : {order.Category}</p>
-                          <p className="mb-1">จำนวน : {order.Amount} กิโลกรัม</p>
-                          <p className="mb-1">ราคา : {order.Price} บาท</p>
-                          <p className="mb-1">สถานะ : {order.Status}</p>
-                        </div>
-                        <div>
-                          <Steps
-                            progressDot
-                            current={currentStep}
-                            direction="vertical"
-                            items={[
-                              {
-                                title: "รับคำสั่งซื้อ",
-                                description:
-                                  "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
-                              },
-                              {
-                                title: "เตรียมจัดส่ง",
-                                description:
-                                  "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
-                              },
-                              {
-                                title: "กำลังจัดส่ง",
-                                description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
-                              },
-                            ]}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </MDBTypography>
-                </div>
-              </div>
-            </div>
-            {windowWidth < 450 && <Footers />}
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
 const Delivery = () => {
+  const { Step } = Steps;
   const head = Urlconfig.serverUrlPrefix;
 
   const { token } = useAuth();
@@ -120,11 +43,90 @@ const Delivery = () => {
 
   const filteredOrders =
     category === "" ||
-      category === "ทั้งหมด" ||
-      category === "กรุณาเลือกประเภททุเรียน"
+    category === "ทั้งหมด" ||
+    category === "กรุณาเลือกประเภททุเรียน"
       ? orders
       : orders.filter((order) => order.Category === category);
+  const OrderStep = ({ order }) => {
+    const [currentStep, setCurrentStep] = useState(0); // กำหนดค่าเริ่มต้นของ step เป็น 0
+    const windowWidth = useWindowWidth();
 
+    useEffect(() => {
+      // ตั้งค่า step ของแต่ละ order โดยอ้างอิงจาก order.Status
+      switch (order.Status) {
+        case "Packaging":
+          setCurrentStep(1);
+          break;
+        case "Delivered":
+          setCurrentStep(2);
+          break;
+        default:
+          setCurrentStep(0);
+          break;
+      }
+    }, [order.Status]);
+    return (
+      <div style={{ marginBottom: "5px" }}>
+        <div className={styles.set_pos}>
+          <div className={styles.set_all}></div>
+
+          <div className={styles.set_pos}>
+            <div className={styles.box}>
+              <div className={styles.set_pos}>
+                <div
+                  className={styles.set_pos}
+                  style={{ marginBottom: "20px" }}
+                >
+                  <div>
+                    <MDBTypography>
+                      <div>
+                        <div className={styles.inside_box}>
+                          <div className={styles.text2}>
+                            <p className="mb-1">สวน : {order.Farmer}</p>
+                            <p className="mb-1">ชนิด : {order.Category}</p>
+                            <p className="mb-1">
+                              จำนวน : {order.Amount} กิโลกรัม
+                            </p>
+                            <p className="mb-1">ราคา : {order.Price} บาท</p>
+                            <p className="mb-1">สถานะ : {order.Status}</p>
+                          </div>
+                          <div>
+                            <Steps
+                              progressDot
+                              current={currentStep}
+                              direction="vertical"
+                              items={[
+                                {
+                                  title: "รับคำสั่งซื้อ",
+                                  description:
+                                    "บริษัทได้รับคำสั่งซื้อของคุณเรียบร้อยแล้ว",
+                                  
+                                },
+                                {
+                                  title: "เตรียมจัดส่ง",
+                                  description:
+                                    "พัสดุของคุณนำเข้าขนส่งเรียบร้อยแล้ว",
+                                },
+                                {
+                                  title: "กำลังจัดส่ง",
+                                  description: "สินค้าของคุณได้จัดส่งเรียบร้อย",
+                                },
+                              ]}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </MDBTypography>
+                  </div>
+                </div>
+              </div>
+              {windowWidth < 450 && <Footers />}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  };
   return (
     <>
       <div style={{ marginBottom: "100px" }}>
@@ -160,5 +162,4 @@ const Delivery = () => {
     </>
   );
 };
-
 export default Delivery;
