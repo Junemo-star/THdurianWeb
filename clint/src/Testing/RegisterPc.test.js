@@ -26,9 +26,7 @@ describe('RegisterPc Component', () => {
 
   test('submitting the form with valid data', async () => {
     axios.post.mockResolvedValueOnce({ data: { success: true } }); // Mock successful API response
-
     render(<Router><RegisterPc /></Router>);
-
     // Fill in the form fields
     fireEvent.change(screen.getByPlaceholderText('username'), { target: { value: 'testtuser' } });
     fireEvent.change(screen.getByPlaceholderText('password'), { target: { value: 'testtpassword' } });
